@@ -1,14 +1,11 @@
-{
-  pkgs,
-  ... 
-}: {
+{pkgs, ...}: {
   imports = [
     ./disko-configuration.nix
     ./hardware-configuration.nix
   ];
 
   nix.package = pkgs.nixVersions.stable;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.allowUnfree = true;
 
   boot.loader.systemd-boot.enable = true;
@@ -32,7 +29,7 @@
   users.users.bata = {
     isNormalUser = true;
     description = "Bastian Sievers";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = ["networkmanager" "wheel" "docker"];
   };
 
   environment.systemPackages = with pkgs; [
@@ -59,7 +56,6 @@
     allowSFTP = true;
   };
   security.sudo.extraConfig = "bata ALL=(ALL) NOPASSWD: ALL";
-
 
   networking.hostName = "test";
   networking.networkmanager.enable = true;

@@ -4,7 +4,7 @@
   inputs,
   ...
 }: {
-  users.users.bata= {
+  users.users.bata = {
     initialHashedPassword = "$y$j9T$hWU0.PI9I8Tj1.mubjMeu0$cIfImoHoERBv6F.HGcpS7Xj5kQdhf0i/IPDIvT811l0";
     isNormalUser = true;
     description = "Bastian Sievers";

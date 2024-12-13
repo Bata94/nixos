@@ -42,4 +42,3 @@ in {
     useTheme = "powerlevel10k_rainbow";
   };
 }
-

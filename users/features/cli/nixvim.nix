@@ -7,4 +7,3 @@
     inputs.nixvim.packages.${pkgs.system}.default
   ];
 }
-
