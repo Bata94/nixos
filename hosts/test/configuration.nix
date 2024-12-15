@@ -4,7 +4,7 @@
     ./hardware-configuration.nix
   ];
 
-  nix.package = pkgs.nixVersions.stable;
+  # nix.package = pkgs.nixVersions.stable;
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.allowUnfree = true;
 
