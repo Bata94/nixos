@@ -13,6 +13,9 @@
     nd = "nix develop --command zsh";
 
     dc = "docker compose";
+
+    kc = "kubectl";
+
     cat = "bat";
   };
 in {

@@ -49,7 +49,10 @@
 
   services.openssh = {
     enable = true;
+    ports = [ 22 ];
+    openFirewall = true;
     settings = {
+      AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
       PasswordAuthentication = true;
       PermitRootLogin = "yes";
     };
@@ -57,12 +60,12 @@
   };
   security.sudo.extraConfig = "bata ALL=(ALL) NOPASSWD: ALL";
 
-  networking.hostName = "test";
+  networking.hostName = "vm-xps-2";
   networking.networkmanager.enable = true;
-  # networking.nat.enable = true;
+  # networking.nat.enable = false;
   # networking.nat.internalInterfaces = ["ve-+"];
   # networking.nat.externalInterface = "enp1s0";
-  # networking.firewall.enable = true;
+  networking.firewall.enable = false;
   # networking.firewall.allowedTCPPorts = [ 22 ];
   # networking.firewall.allowedUDPPorts = [  ];
 

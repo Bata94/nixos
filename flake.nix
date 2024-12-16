@@ -49,20 +49,46 @@
     overlays = import ./overlays {inherit inputs;};
     # homeManagerModules = import ./modules/home-manager;
     nixosConfigurations = {
-      test = nixpkgs.lib.nixosSystem {
+      vm-xps-1 = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-          ./hosts/test
+          ./hosts/vm-xps-1
+          inputs.disko.nixosModules.disko
+          agenix.nixosModules.default
+        ];
+      };
+      vm-xps-2 = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/vm-xps-2
+          inputs.disko.nixosModules.disko
+          agenix.nixosModules.default
+        ];
+      };
+      vm-xps-3 = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/vm-xps-3
           inputs.disko.nixosModules.disko
           agenix.nixosModules.default
         ];
       };
     };
     homeConfigurations = {
-      "bata@test" = home-manager.lib.homeManagerConfiguration {
+      "bata@vm-xps-1" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./users/bata/test.nix];
+        modules = [./users/bata/vm-xps.nix];
+      };
+      "bata@vm-xps-2" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./users/bata/vm-xps.nix];
+      };
+      "bata@vm-xps-3" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./users/bata/vm-xps.nix];
       };
     };
   };
