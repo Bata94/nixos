@@ -12,8 +12,8 @@
 
   services.k3s = {
     enable = true;
-    clusterInit = false;
-    serverAddr = "https://vm-xps-1:6443";
+    serverAddr = "https://192.168.122.11:6443";
+    token = "K10c9118f420d86ef16d3439fae32db40e47ed848165fee9bad4b351129f5313e27::server:a121165383db9c674b90bbfe736fd8d8";
     role = "server";
   };
   environment.systemPackages = with pkgs; [

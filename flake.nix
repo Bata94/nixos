@@ -78,17 +78,17 @@
       "bata@vm-xps-1" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./users/bata/vm-xps.nix];
+        modules = [./users/bata/vm-xps-1.nix];
       };
       "bata@vm-xps-2" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./users/bata/vm-xps.nix];
+        modules = [./users/bata/vm-xps-2.nix];
       };
       "bata@vm-xps-3" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./users/bata/vm-xps.nix];
+        modules = [./users/bata/vm-xps-3.nix];
       };
     };
   };

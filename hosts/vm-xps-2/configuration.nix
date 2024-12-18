@@ -60,14 +60,27 @@
   };
   security.sudo.extraConfig = "bata ALL=(ALL) NOPASSWD: ALL";
 
-  networking.hostName = "vm-xps-2";
-  networking.networkmanager.enable = true;
-  # networking.nat.enable = false;
-  # networking.nat.internalInterfaces = ["ve-+"];
-  # networking.nat.externalInterface = "enp1s0";
-  networking.firewall.enable = false;
-  # networking.firewall.allowedTCPPorts = [ 22 ];
-  # networking.firewall.allowedUDPPorts = [  ];
+  networking = {
+    hostName = "vm-xps-2";
+    # networkmanager.enable = true;
+    useDHCP = false;
+    defaultGateway = {
+      address = "192.168.122.1";
+    };
+    interfaces = {
+      enp1s0.ipv4.addresses = [
+        {
+          address = "192.168.122.12";
+          prefixLength = 24;
+        }
+      ];
+    };
+    firewall = {
+      enable = false;
+      # allowedTCPPorts = [ 22 ];
+      # allowedUDPPorts = [  ];
+    };
+  };
 
   system.stateVersion = "24.11";
 }
