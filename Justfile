@@ -2,7 +2,7 @@
 default:
   @just --list
 
-# Install NixOS via NixOS-Anywhere
+# Install NixOS via NixOS-Anywhere. Careful it will delete all that systems data!
 install SYSTEM HOST:
   nix run github:nix-community/nixos-anywhere -- --flake .#{{SYSTEM}} --target-host root@{{HOST}}
 
@@ -71,3 +71,10 @@ rebuild: rebuild-system rebuild-home-manager
 # Enter a development shell
 dev-shell:
   nix develop
+
+# Collect and delete old Nix Store entries
+collect-garbage:
+  nix-collect-garbage --delete-older-than 14d --max-jobs auto --cores 0 --quiet
+  sudo nix-collect-garbage --delete-older-than 14d --max-jobs auto --cores 0 --quiet
+
+alias gc := collect-garbage

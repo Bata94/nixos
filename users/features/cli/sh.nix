@@ -19,6 +19,8 @@
     f = "fzf --preview 'bat --color=always --style=header,grid,numbers --line-range :500 {}'";
 
     cat = "bat";
+    grep = "rg";
+    ps = "procs";
   };
 in {
   programs.bash = {

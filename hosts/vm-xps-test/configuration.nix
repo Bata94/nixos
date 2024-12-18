@@ -49,7 +49,7 @@
 
   services.openssh = {
     enable = true;
-    ports = [ 22 ];
+    ports = [22];
     openFirewall = true;
     settings = {
       AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
@@ -64,6 +64,9 @@
     hostName = "vm-xps-test";
     # networkmanager.enable = true;
     useDHCP = false;
+    domain = "default";
+    search = ["default"];
+    nameservers = ["1.1.1.1" "1.0.0.1"];
     defaultGateway = {
       address = "192.168.122.1";
     };

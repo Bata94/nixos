@@ -1,30 +1,36 @@
-{config, lib,...}:
+{
+  config,
+  lib,
+  ...
+}:
 with lib; let
   cfg = config.features.desktop.wm.kde;
 in {
   options.features.desktop.wm.kde.enable = mkEnableOption "Enable KDE Desktop Environment";
 
   config = mkIf cfg.enable {
-    services.xserver.enable = true;
+    features.desktop.wm = {
+      defaultFonts.enable = true;
+      dbus.enable = true;
+      audio.enable = true;
+      thunar.enable = true;
+    };
 
-    qt = {
+    services.xserver = {
       enable = true;
-      platformTheme = "qtct";
-      style.name = "kvantum";
+      layout = "de";
+      xkbVariant = "";
+      libinput.enable = true;
     };
 
-    xdg.configFile = {
-      "Kvantum/ArcDark".source = "${pkgs.arc-kde-theme}/share/Kvantum/ArcDark";
-      "Kvantum/kvantum.kvconfig".text = "[General]\ntheme=ArcDark";
-    };
-
-    programs.dconf.enable = true;
-
+    console.keyMap = "de";
     services.desktopManager.plasma6.enable = true;
     services.displayManager = {
-      sddm.enable = true;
       defaultSession = "plasma";
-      sddm.wayland.enable = true;
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+      };
     };
   };
 }
