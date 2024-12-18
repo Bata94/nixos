@@ -1,0 +1,55 @@
+---
+version: "3.9"
+networks:
+  regatta_def:
+    driver: bridge
+    driver_opts:
+      # Anpassen auf das vorhandene Netzwerk 1420 für Wiregurad VPN Network
+      com.docker.network.driver.mtu: 1420
+
+volumes:
+  postgresDB:
+  pgadmin:
+
+
+services:
+  db:
+    platform: linux/amd64
+    container_name: "DB"
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - postgresDB:/var/lib/postgresql/data
+    environment:
+      PGUSER: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "postgres" ]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 30s
+    networks:
+      - regatta_def
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    platform: linux/amd64
+    image: dpage/pgadmin4:latest
+    depends_on:
+      - db
+    ports:
+      - "5431:53603"
+      - "5430:80"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@sits.ruhr
+      PGADMIN_DEFAULT_PASSWORD: admin
+    networks:
+      - regatta_def
+    restart: unless-stopped
+
