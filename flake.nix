@@ -49,6 +49,14 @@
     overlays = import ./overlays {inherit inputs;};
     # homeManagerModules = import ./modules/home-manager;
     nixosConfigurations = {
+      vm-xps-test = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/vm-xps-test
+          inputs.disko.nixosModules.disko
+          agenix.nixosModules.default
+        ];
+      };
       vm-xps-1 = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
@@ -75,6 +83,11 @@
       };
     };
     homeConfigurations = {
+      "bata@vm-xps-test" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./users/bata/vm-xps-test.nix];
+      };
       "bata@vm-xps-1" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
