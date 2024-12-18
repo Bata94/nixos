@@ -16,6 +16,8 @@
 
     kc = "kubectl";
 
+    f = "fzf --preview 'bat --color=always --style=header,grid,numbers --line-range :500 {}'";
+
     cat = "bat";
   };
 in {
@@ -28,6 +30,15 @@ in {
     inherit shellAliases;
     initExtra = ''
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=4"
+
+      function fzf-nvim {
+        local file=$(f < /dev/tty)
+        if [[ -n $file ]]; then
+          nvim "$file"
+        fi
+      }
+      zle -N fzf-nvim
+      bindkey '^E' fzf-nvim;
 
       colorscript random
     '';
