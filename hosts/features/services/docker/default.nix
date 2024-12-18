@@ -15,6 +15,6 @@
   virtualisation.oci-containers.backend = "docker";
 
   environment.systemPackages = [
-    inputs.compose2nix.package.${pkgs.system}.default
+    inputs.compose2nix.packages.${pkgs.system}.default
   ];
 }
