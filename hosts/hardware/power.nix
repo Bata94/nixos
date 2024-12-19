@@ -11,15 +11,15 @@ in {
   config = mkIf cfg.enable {
     services.auto-cpufreq.enable = true;
     services.auto-cpufreq.settings = {
-     charger = {
-       governor = "performance";
-       turbo = "auto";
-     };
-     battery = {
-       governor = "powersave";
-       scaling_max_freq = 2000000;
-       turbo = "never";
-     };
+      charger = {
+        governor = "performance";
+        turbo = "auto";
+      };
+      battery = {
+        governor = "powersave";
+        scaling_max_freq = 2000000;
+        turbo = "never";
+      };
     };
     environment.systemPackages = with pkgs; [
       powertop

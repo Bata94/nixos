@@ -16,7 +16,7 @@ in {
     #   libvdpau-va-gl
     # ];
 
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver.videoDrivers = ["nvidia"];
 
     hardware.graphics = {
       enable = true;
@@ -30,7 +30,7 @@ in {
       #   intel-media-driver # LIBVA_DRIVER_NAME=iHD
       #   intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
       #   # libvdpau-va-gl
-      #   
+      #
       #   # Test
       #   nvidia-vaapi-driver
       #   vpl-gpu-rt          # for newer GPUs on NixOS >24.05 or unstable

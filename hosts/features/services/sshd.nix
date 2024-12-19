@@ -9,7 +9,7 @@ in {
   options.features.desktop.services.sshd.enable = mkEnableOption "Enable SSHD";
 
   config = mkIf cfg.enable {
-      services.openssh = {
+    services.openssh = {
       enable = true;
       openFirewall = true;
       settings = {
