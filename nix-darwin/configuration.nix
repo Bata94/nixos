@@ -104,6 +104,11 @@
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
 
+  # Tmp fix for Rosetta
+  system.activationScripts.extraActivation.text = ''
+    softwareupdate --install-rosetta --agree-to-license
+  '';
+
   # Add ability to used TouchID for sudo authentication
   security.pam.enableSudoTouchIdAuth = true;
 }
