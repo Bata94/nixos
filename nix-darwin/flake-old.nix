@@ -18,26 +18,35 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = inputs@{ self, nix-darwin, home-manager, nixpkgs, nixvim }:
-  let
-
+  outputs = inputs @ {
+    self,
+    nix-darwin,
+    home-manager,
+    nixpkgs,
+    nixvim,
+  }: let
     inherit (nix-darwin.lib) darwinSystem;
     inherit (inputs.nixpkgs-unstable.lib) attrValues makeOverridable optionalAttrs singleton;
 
     nixpkgsConfig = {
-      config = { allowUnfree = true; };
-      overlays = attrValues self.overlays ++ singleton (
-        # Sub in x86 version of packages that don't build on Apple Silicon yet
-        final: prev: (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
-          inherit (final.pkgs-x86)
-            idris2
-            nix-index
-            niv
-            purescript;
-        })
-    );
+      config = {allowUnfree = true;};
+      overlays =
+        attrValues self.overlays
+        ++ singleton (
+          # Sub in x86 version of packages that don't build on Apple Silicon yet
+          final: prev: (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
+            inherit
+              (final.pkgs-x86)
+              idris2
+              nix-index
+              niv
+              purescript
+              ;
+          })
+        );
+    };
 
-    configuration = { pkgs, ... }: {
+    configuration = {pkgs, ...}: {
       environment.systemPackages = [
         pkgs.vim
         nixvim.packages.aarch64-darwin.default
@@ -71,8 +80,7 @@
       # $ darwin-rebuild changelog
       system.stateVersion = 4;
     };
-  in
-  {
+  in {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
     darwinConfigurations."MacBookBata" = nix-darwin.lib.darwinSystem {
@@ -84,7 +92,7 @@
           # `home-manager` config
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.jun = import ./home.nix;            
+          home-manager.users.jun = import ./home.nix;
         }
       ];
     };

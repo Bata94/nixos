@@ -32,6 +32,7 @@ with lib; let
   };
 in {
   options.features.cli.sh.enable = mkEnableOption "Enable SH";
+  # TODO: rm/split up installs in more feature options
   config = mkIf cfg.enable {
     programs.bat.enable = true;
     programs.fzf.enable = true;
