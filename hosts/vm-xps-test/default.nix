@@ -16,7 +16,7 @@
   ];
   # extraServices.podman.enable = true;
 
-  features.desktop = {
-    wm.kde.enable = true;
-  };
+  # features.desktop = {
+  #   wm.kde.enable = true;
+  # };
 }

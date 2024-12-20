@@ -18,10 +18,12 @@ in {
 
     services.xserver = {
       enable = true;
-      layout = "de";
-      xkbVariant = "";
-      libinput.enable = true;
+      xkb = {
+        layout = "de";
+        variant = "";
+      };
     };
+    services.libinput.enable = true;
 
     console.keyMap = "de";
     services.desktopManager.plasma6.enable = true;

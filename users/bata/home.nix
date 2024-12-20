@@ -1,18 +1,16 @@
 {
   config,
   lib,
-  # pkgs,
   ...
 }: {
-  home.username = lib.mkDefault "your-name";
-  home.homeDirectory = lib.mkDefault "/home/${config.home.username}";
-
-  home.stateVersion = "24.11";
-  # home.packages = with pkgs; [];
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
+  home = {
+    username = lib.mkDefault "your-name";
+    homeDirectory = lib.mkDefault "/home/${config.home.username}";
+    stateVersion = "24.11";
   };
-
   programs.home-manager.enable = true;
+
+  # home.sessionVariables = {
+  #   EDITOR = "nvim";
+  # };
 }

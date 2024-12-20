@@ -1,0 +1,7 @@
+{
+  imports = [
+    ./filebrowser
+
+    ./lazygit.nix
+  ];
+}

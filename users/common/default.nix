@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   outputs,
   pkgs,
@@ -8,8 +7,6 @@
   # imports = builtins.attrValues outputs.homeManagerModules;
   nixpkgs = {
     overlays = [
-      # outputs.overlays.additions
-      # outputs.overlays.modifications
       outputs.overlays.stable-packages
     ];
     config = {
