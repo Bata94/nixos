@@ -17,8 +17,8 @@ in {
         font_size = "9.0";
         font_family = "FiraCode Nerd Font Light";
         bold_font = "FiraCode Nerd Font Med";
-        italic_font = "$FiraCode Nerd Font Med Italic";
-        bold_italic_font = "FiraCode Nerd Font Light Italic";
+        italic_font = "$FiraCode Nerd Font Light Italic";
+        bold_italic_font = "FiraCode Nerd Font Med Italic";
 
         # First Color dull, second bright
         # Black
