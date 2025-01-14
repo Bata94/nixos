@@ -3,14 +3,25 @@
     ./home.nix
     # ./dotfiles
     ../common
-    ../features/cli
+    ../features
   ];
 
-  features = {
+  features= {
+    apps = {
+      editor = {
+        nixvim.enable = true;
+      };
+    };
     cli = {
-      fish.enable = true;
-      fzf.enable = true;
-      neofetch.enable = true;
+      tui = {
+        filebrowser.yazi.enable = true;
+        lazygit.enable = false;
+        lazydocker.enable = false;
+      };
+      git.enable = true;
+      sh.enable = true;
+      tmux.enable = true;
+      zoxide.enable = true;
     };
   };
 }
