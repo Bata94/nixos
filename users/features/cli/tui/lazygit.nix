@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.cli.filebrowser.lazygit;
+  cfg = config.features.cli.tui.lazygit;
 in {
-  options.features.cli.filebrowser.lazygit.enable = mkEnableOption "Enable lazygit";
+  options.features.cli.tui.lazygit.enable = mkEnableOption "Enable lazygit";
 
   config = mkIf cfg.enable {
     programs.lazygit = {

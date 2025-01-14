@@ -54,6 +54,14 @@
     overlays = import ./overlays {inherit inputs;};
     # homeManagerModules = import ./modules/home-manager;
     nixosConfigurations = {
+      anakin = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/anakin
+          inputs.disko.nixosModules.disko
+          agenix.nixosModules.default
+        ];
+      }; 
       vm-xps-test = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
@@ -88,6 +96,11 @@
       };
     };
     homeConfigurations = {
+      "bata@anakin" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./users/bata/vm-xps-test.nix];
+      };
       "bata@vm-xps-test" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};

@@ -4,13 +4,14 @@
   ...
 }:
 with lib; let
-  cfg = config.features.cli.filebrowser.lazydocker;
+  cfg = config.features.cli.tui.lazydocker;
 in {
-  options.features.cli.filebrowser.lazydocker.enable = mkEnableOption "Enable lazydocker";
+  options.features.cli.tui.lazydocker.enable = mkEnableOption "Enable lazydocker";
 
   config = mkIf cfg.enable {
-    programs.lazydocker = {
-      enable = true;
-    };
+    # TODO: Not defined
+    # programs.lazydocker = {
+    #   enable = true;
+    # };
   };
 }
