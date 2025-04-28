@@ -62,6 +62,11 @@
       url = "git+ssh://git@github.com/bata94/nixos-secrets.git";
       flake = false;
     };
+    
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { ... } @ inputs:
