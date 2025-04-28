@@ -71,17 +71,17 @@
 
   outputs = { ... } @ inputs:
   let
-    helpers = import ./flakeHelpers.nix inputs;
+    helpers = import ./flake_helpers.nix inputs;
     inherit (helpers) mkMerge mkNixos mkDarwin;
   in 
   # overlays = import ./overlays {inherit inputs;};
   mkMerge [
     # Raspberry Pi
-    (mkNixos "c3po" inputs.nixpkgs [] [])
+    # (mkNixos "c3po" inputs.nixpkgs [] [])
     # FileServer
-    (mkNixos "coruscant" inputs.nixpkgs [] [])
+    # (mkNixos "coruscant" inputs.nixpkgs [] [])
     # Dell XPS
-    (mkNixos "anakin" inputs.nixpkgs [] [])
+    # (mkNixos "anakin" inputs.nixpkgs [] [])
     # MacBook Air
     (mkDarwin "solo" inputs.nixpkgs-darwin [] [])
   ];

@@ -7,8 +7,7 @@ let
       inherit inputs;
     };
     home-manager.users.bata.imports = [
-      inputs.agenix.homeManagerModules.default
-      inputs.nix-index-database.hmModules.nix-index
+
       # ./users/bata/dots.nix
       # ./users/bata/age.nix
     ] ++ extraImports;
