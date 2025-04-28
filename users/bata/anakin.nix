@@ -23,5 +23,14 @@
       tmux.enable = true;
       zoxide.enable = true;
     };
+    development = {
+
+    };
+    wm = {
+      dunst.enable = true;
+      hyprland = {
+        enable = true;
+      };
+    };
   };
 }
