@@ -1,4 +1,5 @@
-nixos-switch.log
-home-manager-switch.log
-github.token
-.DStore
+*~
+.Trash-1000
+..bfg-report
+.DS_Store
+secrets

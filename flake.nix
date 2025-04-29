@@ -1,6 +1,4 @@
 {
-  description = "Bata NixOS Flake";
-
   nixConfig = {
     trusted-substituters = [
       "https://cachix.cachix.org"
@@ -14,146 +12,114 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
-
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
     nixpkgs-darwin-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager-unstable = {
-      url = "github:nix-community/home-manager/master";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixvim = {
+      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager-darwin = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
-
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+    ryzen-undervolt = {
+      url = "github:svenlange2/Ryzen-5800x3d-linux-undervolting/0f05965f9939259c27a428065fda5a6c0cbb9225";
+      flake = false;
     };
-
-    nixvim.url = "github:bata94/nixvim-conf";
-
     auto-aspm = {
       url = "github:notthebee/AutoASPM";
       flake = false;
     };
-
-    colmena.url = "github:zhaofengli/colmena";
-    agenix.url = "github:ryantm/agenix";
-
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    recyclarr-configs = {
+      url = "github:recyclarr/config-templates";
+      flake = false;
+    };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
+    adios-bot = {
+      url = "github:notthebee/adiosbot";
+      flake = false;
+    };
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     secrets = {
-      url = "git+ssh://git@github.com/bata94/nixos-secrets.git";
+      url = "git+ssh://git@github.com/notthebee/nix-private.git";
       flake = false;
     };
-    
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs";
+    jovian = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    alga = {
+      url = "github:Tenzer/alga";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    deploy-rs.url = "github:serokell/deploy-rs";
+
   };
 
-  outputs = { ... } @ inputs:
-  let
-    helpers = import ./flake_helpers.nix inputs;
-    inherit (helpers) mkMerge mkNixos mkDarwin;
-  in 
-  # overlays = import ./overlays {inherit inputs;};
-  mkMerge [
-    # Raspberry Pi
-    # (mkNixos "c3po" inputs.nixpkgs [] [])
-    # FileServer
-    # (mkNixos "coruscant" inputs.nixpkgs [] [])
-    # Dell XPS
-    # (mkNixos "anakin" inputs.nixpkgs [] [])
-    # MacBook Air
-    (mkDarwin "solo" inputs.nixpkgs-darwin [] [])
-  ];
+  outputs =
+    { ... }@inputs:
+    let
+      helpers = import ./flakeHelpers.nix inputs;
+      inherit (helpers) mkMerge mkNixos mkDarwin;
+    in
+    mkMerge [
+      (mkNixos "spencer" inputs.nixpkgs [
+        ./modules/notthebe.ee
+        ./homelab
+        inputs.home-manager.nixosModules.home-manager
+      ])
+      (mkNixos "maya" inputs.nixpkgs-unstable [
+        ./modules/ryzen-undervolt
+        ./modules/lgtv
+        inputs.jovian.nixosModules.default
+        inputs.home-manager-unstable.nixosModules.home-manager
+      ])
+      (mkNixos "alison" inputs.nixpkgs [
+        ./modules/zfs-root
+        ./homelab
+        inputs.home-manager.nixosModules.home-manager
+      ])
+      (mkNixos "emily" inputs.nixpkgs [
+        ./modules/zfs-root
+        ./modules/tailscale
+        ./modules/adios-bot
+        ./modules/duckdns
+        ./homelab
+        inputs.home-manager.nixosModules.home-manager
+      ])
+      (mkNixos "aria" inputs.nixpkgs [
+        ./modules/zfs-root
+        ./modules/tailscale
+        ./homelab
+        inputs.home-manager.nixosModules.home-manager
+      ])
+      (mkDarwin "meredith" inputs.nixpkgs-darwin
+        [
+          dots/tmux
+          dots/kitty
+        ]
+        [ ]
+      )
+    ];
 }
-
-# # homeManagerModules = import ./modules/home-manager;
-# nixosConfigurations = {
-# anakin = nixpkgs.lib.nixosSystem {
-#   specialArgs = {inherit inputs outputs;};
-#   modules = [
-#     ./hosts/anakin
-#     inputs.disko.nixosModules.disko
-#     agenix.nixosModules.default
-#   ];
-# }; 
-# vm-xps-test = nixpkgs.lib.nixosSystem {
-#   specialArgs = {inherit inputs outputs;};
-#   modules = [
-#     ./hosts/vm-xps-test
-#     inputs.disko.nixosModules.disko
-#     agenix.nixosModules.default
-#   ];
-# };
-# vm-xps-1 = nixpkgs.lib.nixosSystem {
-#   specialArgs = {inherit inputs outputs;};
-#   modules = [
-#     ./hosts/vm-xps-1
-#     inputs.disko.nixosModules.disko
-#     agenix.nixosModules.default
-#   ];
-# };
-# vm-xps-2 = nixpkgs.lib.nixosSystem {
-#   specialArgs = {inherit inputs outputs;};
-#   modules = [
-#     ./hosts/vm-xps-2
-#     inputs.disko.nixosModules.disko
-#     agenix.nixosModules.default
-#   ];
-# };
-# vm-xps-3 = nixpkgs.lib.nixosSystem {
-#   specialArgs = {inherit inputs outputs;};
-#   modules = [
-#     ./hosts/vm-xps-3
-#     inputs.disko.nixosModules.disko
-#     agenix.nixosModules.default
-#   ];
-# };
-# };
-# homeConfigurations = {
-# "bata@anakin" = home-manager.lib.homeManagerConfiguration {
-#   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#   extraSpecialArgs = {inherit inputs outputs;};
-#   modules = [./users/bata/vm-xps-test.nix];
-# };
-# "bata@vm-xps-test" = home-manager.lib.homeManagerConfiguration {
-#   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#   extraSpecialArgs = {inherit inputs outputs;};
-#   modules = [./users/bata/vm-xps-test.nix];
-# };
-# "bata@vm-xps-1" = home-manager.lib.homeManagerConfiguration {
-#   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#   extraSpecialArgs = {inherit inputs outputs;};
-#   modules = [./users/bata/vm-xps-1.nix];
-# };
-# "bata@vm-xps-2" = home-manager.lib.homeManagerConfiguration {
-#   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#   extraSpecialArgs = {inherit inputs outputs;};
-#   modules = [./users/bata/vm-xps-2.nix];
-# };
-# "bata@vm-xps-3" = home-manager.lib.homeManagerConfiguration {
-#   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#   extraSpecialArgs = {inherit inputs outputs;};
-#   modules = [./users/bata/vm-xps-3.nix];
-# };
-# };

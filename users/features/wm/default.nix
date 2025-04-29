@@ -1,7 +1,0 @@
-{
-  imports = [
-    ./hyprland
-
-    ./dunst.nix
-  ];
-}
