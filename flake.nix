@@ -79,9 +79,7 @@
     in
     mkMerge [
       (mkDarwin "solo" inputs.nixpkgs-darwin
-        [
-          dots/kitty
-        ]
+        [ ]
         [ ]
       )
     ];

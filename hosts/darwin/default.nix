@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   nixpkgs = {
     config = {
@@ -8,16 +8,18 @@
   };
 
   nix = {
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
     settings = {
+      experimental-features = lib.mkDefault [
+        "nix-command"
+        "flakes"
+      ];
       max-jobs = "auto";
       trusted-users = [
         "root"
         "bata"
         "@admin"
       ];
+      extra-trusted-users = ["bata"];
     };
   };
 }

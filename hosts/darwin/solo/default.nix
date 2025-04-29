@@ -70,6 +70,8 @@
   ];
 
   services.nix-daemon.enable = lib.mkForce true;
+  security.pam.enableSudoTouchIdAuth = true;
+  nix.extraOptions = ''extra-platforms = x86_64-darwin aarch64-darwin'';
 
   system.stateVersion = 4;
 }

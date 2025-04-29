@@ -37,17 +37,22 @@
         AppleShowAllExtensions = true;
         FXEnableExtensionChangeWarning = false;
         ShowStatusBar = true;
+        FXPreferredViewStyle = "clmv";
       };
       dock = {
         # Quick Note on the bottom right hot corner
         wvous-br-corner = 14;
         tilesize = 50;
+        autohide = true;
+        mru-spaces = false;
       };
       NSGlobalDomain = {
         "com.apple.sound.beep.volume" = 0.0;
         InitialKeyRepeat = 13;
         KeyRepeat = 2;
       };
+      screencapture.location = "~/Pictures/screenshots";
+      screensaver.askForPasswordDelay = 10;
     };
     activationScripts.postUserActivation.text = ''
       # Following line should allow us to avoid a logout/login cycle
