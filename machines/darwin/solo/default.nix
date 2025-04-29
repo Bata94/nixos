@@ -9,7 +9,7 @@
     ulimit -n 2048
   '';
 
-  imports = [ ./work.nix ];
+  # imports = [ ./system.nix ];
 
   homebrew = {
     enable = true;
@@ -23,23 +23,9 @@
       no_quarantine = true;
     };
     casks = [
-      "notion"
-      "telegram"
-      "libreoffice"
-      "signal"
-      "grid"
-      "google-chrome"
-      "handbrake"
-      "tailscale"
-      "bambu-studio"
-      "element"
-      "microsoft-outlook"
-      "monitorcontrol"
-      "raycast"
+      # "google-chrome"
+      "ghostty"
       "zen-browser"
-    ];
-    brews = [
-      "pulumi"
     ];
   };
   environment.systemPackages = with pkgs; [
@@ -53,11 +39,6 @@
         pyopenssl
       ]
     ))
-    ansible-language-server
-    yq
-    git-lfs
-    pre-commit
-    bfg-repo-cleaner
     go
     gotools
     gopls
@@ -67,16 +48,11 @@
     gocode-gomod
     godef
     golint
-    colima
     docker
     docker-compose
-    utm
     wget
-    git-crypt
     iperf3
-    eza
     neofetch
-    tmux
     rsync
     nmap
     jq
@@ -85,27 +61,12 @@
     ripgrep
     sqlite
     pwgen
-    gnupg
-    inputs.agenix.packages."${system}".default
-    yt-dlp
-    ffmpeg
-    discord
-    git-filter-repo
+    # inputs.agenix.packages."${system}".default
     spotify
-    slack
-    mattermost
     google-cloud-sdk
-    pinentry.curses
     deploy-rs
     nixpkgs-fmt
-    nil
-    nss
-    nss.tools
-    mkcert
-    karabiner-elements
-    devenv
     nixfmt-rfc-style
-    opentofu
   ];
 
   services.nix-daemon.enable = lib.mkForce true;

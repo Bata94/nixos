@@ -5,11 +5,11 @@ let
     home-manager.extraSpecialArgs = {
       inherit inputs;
     };
-    home-manager.users.notthebee.imports = [
-      inputs.agenix.homeManagerModules.default
+    home-manager.users.bata.imports = [
+      # inputs.agenix.homeManagerModules.default
       inputs.nix-index-database.hmModules.nix-index
-      ./users/notthebee/dots.nix
-      ./users/notthebee/age.nix
+      ./users/bata/dots.nix
+      # ./users/bata/age.nix
     ] ++ extraImports;
     home-manager.backupFileExtension = "bak";
     home-manager.useUserPackages = userPackages;
@@ -24,14 +24,15 @@ in
         inherit inputs;
       };
       modules = [
-        "${inputs.secrets}/default.nix"
-        inputs.agenix.darwinModules.default
+        # "${inputs.secrets}/default.nix"
+        # inputs.agenix.darwinModules.default
+	# inputs.nixvim.packages."aarch64-darwin".default
         ./machines/darwin
         ./machines/darwin/${machineHostname}
         inputs.home-manager-darwin.darwinModules.home-manager
         (inputs.nixpkgs-darwin.lib.attrsets.recursiveUpdate (homeManagerCfg true extraHmModules) {
-          home-manager.users.notthebee.home.homeDirectory =
-            inputs.nixpkgs-darwin.lib.mkForce "/Users/notthebee";
+          home-manager.users.bata.home.homeDirectory =
+            inputs.nixpkgs-darwin.lib.mkForce "/Users/bata";
         })
       ];
     };
@@ -41,7 +42,7 @@ in
       hostname = machineHostname;
       profiles.system = {
         user = "root";
-        sshUser = "notthebee";
+        sshUser = "bata";
         path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos nixosConfigurations.${machineHostname};
       };
     };
@@ -52,16 +53,16 @@ in
         vars = import ./machines/nixos/vars.nix;
       };
       modules = [
-        ./homelab
+        # ./homelab
         ./machines/nixos/_common
         ./machines/nixos/${machineHostname}
-        ./modules/email
-        ./modules/tg-notify
+        # ./modules/email
+        # ./modules/tg-notify
         ./modules/auto-aspm
-        ./modules/mover
-        "${inputs.secrets}/default.nix"
-        inputs.agenix.nixosModules.default
-        ./users/notthebee
+        # ./modules/mover
+        # "${inputs.secrets}/default.nix"
+        # inputs.agenix.nixosModules.default
+        ./users/bata
         (homeManagerCfg false [ ])
       ] ++ extraModules;
     };

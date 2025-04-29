@@ -1,9 +1,10 @@
-{ ... }:
+{ inputs, ... }:
 let
   home = {
-    username = "notthebee";
-    homeDirectory = "/home/notthebee";
+    username = "bata";
+    homeDirectory = "/home/bata";
     stateVersion = "23.11";
+    packages = [ inputs.nixvim.packages."aarch64-darwin".default ];
   };
 in
 {
@@ -19,10 +20,10 @@ in
   home = home;
 
   imports = [
-    ../../dots/zsh/default.nix
-    ../../dots/nvim/default.nix
-    ../../dots/neofetch/default.nix
-    ./packages.nix
+    # ../../dots/zsh/default.nix
+    # ../../dots/nvim/default.nix
+    # ../../dots/neofetch/default.nix
+    # ./packages.nix
     ./gitconfig.nix
   ];
 
