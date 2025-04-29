@@ -26,9 +26,8 @@ in
       modules = [
         # "${inputs.secrets}/default.nix"
         # inputs.agenix.darwinModules.default
-	# inputs.nixvim.packages."aarch64-darwin".default
-        ./machines/darwin
-        ./machines/darwin/${machineHostname}
+        ./hosts/darwin
+        ./hosts/darwin/${machineHostname}
         inputs.home-manager-darwin.darwinModules.home-manager
         (inputs.nixpkgs-darwin.lib.attrsets.recursiveUpdate (homeManagerCfg true extraHmModules) {
           home-manager.users.bata.home.homeDirectory =
@@ -50,12 +49,12 @@ in
       system = "x86_64-linux";
       specialArgs = {
         inherit inputs;
-        vars = import ./machines/nixos/vars.nix;
+        vars = import ./hosts/nixos/vars.nix;
       };
       modules = [
         # ./homelab
-        ./machines/nixos/_common
-        ./machines/nixos/${machineHostname}
+        ./hosts/nixos/_common
+        ./hosts/nixos/${machineHostname}
         # ./modules/email
         # ./modules/tg-notify
         ./modules/auto-aspm
