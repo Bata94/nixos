@@ -62,29 +62,39 @@
       url = "git+ssh://git@github.com/bata94/nixos-secrets.git";
       flake = false;
     };
-    
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { ... } @ inputs:
-  let
-    helpers = import ./flake_helpers.nix inputs;
-    inherit (helpers) mkMerge mkNixos mkDarwin;
-  in 
-  # overlays = import ./overlays {inherit inputs;};
-  mkMerge [
-    # Raspberry Pi
-    # (mkNixos "c3po" inputs.nixpkgs [] [])
-    # FileServer
-    # (mkNixos "coruscant" inputs.nixpkgs [] [])
-    # Dell XPS
-    # (mkNixos "anakin" inputs.nixpkgs [] [])
-    # MacBook Air
-    (mkDarwin "solo" inputs.nixpkgs-darwin [] [])
-  ];
+  outputs = { self, nixpkgs, nix-darwin, home-manager, ... } @ inputs: let
+    inherit (self) outputs;
+  in {
+    nixosConfigurations = {
+      coruscant = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/nixos/coruscant
+          inputs.disko.nixosModules.disko
+        ];
+      };
+    };
+
+    homeConfigurations = {
+      "bata@coruscant" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./users/bsievers/coruscant.nix];
+      };
+    };
+
+    darwinConfigurations = {
+      solo = nix-darwin.lib.darwinSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/darwin/solo
+        ];
+      };
+    };
+  };
 }
 
 # # homeManagerModules = import ./modules/home-manager;

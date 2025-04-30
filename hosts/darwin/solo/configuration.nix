@@ -1,7 +1,50 @@
-{ 
+{
+  self,
+  inputs,
+  pkgs,
+  lib,
   ...
 }:
 {
+  nixpkgs.hostPlatform = "aarch64-darwin";
+  system = {
+    stateVersion = 5;
+    configurationRevision = self.rev or self.dirtyRev or null;
+  };
+  services.nix-daemon.enable = lib.mkForce true;
+
+  environment.shellInit = ''
+    ulimit -n 2048
+  '';
+
+  homebrew = {
+    enable = true;
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "uninstall";
+      upgrade = true;
+    };
+    brewPrefix = "/opt/homebrew/bin";
+    caskArgs = {
+      no_quarantine = true;
+    };
+    casks = [
+      "ghostty"
+      "google-chrome"
+      "zen-browser"
+    ];
+    brews = [];
+  };
+  environment.systemPackages = with pkgs; [
+    # TODO:
+    # inputs.agenix.packages."${system}".default
+    wget
+    rsync
+    just
+    ripgrep
+    google-cloud-sdk
+  ];
+
   nixpkgs = {
     config = {
       allowUnfree = true;
@@ -11,6 +54,7 @@
 
   nix = {
     settings = {
+      experimental-features = "nix-command flakes";
       max-jobs = "auto";
       trusted-users = [
         "root"

@@ -123,28 +123,6 @@
         "type": "github"
       }
     },
-    "firefox-addons": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "dir": "pkgs/firefox-addons",
-        "lastModified": 1745752599,
-        "narHash": "sha256-vX5uq4wv7FeNeeFtsTPXQ9n2hd92NFXI+u9sg1K8OhA=",
-        "owner": "rycee",
-        "repo": "nur-expressions",
-        "rev": "0388c30f59e860307b2ef0ba93f38d2e525a153e",
-        "type": "gitlab"
-      },
-      "original": {
-        "dir": "pkgs/firefox-addons",
-        "owner": "rycee",
-        "repo": "nur-expressions",
-        "type": "gitlab"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -724,7 +702,6 @@
         "auto-aspm": "auto-aspm",
         "colmena": "colmena",
         "disko": "disko",
-        "firefox-addons": "firefox-addons",
         "home-manager": "home-manager_2",
         "home-manager-darwin": "home-manager-darwin",
         "home-manager-unstable": "home-manager-unstable",
