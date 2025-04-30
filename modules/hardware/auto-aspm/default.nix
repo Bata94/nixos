@@ -6,7 +6,7 @@
   ...
 }:
 let
-  cfg = config.services.auto-aspm;
+  cfg = config.features.hardware.auto-aspm;
   auto-aspm = pkgs.writeScriptBin "auto-aspm" (builtins.readFile "${inputs.auto-aspm}/autoaspm.py");
 in
 {
