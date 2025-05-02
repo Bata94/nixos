@@ -6,7 +6,7 @@
     ../features
   ];
 
-  features= {
+  features = {
     apps = {
       editor = {
         nixvim.enable = true;
@@ -24,7 +24,6 @@
       zoxide.enable = true;
     };
     development = {
-
     };
     wm = {
       dunst.enable = true;

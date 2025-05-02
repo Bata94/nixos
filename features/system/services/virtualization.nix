@@ -5,21 +5,23 @@
   ...
 }:
 with lib; let
-  cfg = config.features.desktop.services.tailscale;
+  cfg = config.features.system.services.tailscale;
 in {
-  options.features.desktop.services.virtualization.enable = mkEnableOption "Enable virtualization";
+  options.features.system.services.virtualization.enable = mkEnableOption "Enable virtualization";
+  options.features.system.services.virtualization.guiApps = mkEnableOption "Enable virtualization GUI Apps";
 
   config = mkIf cfg.enable {
     programs.dconf.enable = true;
 
     environment.systemPackages = with pkgs; [
-      virt-manager
-      virt-viewer
       spice
       spice-gtk
       spice-protocol
       win-virtio
       win-spice
+    ] ++ mkIf cfg.guiApps [
+      virt-manager
+      virt-viewer
       adwaita-icon-theme
     ];
 

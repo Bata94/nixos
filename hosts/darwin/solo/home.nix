@@ -6,6 +6,7 @@
   features = {
     apps = {
       editor.nixvim.enable = true;
+      terminal.ghostty.enable = true;
     };
     cli = {
       tui = {

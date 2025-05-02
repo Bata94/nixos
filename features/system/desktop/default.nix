@@ -1,5 +1,7 @@
 {...}: {
   imports = [
     ./wm
+
+    ./gaming.nix
   ];
 }

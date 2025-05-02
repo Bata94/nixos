@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.desktop.services.sshd;
+  cfg = config.features.system.services.sshd;
 in {
-  options.features.desktop.services.sshd.enable = mkEnableOption "Enable SSHD";
+  options.features.system.services.sshd.enable = mkEnableOption "Enable SSHD";
 
   config = mkIf cfg.enable {
     services.openssh = {

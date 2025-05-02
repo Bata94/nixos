@@ -4,7 +4,7 @@
   inputs,
   ...
 }: {
-  nix.settings.trusted-users = [ "bata" ];
+  nix.settings.trusted-users = ["bata"];
 
   # TODO:
   # age.secrets.hashedUserPassword = {

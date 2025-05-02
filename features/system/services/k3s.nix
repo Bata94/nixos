@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.desktop.services.k3s;
+  cfg = config.features.system.services.k3s;
 in {
-  options.features.desktop.services.k3s.enable = mkEnableOption "Enable k3s";
+  options.features.system.services.k3s.enable = mkEnableOption "Enable k3s";
 
   config = mkIf cfg.enable {
     services.k3s = {

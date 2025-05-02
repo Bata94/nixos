@@ -4,8 +4,7 @@
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   users.users.bata = {
@@ -14,7 +13,7 @@
   };
   home-manager.users.bata = {
     home.stateVersion = "24.11";
-    imports=[./home.nix];
+    imports = [./home.nix];
   };
 
   system = {
@@ -61,7 +60,7 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
-      allowUnfreePredicate = (_: true);
+      allowUnfreePredicate = _: true;
     };
   };
 
@@ -134,6 +133,6 @@
       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
       launchctl stop com.apple.Dock.agent
       launchctl start com.apple.Dock.agent
-   '';
+    '';
   };
 }

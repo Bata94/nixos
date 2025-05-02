@@ -53,7 +53,13 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, ... } @ inputs: let
+  outputs = {
+    self,
+    nixpkgs,
+    nix-darwin,
+    home-manager,
+    ...
+  } @ inputs: let
     inherit (self) outputs;
   in {
     nixosConfigurations = {
@@ -82,8 +88,7 @@
         };
         modules = [
           home-manager.darwinModules.home-manager
-          { home-manager.extraSpecialArgs = {inherit inputs;}; }
-
+          {home-manager.extraSpecialArgs = {inherit inputs;};}
 
           ./hosts/darwin/solo
         ];

@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.desktop.services.tailscale;
+  cfg = config.features.system.services.tailscale;
 in {
-  options.features.desktop.services.tailscale.enable = mkEnableOption "Enable tailscale";
+  options.features.system.services.tailscale.enable = mkEnableOption "Enable tailscale";
 
   config = mkIf cfg.enable {
     environment.systemPackages = [pkgs.tailscale];
