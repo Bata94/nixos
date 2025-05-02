@@ -18,28 +18,14 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    # nixpkgs.url = "nixpkgs/nixos-24.11";
-    # nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    # nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
-    # nixpkgs-darwin-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # home-manager-unstable = {
-    #   url = "github:nix-community/home-manager/master";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # };
-    # home-manager-darwin = {
-    #   url = "github:nix-community/home-manager/release-24.11";
-    #   inputs.nixpkgs.follows = "nixpkgs-darwin";
-    # };
 
     nix-darwin = {
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
-      # inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
     disko = {
@@ -99,80 +85,9 @@
           { home-manager.extraSpecialArgs = {inherit inputs;}; }
 
 
-          ./hosts/darwin/solo/configuration.nix
+          ./hosts/darwin/solo
         ];
       };
     };
   };
 }
-
-# # homeManagerModules = import ./modules/home-manager;
-# nixosConfigurations = {
-# anakin = nixpkgs.lib.nixosSystem {
-#   specialArgs = {inherit inputs outputs;};
-#   modules = [
-#     ./hosts/anakin
-#     inputs.disko.nixosModules.disko
-#     agenix.nixosModules.default
-#   ];
-# }; 
-# vm-xps-test = nixpkgs.lib.nixosSystem {
-#   specialArgs = {inherit inputs outputs;};
-#   modules = [
-#     ./hosts/vm-xps-test
-#     inputs.disko.nixosModules.disko
-#     agenix.nixosModules.default
-#   ];
-# };
-# vm-xps-1 = nixpkgs.lib.nixosSystem {
-#   specialArgs = {inherit inputs outputs;};
-#   modules = [
-#     ./hosts/vm-xps-1
-#     inputs.disko.nixosModules.disko
-#     agenix.nixosModules.default
-#   ];
-# };
-# vm-xps-2 = nixpkgs.lib.nixosSystem {
-#   specialArgs = {inherit inputs outputs;};
-#   modules = [
-#     ./hosts/vm-xps-2
-#     inputs.disko.nixosModules.disko
-#     agenix.nixosModules.default
-#   ];
-# };
-# vm-xps-3 = nixpkgs.lib.nixosSystem {
-#   specialArgs = {inherit inputs outputs;};
-#   modules = [
-#     ./hosts/vm-xps-3
-#     inputs.disko.nixosModules.disko
-#     agenix.nixosModules.default
-#   ];
-# };
-# };
-# homeConfigurations = {
-# "bata@anakin" = home-manager.lib.homeManagerConfiguration {
-#   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#   extraSpecialArgs = {inherit inputs outputs;};
-#   modules = [./users/bata/vm-xps-test.nix];
-# };
-# "bata@vm-xps-test" = home-manager.lib.homeManagerConfiguration {
-#   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#   extraSpecialArgs = {inherit inputs outputs;};
-#   modules = [./users/bata/vm-xps-test.nix];
-# };
-# "bata@vm-xps-1" = home-manager.lib.homeManagerConfiguration {
-#   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#   extraSpecialArgs = {inherit inputs outputs;};
-#   modules = [./users/bata/vm-xps-1.nix];
-# };
-# "bata@vm-xps-2" = home-manager.lib.homeManagerConfiguration {
-#   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#   extraSpecialArgs = {inherit inputs outputs;};
-#   modules = [./users/bata/vm-xps-2.nix];
-# };
-# "bata@vm-xps-3" = home-manager.lib.homeManagerConfiguration {
-#   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#   extraSpecialArgs = {inherit inputs outputs;};
-#   modules = [./users/bata/vm-xps-3.nix];
-# };
-# };
