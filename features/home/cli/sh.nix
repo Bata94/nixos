@@ -59,11 +59,11 @@ in {
       rsync
       htop
       btop
-      hwinfo
+      # hwinfo
       unzip
       w3m
       pandoc
-      pciutils
+      # pciutils
       jq
       curl
       texinfo
@@ -74,7 +74,7 @@ in {
       httpie
       procs
       tldr
-      zip
+      # zip
     ];
 
     programs.bash = {
@@ -84,7 +84,7 @@ in {
 
     programs.zsh = {
       inherit shellAliases;
-      initExtra = ''
+      initContent = ''
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=4"
 
         function fzf-nvim {

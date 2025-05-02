@@ -16,27 +16,30 @@
   };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
-    nixpkgs-darwin-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
+    # nixpkgs.url = "nixpkgs/nixos-24.11";
+    # nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    # nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
+    # nixpkgs-darwin-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager-unstable = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    home-manager-darwin = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
-    };
+    # home-manager-unstable = {
+    #   url = "github:nix-community/home-manager/master";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
+    # home-manager-darwin = {
+    #   url = "github:nix-community/home-manager/release-24.11";
+    #   inputs.nixpkgs.follows = "nixpkgs-darwin";
+    # };
 
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
+      url = "github:LnL7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
     disko = {
@@ -88,9 +91,15 @@
 
     darwinConfigurations = {
       solo = nix-darwin.lib.darwinSystem {
-        specialArgs = {inherit inputs outputs;};
+        specialArgs = {
+          inherit inputs outputs;
+        };
         modules = [
-          ./hosts/darwin/solo
+          home-manager.darwinModules.home-manager
+          { home-manager.extraSpecialArgs = {inherit inputs;}; }
+
+
+          ./hosts/darwin/solo/configuration.nix
         ];
       };
     };

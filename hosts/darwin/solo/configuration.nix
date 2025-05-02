@@ -1,17 +1,29 @@
 {
-  self,
   inputs,
+  home-manager-darwin,
   pkgs,
   lib,
   ...
 }:
 {
   nixpkgs.hostPlatform = "aarch64-darwin";
+  # imports = [
+  #   home-manager-darwin.darwinModules.home-manager
+  # ];
+
+  users.users.bata = {
+    name = "bata";
+    home = "/Users/bata";
+  };
+  home-manager.users.bata = {
+    home.stateVersion = "24.11";
+    imports=[./home.nix];
+  };
+
   system = {
     stateVersion = 5;
-    configurationRevision = self.rev or self.dirtyRev or null;
+    # configurationRevision = self.rev or self.dirtyRev or null;
   };
-  services.nix-daemon.enable = lib.mkForce true;
 
   environment.shellInit = ''
     ulimit -n 2048
@@ -29,6 +41,7 @@
       no_quarantine = true;
     };
     casks = [
+      "stats"
       "ghostty"
       "google-chrome"
       "zen-browser"
@@ -38,6 +51,9 @@
   environment.systemPackages = with pkgs; [
     # TODO:
     # inputs.agenix.packages."${system}".default
+
+    lazygit
+
     wget
     rsync
     just
@@ -53,6 +69,7 @@
   };
 
   nix = {
+    enable = true;
     settings = {
       experimental-features = "nix-command flakes";
       max-jobs = "auto";
@@ -64,7 +81,7 @@
     };
   };
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
   environment.launchDaemons."limit.maxfiles.plist" = {
     enable = true;
     text = ''
@@ -114,11 +131,12 @@
         KeyRepeat = 2;
       };
     };
-    activationScripts.postUserActivation.text = ''
-      # Following line should allow us to avoid a logout/login cycle
-      /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-      launchctl stop com.apple.Dock.agent
-      launchctl start com.apple.Dock.agent
-    '';
+    # TODO: Error: No Privelages
+    # activationScripts.postUserActivation.text = ''
+    #   # Following line should allow us to avoid a logout/login cycle
+    #   /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+    #   launchctl stop com.apple.Dock.agent
+    #   launchctl start com.apple.Dock.agent
+    # '';
   };
 }
