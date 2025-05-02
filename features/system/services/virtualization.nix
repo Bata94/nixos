@@ -13,17 +13,19 @@ in {
   config = mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      spice
-      spice-gtk
-      spice-protocol
-      win-virtio
-      win-spice
-    ] ++ mkIf cfg.guiApps [
-      virt-manager
-      virt-viewer
-      adwaita-icon-theme
-    ];
+    environment.systemPackages = with pkgs;
+      [
+        spice
+        spice-gtk
+        spice-protocol
+        win-virtio
+        win-spice
+      ]
+      ++ mkIf cfg.guiApps [
+        virt-manager
+        virt-viewer
+        adwaita-icon-theme
+      ];
 
     virtualisation = {
       libvirtd = {

@@ -1,15 +1,33 @@
 {
   pkgs,
-  config,
   lib,
   ...
 }:
 with lib; let
-  cfg = config.features.cli.sh;
+  tmuxSessionizer = pkgs.writeShellScriptBin "tmuxSessionizer" (builtins.readFile ./tmux-sessionizer.sh);
+  cheatSheet = pkgs.writeShellScriptBin "cheatSheet" ''
+    #! /usr/bin/env bash
 
+    # TODO: query options from cht.sh directly
+    languages=$(echo "golang typescript rust python flutter dart nix" | tr " " "\n")
+    core_utils=$(echo "find xargs sed awk make just" | tr " " "\n")
+    selected=$(echo -e "$languages\n$core_utils" | fzf)
+
+    read -p "Query: " query
+
+    if echo "$languages" | grep -qs $selected; then
+      tmux split-window -h bash -c "curl cht.sh/$selected/$(echo $query | tr " " "+") | less"
+    else
+      curl cht.sh/$selected~$query
+    fi
+  '';
   shellAliases = {
     tmux = "tmux -2";
     td = "tmux -2 new -Asdefault";
+    ta = "tmux a";
+    ts = "${tmuxSessionizer}/bin/tmuxSessionizer -r ~/Projects";
+    cs = "${cheatSheet}/bin/cheatSheet";
+    y = "yazi";
 
     ls = "colorls";
     ll = "colorls -l";
@@ -21,17 +39,17 @@ with lib; let
     nd = "nix develop --command zsh";
 
     dc = "docker compose";
+    cat = "bat";
 
     kc = "kubectl";
 
     f = "fzf --preview 'bat --color=always --style=header,grid,numbers --line-range :500 {}'";
-
-    cat = "bat";
-    grep = "rg";
-    ps = "procs";
   };
+  PROJECT_ROOT = builtins.getEnv "PWD";
+
+  cfg = config.features.home.cli.sh;
 in {
-  options.features.cli.sh.enable = mkEnableOption "Enable SH";
+  options.features.home.cli.sh.enable = mkEnableOption "Enable SH";
   # TODO: rm/split up installs in more feature options
   config = mkIf cfg.enable {
     programs.bat.enable = true;
@@ -43,8 +61,6 @@ in {
       dwt1-shell-color-scripts
       colorls
       neofetch
-      # lazygit
-      # lazydocker
       unzip
       p7zip
       gnugrep
@@ -105,11 +121,11 @@ in {
     };
 
     # TODO: Customize :)
+
     programs.oh-my-posh = {
       enable = true;
       enableZshIntegration = true;
-      # settings = builtins.fromJSON ./omp.json;
-      useTheme = "powerlevel10k_rainbow";
+      settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile "${PROJECT_ROOT}/user/shell/omp.json"));
     };
   };
 }

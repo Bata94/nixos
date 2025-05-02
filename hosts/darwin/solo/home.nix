@@ -3,7 +3,7 @@
     ../../../features/home
   ];
 
-  features = {
+  features.home = {
     apps = {
       editor.nixvim.enable = true;
       terminal.ghostty.enable = true;

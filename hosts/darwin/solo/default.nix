@@ -1,10 +1,10 @@
-{
-  inputs,
-  home-manager-darwin,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
+  imports = [
+    ../../../features/system
+  ];
+
+  features.system = {};
+
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   users.users.bata = {
@@ -127,7 +127,6 @@
         KeyRepeat = 2;
       };
     };
-    # TODO: Error: No Privelages
     activationScripts.postUserActivation.text = ''
       # Following line should allow us to avoid a logout/login cycle
       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u

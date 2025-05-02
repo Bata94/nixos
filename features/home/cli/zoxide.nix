@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.cli.zoxide;
+  cfg = config.features.home.cli.zoxide;
 in {
-  options.features.cli.zoxide.enable = mkEnableOption "Enable zoxide";
+  options.features.home.cli.zoxide.enable = mkEnableOption "Enable zoxide";
   config = mkIf cfg.enable {
     programs.zoxide = {
       enable = true;

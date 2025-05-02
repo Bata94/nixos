@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.cli.tmux;
+  cfg = config.features.home.cli.tmux;
 in {
-  options.features.cli.tmux.enable = mkEnableOption "Enable tmux";
+  options.features.home.cli.tmux.enable = mkEnableOption "Enable tmux";
 
   config = mkIf cfg.enable {
     programs.tmux = {

@@ -6,7 +6,7 @@
 with lib; let
   cfg = config.features.home.apps.terminal.ghostty;
 in {
-  options.features.apps.terminal.alacritty.enable = mkEnableOption "Enable Ghostty";
+  options.features.home.apps.terminal.ghostty.enable = mkEnableOption "Enable Ghostty";
 
   config = mkIf cfg.enable {
     home.file.".config/ghostty/config".text = ''

@@ -20,8 +20,10 @@ in {
     users.users.bata.extraGroups = ["docker"];
     virtualisation.oci-containers.backend = "docker";
 
-    environment.systemPackages = [] ++ mkIf cfg.compose2nix [
-      inputs.compose2nix.packages.${pkgs.system}.default
-    ];
+    environment.systemPackages =
+      []
+      ++ mkIf cfg.compose2nix [
+        inputs.compose2nix.packages.${pkgs.system}.default
+      ];
   };
 }

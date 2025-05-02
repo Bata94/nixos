@@ -1,9 +1,9 @@
 {
   imports = [
     ./tui
+    ./shell
 
     ./git.nix
-    ./sh.nix
     ./tmux.nix
     ./zoxide.nix
   ];
