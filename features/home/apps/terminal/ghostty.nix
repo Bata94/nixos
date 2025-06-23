@@ -9,14 +9,16 @@ in {
   options.features.home.apps.terminal.ghostty.enable = mkEnableOption "Enable Ghostty";
 
   config = mkIf cfg.enable {
-    home.file.".config/ghostty/config".text = ''
+    # home.file.".config/ghostty/config".text = ''
+    # MacOS specific location...
+    home.file."Library/Application\ Support/com.mitchellh.ghostty/config".text = ''
       theme = rose-pine
       window-theme = ghostty
 
       mouse-scroll-multiplier = 0.5
 
       background = 000000
-      background-opacity = 0.6
+      background-opacity = 0.8
       background-blur-radius = 20
 
       gtk-titlebar = false

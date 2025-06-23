@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -25,7 +26,7 @@ with lib; let
     tmux = "tmux -2";
     td = "tmux -2 new -Asdefault";
     ta = "tmux a";
-    ts = "${tmuxSessionizer}/bin/tmuxSessionizer -r ~/Projects";
+    ts = "${tmuxSessionizer}/bin/tmuxSessionizer -r ~/Projects/work ~/Projects/personal";
     cs = "${cheatSheet}/bin/cheatSheet";
     y = "yazi";
 
@@ -125,7 +126,7 @@ in {
     programs.oh-my-posh = {
       enable = true;
       enableZshIntegration = true;
-      settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile "${PROJECT_ROOT}/user/shell/omp.json"));
+      settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile "${PROJECT_ROOT}/features/home/cli/shell/omp.json"));
     };
   };
 }

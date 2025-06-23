@@ -1,10 +1,4 @@
 {pkgs, ...}: {
-  imports = [
-    ../../../features/system
-  ];
-
-  features.system = {};
-
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   users.users.bata = {
@@ -36,11 +30,15 @@
     caskArgs = {
       no_quarantine = true;
     };
+    taps = [
+      "dimentium/autoraise"
+    ];
     casks = [
       "stats"
       "ghostty"
       "google-chrome"
       "zen-browser"
+      "autoraiseapp"
     ];
     brews = [];
   };
@@ -49,6 +47,9 @@
     # inputs.agenix.packages."${system}".default
 
     lazygit
+    lazydocker
+    docker
+    docker-compose
 
     wget
     rsync
@@ -105,6 +106,7 @@
     '';
   };
   system = {
+    primaryUser = "bata";
     defaults = {
       trackpad = {
         Clicking = true;
@@ -127,11 +129,12 @@
         KeyRepeat = 2;
       };
     };
-    activationScripts.postUserActivation.text = ''
-      # Following line should allow us to avoid a logout/login cycle
-      /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-      launchctl stop com.apple.Dock.agent
-      launchctl start com.apple.Dock.agent
-    '';
+    # Error: With new Darwin Version
+    # activationScripts.postUserActivation.text = ''
+    #   # Following line should allow us to avoid a logout/login cycle
+    #   /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+    #   launchctl stop com.apple.Dock.agent
+    #   launchctl start com.apple.Dock.agent
+    # '';
   };
 }
