@@ -56,6 +56,9 @@
     just
     ripgrep
     google-cloud-sdk
+
+    spotify
+    gemini-cli
   ];
 
   nixpkgs = {
