@@ -3,7 +3,7 @@
     ./home.nix
     # ./dotfiles
     ../common
-    ../features
+    ../../features/home
   ];
 
   features = {

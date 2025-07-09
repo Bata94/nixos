@@ -48,5 +48,5 @@
     };
   };
   programs.zsh.enable = true;
-  home-manager.users.bata = import ../../../users/bata/${config.networking.hostName}.nix;
+  home-manager.users.bata = import ../../../../users/bata/${config.networking.hostName}.nix;
 }
