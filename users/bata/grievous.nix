@@ -6,11 +6,10 @@
     ../../features/home
   ];
 
-  features = {
+  features.home = {
     apps = {
-      editor = {
-        nixvim.enable = true;
-      };
+      editor.nixvim.enable = true;
+      terminal.ghostty.enable = true;
     };
     cli = {
       tui = {
@@ -23,7 +22,7 @@
       tmux.enable = true;
       zoxide.enable = true;
     };
-  development = {};
+  # development = {};
     wm = {
       dunst.enable = true;
       hyprland = {

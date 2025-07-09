@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.wm.dunst;
+  cfg = config.features.home.wm.dunst;
 in {
-  options.features.wm.dunst.enable = mkEnableOption "Enable Dunst";
+  options.features.home.wm.dunst.enable = mkEnableOption "Enable Dunst";
 
   config = mkIf cfg.enable {};
 }

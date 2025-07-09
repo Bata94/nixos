@@ -62,7 +62,7 @@
   networking = {
     hostName = "grievous";
     networkmanager.enable = true;
-    useDHCP = true;
+    # useDHCP = true;
     # defaultGateway = {
     #   address = "192.168.122.1";
     # };
