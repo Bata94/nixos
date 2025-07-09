@@ -41,7 +41,7 @@
     };
 
     colmena.url = "github:zhaofengli/colmena";
-    agenix.url = "github:ryantm/agenix";
+    # agenix.url = "github:ryantm/agenix";
 
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
