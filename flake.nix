@@ -47,10 +47,10 @@
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    secrets = {
-      url = "git+ssh://git@github.com/bata94/nixos-secrets.git";
-      flake = false;
-    };
+    # secrets = {
+    #   url = "git+ssh://git@github.com/bata94/nixos-secrets.git";
+    #   flake = false;
+    # };
   };
 
   outputs = {
