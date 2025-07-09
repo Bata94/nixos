@@ -71,14 +71,27 @@
           inputs.disko.nixosModules.disko
         ];
       };
+      grievous = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/nixos/grievous
+          inputs.disko.nixosModules.disko
+        ];
+      }
     };
 
     homeConfigurations = {
       "bata@coruscant" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./users/bsievers/coruscant.nix];
+        modules = [./users/bata/coruscant.nix];
       };
+      "bata@grievous" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./users/bata/grievous]
+      }
     };
 
     darwinConfigurations = {

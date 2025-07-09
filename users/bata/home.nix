@@ -6,11 +6,11 @@
   home = {
     username = lib.mkDefault "bata";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
-    stateVersion = "24.11";
+    stateVersion = "25.05";
   };
   programs.home-manager.enable = true;
 
-  # home.sessionVariables = {
-  #   EDITOR = "nvim";
-  # };
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
 }
