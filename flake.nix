@@ -39,6 +39,11 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
 
     nixvim.url = "github:bata94/nixvim-conf";
 
@@ -73,6 +78,7 @@
     nixos-hardware,
     nix-darwin,
     home-manager,
+    lanzaboote,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -91,6 +97,7 @@
         system = "x86_64-linux";
         specialArgs = {inherit inputs outputs;};
         modules = [
+          lanzaboote.nixosModules.lanzaboote
           ./hosts/nixos/grievous
           nixos-hardware.nixosModules.microsoft-surface-pro-intel
           inputs.disko.nixosModules.disko

@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{pkgs, lib, ...}: let
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
   session = "${pkgs.hyprland}/bin/Hyprland";
   username = "bata";
@@ -73,7 +73,11 @@ in {
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.allowUnfree = true;
 
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
   time.timeZone = "Europe/Berlin";
@@ -106,6 +110,8 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    sbctl # key gen and mgmt for secureboot
+
     vim
     wget
     curl
