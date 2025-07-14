@@ -9,8 +9,6 @@ in {
   options.features.home.cli.tui.lazygit.enable = mkEnableOption "Enable lazygit";
 
   config = mkIf cfg.enable {
-    programs.lazygit = {
-      enable = true;
-    };
+    programs.lazygit.enable = true;
   };
 }

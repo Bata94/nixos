@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.hardware.intel-gpu;
+  cfg = config.features.hardware.intel-gpu;
 in {
-  options.hardware.intel-gpu.enable = mkEnableOption "Enable intel-gpu";
+  options.features.hardware.intel-gpu.enable = mkEnableOption "Enable intel-gpu";
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [

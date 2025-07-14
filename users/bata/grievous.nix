@@ -1,10 +1,38 @@
+{ pkgs, inputs, ... }:
 {
   imports = [
     ./home.nix
     # ./dotfiles
     ../common
     ../../features/home
+
+    inputs.zen-browser.homeModules.twilight
+    inputs.nix-colors.homeManagerModules.default
   ];
+
+  colorScheme = inputs.nix-colors.colorSchemes.rose-pine;
+
+  home.packages = with pkgs; [
+    brightnessctl
+    spotify-player
+  ];
+
+  programs.zen-browser = {
+    enable = true;
+    nativeMessagingHosts = [pkgs.firefoxpwa];
+    policies = {
+      AutofillAddressEnabled = false;
+      AutofillCreditCardEnabled = false;
+      DisableAppUpdate = true;
+      DisableFeedbackCommands = true;
+      DisableFirefoxStudies = true;
+      DisablePocket = true; # save webs for later reading
+      DisableTelemetry = true;
+      DontCheckDefaultBrowser = true;
+      NoDefaultBookmarks = true;
+      OfferToSaveLogins = false;
+    };
+  };
 
   features.home = {
     apps = {
@@ -14,7 +42,7 @@
     cli = {
       tui = {
         filebrowser.yazi.enable = true;
-        lazygit.enable = false;
+        lazygit.enable = true;
         lazydocker.enable = false;
       };
       git.enable = true;
@@ -22,11 +50,12 @@
       tmux.enable = true;
       zoxide.enable = true;
     };
-  # development = {};
+    # development = {};
     wm = {
       dunst.enable = true;
       hyprland = {
         enable = true;
+        virtKeyboard = true;
       };
     };
   };

@@ -9,9 +9,8 @@ in {
   options.features.home.cli.tui.lazydocker.enable = mkEnableOption "Enable lazydocker";
 
   config = mkIf cfg.enable {
-    # TODO: Not defined
-    # programs.lazydocker = {
-    #   enable = true;
-    # };
+    programs.lazydocker = {
+      enable = true;
+    };
   };
 }

@@ -17,10 +17,17 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprgrass = {
+       url = "github:horriblename/hyprgrass";
+       inputs.hyprland.follows = "hyprland"; # IMPORTANT
     };
 
     nix-darwin = {
@@ -51,11 +58,19 @@
     #   url = "git+ssh://git@github.com/bata94/nixos-secrets.git";
     #   flake = false;
     # };
+
+    nix-colors.url = "github:misterio77/nix-colors";
+
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
+    nixos-hardware,
     nix-darwin,
     home-manager,
     ...
@@ -77,6 +92,7 @@
         specialArgs = {inherit inputs outputs;};
         modules = [
           ./hosts/nixos/grievous
+          nixos-hardware.nixosModules.microsoft-surface-pro-intel
           inputs.disko.nixosModules.disko
         ];
       };

@@ -1,10 +1,75 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+  session = "${pkgs.hyprland}/bin/Hyprland";
+  username = "bata";
+in {
   imports = [
     # ./disko-configuration.nix
     ./hardware-configuration.nix
+
+    ../../../features/hardware
   ];
 
-  # nix.package = pkgs.nixVersions.stable;
+  features = {
+    hardware = {
+      bluetooth.enable = true;
+    };
+  };
+
+  services = {
+    xserver.enable = true;
+    greetd = {
+      enable = true;
+      settings = {
+        initial_session = {
+          command = "${session}";
+          user = "${username}";
+        };
+        default_session = {
+          command = "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time -cmd ${session}";
+          user = "${username}";
+        };
+      };
+    };
+  iptsd = {
+    enable = true;
+    config = {
+      Touchscreen = {
+        DisableOnPalm = true;
+        DisableOnStylus = true;
+      };
+    };
+  };
+
+  };
+
+  fonts.packages = with pkgs; [
+    corefonts
+    cm_unicode
+
+    font-awesome
+    powerline-fonts
+    powerline-symbols
+
+    ubuntu_font_family
+    source-code-pro
+    jetbrains-mono
+    twemoji-color-font
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
+    kanji-stroke-order-font
+    ipafont
+
+    nerd-fonts.symbols-only
+    nerd-fonts.noto
+    nerd-fonts.fira-code
+    nerd-fonts.inconsolata
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+    nerd-fonts.iosevka
+  ];
+
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.allowUnfree = true;
 
@@ -25,11 +90,19 @@
     LC_TIME = "de_DE.UTF-8";
   };
   console.keyMap = "de";
+  services.xserver.xkb = {
+    layout = "de";
+    variant = "";
+  };
 
   users.users.bata = {
     isNormalUser = true;
     description = "Bastian Sievers";
-    extraGroups = ["networkmanager" "wheel" "docker"];
+    extraGroups = ["networkmanager" "wheel" "docker" "surface-control"];
+  };
+
+  programs = {
+    hyprland.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -37,6 +110,9 @@
     wget
     curl
     git
+    htop
+    btop
+    powertop
   ];
 
   environment.shells = with pkgs; [bash zsh];
@@ -48,10 +124,10 @@
 
   services.openssh = {
     enable = true;
-    ports = [22];
+    ports = [ 22 ];
     openFirewall = true;
     settings = {
-      AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
+      AllowUsers = [ "bata" ];
       PasswordAuthentication = true;
       PermitRootLogin = "yes";
     };
@@ -62,24 +138,12 @@
   networking = {
     hostName = "grievous";
     networkmanager.enable = true;
-    # useDHCP = true;
-    # defaultGateway = {
-    #   address = "192.168.122.1";
-    # };
-    # interfaces = {
-    #   enp1s0.ipv4.addresses = [
-    #     {
-    #       address = "192.168.122.11";
-    #       prefixLength = 24;
-    #     }
-    #   ];
-    # };
     firewall = {
-      enable = false;
-      # allowedTCPPorts = [ 22 ];
-      # allowedUDPPorts = [  ];
+      enable = true;
+      allowedTCPPorts = [ 22 ];
+      allowedUDPPorts = [  ];
     };
   };
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

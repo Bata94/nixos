@@ -9,24 +9,25 @@ in {
   options.features.home.apps.terminal.ghostty.enable = mkEnableOption "Enable Ghostty";
 
   config = mkIf cfg.enable {
-    # home.file.".config/ghostty/config".text = ''
-    # MacOS specific location...
-    home.file."Library/Application\ Support/com.mitchellh.ghostty/config".text = ''
-      theme = rose-pine
-      window-theme = ghostty
+    programs.ghostty = {
+      enable = true;
+      settings = {
+        theme = "rose-pine";
+        window-theme = "ghostty";
 
-      mouse-scroll-multiplier = 0.5
+        mouse-scroll-multiplier = 0.5;
 
-      background = 000000
-      background-opacity = 0.8
-      background-blur-radius = 20
+        background = "000000";
+        background-opacity = 0.8;
+        background-blur-radius = 20;
 
-      gtk-titlebar = false
-      gtk-tabs-location = hidden
-      gtk-single-instance = true
+        gtk-titlebar = false;
+        gtk-tabs-location = "hidden";
+        gtk-single-instance = true;
 
-      font-size = 9.0
-      font-family = FiraMono Nerd Font
-    '';
+        font-size = 9.0;
+        font-family = "FiraMono Nerd Font";
+      };
+    };
   };
 }

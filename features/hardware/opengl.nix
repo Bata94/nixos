@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.hardware.opengl;
+  cfg = config.features.hardware.opengl;
 in {
-  options.hardware.opengl.enable = mkEnableOption "Enable opengl";
+  options.features.hardware.opengl.enable = mkEnableOption "Enable opengl";
 
   config = mkIf cfg.enable {
     # environment.systemPackages = with pkgs; [
