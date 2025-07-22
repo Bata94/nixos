@@ -17,6 +17,7 @@ in {
       font-awesome
       powerline-fonts
       powerline-symbols
+      material-symbols 
 
       ubuntu_font_family
       source-code-pro

@@ -2,7 +2,7 @@
 {
   imports = [
     ./home.nix
-    # ./dotfiles
+
     ../common
     ../../features/home
 
@@ -52,7 +52,7 @@
     };
     # development = {};
     wm = {
-      dunst.enable = true;
+      dunst.enable = false;
       hyprland = {
         enable = true;
         virtKeyboard = true;

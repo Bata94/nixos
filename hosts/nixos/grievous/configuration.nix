@@ -4,7 +4,7 @@
   username = "bata";
 in {
   imports = [
-    # ./disko-configuration.nix
+    ./disko-configuration.nix
     ./hardware-configuration.nix
 
     ../../../features/hardware
@@ -17,6 +17,10 @@ in {
   };
 
   services = {
+    upower = {
+      enable = true;
+    };
+    power-profiles-daemon.enable = true;
     xserver.enable = true;
     greetd = {
       enable = true;
@@ -73,11 +77,11 @@ in {
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.allowUnfree = true;
 
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/var/lib/sbctl";
-  };
+  boot.loader.systemd-boot.enable = true; # lib.mkForce false;
+  # boot.lanzaboote = {
+  #   enable = true;
+  #   pkiBundle = "/var/lib/sbctl";
+  # };
   boot.loader.efi.canTouchEfiVariables = true;
 
   time.timeZone = "Europe/Berlin";

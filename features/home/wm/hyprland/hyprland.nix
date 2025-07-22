@@ -68,8 +68,8 @@ in {
     };
 
     home.file.".config/hypr/hyprpaper.conf".text = ''
-      preload = ~/bg.jpg
-      wallpaper = ,~/bg.jpg
+      preload = ~/bg.png
+      wallpaper = ,~/bg.png
       splash = false
       ipc = off
     '';
@@ -160,17 +160,19 @@ in {
 
         exec-once = [
           "dbus-update-activation-environment --systemd --all"
-          "dunst"
-          # "waybar"
-          "quickshell"
+          "brightnessctl set 40%"
+          # "dunst"
+          # "quickshell"
+          "nix run ~/.config/quickshell/."
           "wl-paste --watch cliphist store"
           "hyprpaper"
           "hypridle"
           "ulauncher --hide-window --no-window-shadow"
+        ] ++ optionals cfg.virtKeyboard ["wvkbd-mobintl --hidden"] ++ [
           # "easyeffects --gapplication-service"
           "[workspace 7] zen"
           "[workspace 1] ghostty -e tmux -2 new -Asdefault"
-        ] ++ optionals cfg.virtKeyboard ["onboard -h"];
+        ];
 
         input = {
           kb_layout = "de";
@@ -209,7 +211,7 @@ in {
         };
 
         decoration = {
-          rounding = 0;
+          rounding = 8;
           blur = {
             enabled = true;
             size = 6;
@@ -402,15 +404,6 @@ in {
           "$mainMod SHIFT, K, movewindow, u"
           "$mainMod SHIFT, J, movewindow, d"
 
-          # Audio
-          # ", xf86audiomute, exec, ~/.config/scripts/volumecontrol mute"
-          # ", xf86audiolowervolume, exec, ~/.config/scripts/volumecontrol down"
-          # ", xf86audioraisevolume, exec, ~/.config/scripts/volumecontrol up"
-
-          # Brightness
-          ", xf86monbrightnessdown, exec, brightnessctl set 5%-" 
-          ", xf86monbrightnessup, exec, brightnessctl set +5%"
-
           # Move focus to the next monitor
           "$mainMod CONTROL, period, focusmonitor, +1"
         ];
@@ -418,8 +411,13 @@ in {
         "$resizeConst" = 50;
 
         binde = [
-          ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          # Brightness
+          ", xf86monbrightnessup, exec, brightnessctl set +5% && notify-send 'Brightness Up!'"
+          ", xf86monbrightnessdown, exec, brightnessctl set 5%- && notify-send 'Brightness Down!'" 
+
+          # Audio
+          ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ && notify-send 'Volume Up!'"
+          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && notify-send 'Volume Down!'"
 
           # Resize window with mainMod + ALT + arrow keys
           "$mainMod ALT, left, resizeactive, -$resizeConst 0"
@@ -458,9 +456,9 @@ in {
         windowrule = [
           # No Gap if only 1 Window is active
           "bordersize 0, floating:0, onworkspace:w[tv1]"
-          "rounding 0, floating:0, onworkspace:w[tv1]"
+          # "rounding 0, floating:0, onworkspace:w[tv1]"
           "bordersize 0, floating:0, onworkspace:f[1]"
-          "rounding 0, floating:0, onworkspace:f[1]"
+          # "rounding 0, floating:0, onworkspace:f[1]"
 
           # Example rule for a virtual keyboard (replace with your keyboard's class/title)
           # "float, class:onboard"

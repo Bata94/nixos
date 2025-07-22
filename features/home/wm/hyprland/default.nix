@@ -24,6 +24,37 @@ in {
       wireplumber
       ulauncher
 
+      ## Deps via quickshell (caelestia-shell)
+      ddcutil
+      # brightnessctl
+      app2unit
+      cava
+      networkmanager
+      lm_sensors
+      # grim
+      swappy
+      # wl-clipboard
+      libqalculate
+      inotify-tools
+      bluez
+      coreutils
+      findutils
+      file
+      ## Caelestia-cli
+      # swappy
+      libnotify
+      # slurp
+      # wl-clipboard
+      cliphist
+      # app2unit
+      dart-sass
+      # grim
+      fuzzel
+      wl-screenrec
+      dconf
+      # killall
+      ## Div
+
       zenity
       polkit_gnome
       libva-utils
@@ -44,6 +75,11 @@ in {
       hypridle
       xdg-utils
       xdg-desktop-portal-hyprland
+    ] ++ [
+      python3.pkgs.hatch-vcs
+      python3.pkgs.hatchling
+      python3.pkgs.materialyoucolor
+      python3.pkgs.pillow
     ] ++ optionals cfg.virtKeyboard [ pkgs.wvkbd ];
   };
 }
