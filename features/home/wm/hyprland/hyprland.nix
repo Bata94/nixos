@@ -161,9 +161,7 @@ in {
         exec-once = [
           "dbus-update-activation-environment --systemd --all"
           "brightnessctl set 40%"
-          # "dunst"
-          # "quickshell"
-          "nix run ~/.config/quickshell/."
+          "quickshell"
           "wl-paste --watch cliphist store"
           "hyprpaper"
           "hypridle"

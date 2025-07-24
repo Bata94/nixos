@@ -13,6 +13,9 @@ in {
       cava
       networkmanager
       lm_sensors
+      fish
+      aubio
+      libgcc
       # grim
       swappy
       # wl-clipboard
@@ -22,6 +25,7 @@ in {
       coreutils
       findutils
       file
+      makeWrapper
       ## Caelestia-cli
       # swappy
       libnotify
@@ -36,11 +40,16 @@ in {
       dconf
       # killall
       ## Div
+      imagemagick
+      material-symbols
+      nerd-fonts.jetbrains-mono
     ] ++ [
       pkgs.kdePackages.qtsvg
       pkgs.kdePackages.qtimageformats
       pkgs.kdePackages.qtmultimedia
       pkgs.kdePackages.qt5compat
+      pkgs.kdePackages.qtdeclarative
+      pkgs.kdePackages.qt6ct
 
       pkgs.kdePackages.kiconthemes
       pkgs.kdePackages.breeze-icons
@@ -49,6 +58,11 @@ in {
       python3.pkgs.hatchling
       python3.pkgs.materialyoucolor
       python3.pkgs.pillow
-    ] ++ [ inputs.quickshell.packages.${pkgs.system}.default ];
+      python3.pkgs.aubio
+      python3.pkgs.pyaudio
+      python3.pkgs.numpy
+    ] ++ [ 
+      inputs.quickshell.packages.${pkgs.system}.default
+    ];
   };
 }
