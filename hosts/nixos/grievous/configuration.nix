@@ -1,4 +1,4 @@
-{pkgs, lib, ...}: let
+{inputs, pkgs, lib, ...}: let
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
   session = "${pkgs.hyprland}/bin/Hyprland";
   username = "bata";
@@ -8,7 +8,21 @@ in {
     ./hardware-configuration.nix
 
     ../../../features/hardware
+
+    inputs.sops-nix.nixosModules.sops
   ];
+
+  sops = {
+    defaultSopsFile = ../../../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+
+    age.keyFile = "/home/bata/.config/sops/age/keys.txt";
+
+    secrets = {
+      example-key = { };
+      "myservice/my_subdir/my_secret" = { };
+    };
+  };
 
   features = {
     hardware = {
