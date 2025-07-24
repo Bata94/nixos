@@ -187,8 +187,8 @@ in {
 
         bind-key -n M-s popup -w 80% -h 80% -E '${tmuxSessionizer}/bin/tmuxSessionizer -r ~/Projects/work ~/Projects/personal > ~/ts.log'
       '';
-        plugins = with pkgs.tmuxPlugins; [
-          {
+      plugins = with pkgs.tmuxPlugins; [
+        {
           plugin = vim-tmux-navigator;
         }
         {

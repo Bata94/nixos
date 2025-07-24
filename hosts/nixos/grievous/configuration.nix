@@ -1,4 +1,9 @@
-{inputs, pkgs, lib, ...}: let
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}: let
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
   session = "${pkgs.hyprland}/bin/Hyprland";
   username = "bata";
@@ -19,7 +24,7 @@ in {
 
     age = {
       # automatically import host SSH keys as age keys and generate if needed
-      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
       keyFile = "/var/lib/sops-nix/key.txt";
       generateKey = true;
     };
@@ -58,16 +63,15 @@ in {
         };
       };
     };
-  iptsd = {
-    enable = true;
-    config = {
-      Touchscreen = {
-        DisableOnPalm = true;
-        DisableOnStylus = true;
+    iptsd = {
+      enable = true;
+      config = {
+        Touchscreen = {
+          DisableOnPalm = true;
+          DisableOnStylus = true;
+        };
       };
     };
-  };
-
   };
 
   fonts.packages = with pkgs; [
@@ -159,10 +163,10 @@ in {
 
   services.openssh = {
     enable = true;
-    ports = [ 22 ];
+    ports = [22];
     openFirewall = true;
     settings = {
-      AllowUsers = [ "bata" ];
+      AllowUsers = ["bata"];
       PasswordAuthentication = true;
       PermitRootLogin = "yes";
     };
@@ -175,8 +179,8 @@ in {
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 ];
-      allowedUDPPorts = [  ];
+      allowedTCPPorts = [22];
+      allowedUDPPorts = [];
     };
   };
 

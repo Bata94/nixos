@@ -1,14 +1,10 @@
-{
-  config,
-  ...
-}:
-let
-    colors = config.colorScheme.palette;
-    defFont = "FiraCode Nerd Font";
-    defOpacity = "0.8";
-    defFontSize = "13px";
-    biggerFontSize = "14px";
-    bigIconFontSize = "16px";
+{config, ...}: let
+  colors = config.colorScheme.palette;
+  defFont = "FiraCode Nerd Font";
+  defOpacity = "0.8";
+  defFontSize = "13px";
+  biggerFontSize = "14px";
+  bigIconFontSize = "16px";
 in {
   programs.waybar = {
     enable = true;

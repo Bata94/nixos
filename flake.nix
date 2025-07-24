@@ -26,8 +26,8 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
     hyprgrass = {
-       url = "github:horriblename/hyprgrass";
-       inputs.hyprland.follows = "hyprland"; # IMPORTANT
+      url = "github:horriblename/hyprgrass";
+      inputs.hyprland.follows = "hyprland"; # IMPORTANT
     };
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
@@ -47,7 +47,6 @@
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
 
     nixvim.url = "github:bata94/nixvim-conf";
 

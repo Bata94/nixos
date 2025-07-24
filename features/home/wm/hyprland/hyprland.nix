@@ -158,19 +158,24 @@ in {
           # "__EGL_VENDOR_LIBRARY_FILENAMES,/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json"
         ];
 
-        exec-once = [
-          "dbus-update-activation-environment --systemd --all"
-          "brightnessctl set 40%"
-          "quickshell"
-          "wl-paste --watch cliphist store"
-          "hyprpaper"
-          "hypridle"
-          "ulauncher --hide-window --no-window-shadow"
-        ] ++ optionals cfg.virtKeyboard ["wvkbd-mobintl --hidden"] ++ [
-          # "easyeffects --gapplication-service"
-          "[workspace 7] zen"
-          "[workspace 1] ghostty -e tmux -2 new -Asdefault"
-        ];
+        exec-once =
+          [
+            "dbus-update-activation-environment --systemd --all"
+            "brightnessctl set 40%"
+            "wl-paste --watch cliphist store"
+            "hyprpaper"
+            "hypridle"
+            "quickshell"
+            "sleep 2"
+            "ulauncher --hide-window --no-window-shadow"
+          ]
+          ++ optionals cfg.virtKeyboard ["wvkbd-mobintl --hidden"]
+          ++ [
+            # "easyeffects --gapplication-service"
+            "[workspace 7] zen"
+            "sleep 2"
+            "[workspace 1] ghostty -e tmux -2 new -Asdefault"
+          ];
 
         input = {
           kb_layout = "de";
@@ -203,7 +208,7 @@ in {
 
           layout = "dwindle";
         };
-        
+
         cursor = {
           inactive_timeout = 60;
         };
@@ -302,7 +307,7 @@ in {
           # "$mainMod, SPACE, exec, ~/.config/scripts/applauncher.sh"
           "$mainMod, E, exec, thunar "
           "$mainMod SHIFT, E, exec, ghostty -e yazi"
-          "$mainMod, B, exec, zen" #__EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json zen"
+          "$mainMod, B, exec, zen" # __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json zen"
           "$mainMod SHIFT, B, exec, brave"
 
           "$mainMod CTRL, P, exec, wlogout"
@@ -411,7 +416,7 @@ in {
         binde = [
           # Brightness
           ", xf86monbrightnessup, exec, brightnessctl set +5% && notify-send 'Brightness Up!'"
-          ", xf86monbrightnessdown, exec, brightnessctl set 5%- && notify-send 'Brightness Down!'" 
+          ", xf86monbrightnessdown, exec, brightnessctl set 5%- && notify-send 'Brightness Down!'"
 
           # Audio
           ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ && notify-send 'Volume Up!'"
@@ -542,37 +547,37 @@ in {
         ];
 
         plugin = {
-         touch_gestures = {
-          # The default sensitivity is probably too low on tablet screens,
-          # I recommend turning it up to 4.0
-          sensitivity = 4.0;
+          touch_gestures = {
+            # The default sensitivity is probably too low on tablet screens,
+            # I recommend turning it up to 4.0
+            sensitivity = 4.0;
 
-          # must be >= 3
-          workspace_swipe_fingers = 3;
+            # must be >= 3
+            workspace_swipe_fingers = 3;
 
-          # switching workspaces by swiping from an edge, this is separate from workspace_swipe_fingers
-          # and can be used at the same time
-          # possible values: l, r, u, or d
-          # to disable it set it to anything else
-          workspace_swipe_edge = "d";
+            # switching workspaces by swiping from an edge, this is separate from workspace_swipe_fingers
+            # and can be used at the same time
+            # possible values: l, r, u, or d
+            # to disable it set it to anything else
+            workspace_swipe_edge = "d";
 
-          # in milliseconds
-          long_press_delay = 400;
+            # in milliseconds
+            long_press_delay = 400;
 
-          # resize windows by long-pressing on window borders and gaps.
-          # If general:resize_on_border is enabled, general:extend_border_grab_area is used for floating
-          # windows
-          resize_on_border_long_press = true;
+            # resize windows by long-pressing on window borders and gaps.
+            # If general:resize_on_border is enabled, general:extend_border_grab_area is used for floating
+            # windows
+            resize_on_border_long_press = true;
 
-          # in pixels, the distance from the edge that is considered an edge
-          edge_margin = 10;
+            # in pixels, the distance from the edge that is considered an edge
+            edge_margin = 10;
 
-          # emulates touchpad swipes when swiping in a direction that does not trigger workspace swipe.
-          # ONLY triggers when finger count is equal to workspace_swipe_fingers
-          #
-          # might be removed in the future in favor of event hooks
-          emulate_touchpad_swipe = true;
-         };
+            # emulates touchpad swipes when swiping in a direction that does not trigger workspace swipe.
+            # ONLY triggers when finger count is equal to workspace_swipe_fingers
+            #
+            # might be removed in the future in favor of event hooks
+            emulate_touchpad_swipe = true;
+          };
         };
       };
     };

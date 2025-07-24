@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib; let
   cfg = config.features.home.wm.hyprland;
 in {
@@ -17,33 +22,35 @@ in {
   ];
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      #   alacritty
-      killall
+    home.packages = with pkgs;
+      [
+        #   alacritty
+        killall
 
-      wireplumber
-      ulauncher
+        wireplumber
+        ulauncher
 
-      zenity
-      polkit_gnome
-      libva-utils
-      gsettings-desktop-schemas
-      grim
-      slurp
-      libsForQt5.qt5.qtwayland
-      qt6.qtwayland
-      pavucontrol
-      pamixer
-      waypipe
-      wf-recorder
-      wl-mirror
-      wl-clipboard
-      hyprland-protocols
-      hyprpicker
-      hyprpaper
-      hypridle
-      xdg-utils
-      xdg-desktop-portal-hyprland
-    ] ++ optionals cfg.virtKeyboard [ pkgs.wvkbd ];
+        zenity
+        polkit_gnome
+        libva-utils
+        gsettings-desktop-schemas
+        grim
+        slurp
+        libsForQt5.qt5.qtwayland
+        qt6.qtwayland
+        pavucontrol
+        pamixer
+        waypipe
+        wf-recorder
+        wl-mirror
+        wl-clipboard
+        hyprland-protocols
+        hyprpicker
+        hyprpaper
+        hypridle
+        xdg-utils
+        xdg-desktop-portal-hyprland
+      ]
+      ++ optionals cfg.virtKeyboard [pkgs.wvkbd];
   };
 }
