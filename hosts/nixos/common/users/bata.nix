@@ -6,14 +6,9 @@
 }: {
   nix.settings.trusted-users = ["bata"];
 
-  # TODO:
-  # age.secrets.hashedUserPassword = {
-  #   file = "${inputs.secrets}/hashedUserPassword.age";
-  # };
-
   users = {
     users.bata = {
-      initialHashedPassword = "$y$j9T$hWU0.PI9I8Tj1.mubjMeu0$cIfImoHoERBv6F.HGcpS7Xj5kQdhf0i/IPDIvT811l0";
+      hashedPasswordFile = config.sops.secrets.bata_pw.path;
       isNormalUser = true;
       description = "Bastian Sievers";
       uid = 1000;

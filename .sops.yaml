@@ -1,9 +1,13 @@
 # .sops.yaml
 
 keys:
-  - &primary age1rlhtmq3vvhkwg8qd9g2zuz50wzxg8am9vzd56ksf3wkj8eulpctq5d0d5a
+  - &users:
+    - &primary age1rlhtmq3vvhkwg8qd9g2zuz50wzxg8am9vzd56ksf3wkj8eulpctq5d0d5a
+  - &hosts:
+    - &grievous age1keq8tmu0496yefp6k6ul5tq4qwn8q4xpw0wnla07w39dht9wf5cs4sl2k9
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
     - age:
       - *primary
+      - *grievous

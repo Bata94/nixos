@@ -15,12 +15,21 @@ in {
   sops = {
     defaultSopsFile = ../../../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
+    validateSopsFiles = false;
 
-    age.keyFile = "/home/bata/.config/sops/age/keys.txt";
+    age = {
+      # automatically import host SSH keys as age keys and generate if needed
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      keyFile = "/var/lib/sops-nix/key.txt";
+      generateKey = true;
+    };
 
     secrets = {
-      example-key = { };
-      "myservice/my_subdir/my_secret" = { };
+      bata_pw = {
+        neededForUsers = true;
+      };
+      "software_pw/google" = {};
+      "software_pw/github" = {};
     };
   };
 
@@ -117,6 +126,7 @@ in {
     variant = "";
   };
 
+  users.mutableUsers = false; # Needed for pw set by sops!
   users.users.bata = {
     isNormalUser = true;
     description = "Bastian Sievers";
