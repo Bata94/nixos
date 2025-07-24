@@ -1,19 +1,17 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 ## https://github.com/vamuscari/tmux-sessionizer ##
 
 ################################################################################
 #                           TMUX Sessionizer
 #
-#         The TMUX Sessionizer is a tool for creating or switching 
+#         The TMUX Sessionizer is a tool for creating or switching
 #         sessions in tmux by (project / directory) names.
 #
 #
 ################################################################################
 
-
 #Find Directory
-
 
 usage="\
 --------------------------------------------------------------------------------
@@ -61,7 +59,6 @@ magenta='\033[0;35m'
 cyan='\033[0;36m'
 clear='\033[0m'
 
-
 recursive='false' # A list of directories
 name=''
 help='false'
@@ -86,7 +83,6 @@ dirs="$@"
 sub_dirs=""
 session_dirs=""
 selected_dir=""
-
 
 if [[ "$help" = true ]]; then
   echo "$usage"
@@ -167,7 +163,6 @@ get_sub_directories(){
   return 0
 }
 
-
 # Adds Prefix of [i/o] to directories
 tmux_session_status(){
   # local directies=$*
@@ -175,7 +170,7 @@ tmux_session_status(){
 
   if [[ -n "$TMUX" ]]; then
     sessions=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
-  fi 
+  fi
 
   for d in $*; do
 
@@ -199,18 +194,17 @@ tmux_session_status(){
 
 }
 
-
 select_directory(){
-  local fzf_default=( '--header-lines=1' 
-                      '--color=dark'  
-                      '--ansi' 
+  local fzf_default=( '--header-lines=1'
+                      '--color=dark'
+                      '--ansi'
                       '--delimiter' '/'
                       '--nth' '1,-1'
                       '--with-nth' '1,-1' )
   local fzf_preview=()
-  local fzf_header='status,/directory' 
+  local fzf_header='status,/directory'
   local start_icon=$( printf "${green}${clear}" )
-  local stop_icon=$( printf "${yellow}${clear}" ) 
+  local stop_icon=$( printf "${yellow}${clear}" )
 
   if "$preview"; then
     # TMUX changes all periods(.) to underscores(_)
@@ -219,7 +213,7 @@ select_directory(){
         tmux capture-pane -ept \$session_name 2>/dev/null
       "
     fzf_preview=( '--preview' "$preview_script"
-                  '--preview-window' 'nohidden' 
+                  '--preview-window' 'nohidden'
                   '--preview-label' 'Session'  )
   fi
 
@@ -240,12 +234,12 @@ select_directory(){
 
 get_name(){
 
-  if [[ "$name" = '' ]]; then 
+  if [[ "$name" = '' ]]; then
 
     if ! name=$( basename "$1" | tr . _ ); then
       log "${red}Error${clear}: Getting basename failed, $selected_dir"
       return 1
-    fi 
+    fi
 
     verbose "Basename: $name"
 
@@ -256,9 +250,8 @@ get_name(){
 
 #---------------------------------Execution-------------------------------------
 
-
 if [[ $dirs = "" ]]; then
-  log "$usage" 
+  log "$usage"
   exit 2
 fi
 
@@ -269,18 +262,17 @@ if [[ $recursive = false && $# = 1  ]]; then
   if ! test_directories $dirs ; then
    exit 1
   fi
-  
+
   selected_dir="$dirs"
 
   if ! get_name $selected_dir; then
     exit 1
-  fi 
-  
+  fi
+
   open_session $name $selected_dir
 
   exit 0
 fi
-
 
 if [[ $recursive = false ]]; then
 
@@ -296,7 +288,7 @@ if [[ $recursive = false ]]; then
 
   if ! get_name $selected_dir; then
     exit 1
-  fi 
+  fi
 
   open_session $name $selected_dir
 
@@ -321,7 +313,7 @@ if [[ $recursive = true ]]; then
 
   if ! get_name $selected_dir; then
     exit 1
-  fi 
+  fi
 
   open_session $name $selected_dir
 

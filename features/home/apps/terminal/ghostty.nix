@@ -11,6 +11,7 @@ in {
   config = mkIf cfg.enable {
     programs.ghostty = {
       enable = true;
+      clearDefaultKeybinds = false;
       settings = {
         theme = "rose-pine";
         window-theme = "ghostty";
@@ -27,6 +28,20 @@ in {
 
         font-size = 9.0;
         font-family = "FiraMono Nerd Font";
+
+        keybind = [
+          "alt+1=unbind"
+          "alt+2=unbind"
+          "alt+3=unbind"
+          "alt+4=unbind"
+          "alt+5=unbind"
+          "alt+6=unbind"
+          "alt+7=unbind"
+          "alt+8=unbind"
+          "alt+9=unbind"
+          "alt+0=unbind"
+          "alt+t=unbind"
+        ];
       };
     };
   };
