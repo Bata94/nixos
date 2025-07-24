@@ -46,7 +46,7 @@ show:
 
 # Format nix files
 format:
-  alejandra .
+  nix-shell -p alejandra --run "alejandra ."
 
 alias fmt := format
 
@@ -83,3 +83,9 @@ collect-garbage-all:
   sudo nix-collect-garbage -d --max-jobs auto --cores 0 --quiet
 
 alias gc := collect-garbage
+
+sops-edit FILE:
+  nix-shell -p sops --run "sops {{FILE}}"
+
+sops-update-keys:
+  nix-shell -p sops --run "sops update-secrets"
