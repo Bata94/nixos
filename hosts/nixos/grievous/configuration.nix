@@ -130,6 +130,7 @@ in {
   environment.systemPackages = with pkgs; [
     sbctl # key gen and mgmt for secureboot
 
+    just
     vim
     wget
     curl
