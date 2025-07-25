@@ -5,7 +5,8 @@
   lib,
   ...
 }:
-with lib; let
+with lib;
+let
   customDispatch = pkgs.writeShellScriptBin "customDispatch" ''
     activemonitor=$(hyprctl monitors -j | jq '.[] | select(.focused == true).id')
     passivemonitor=$(hyprctl monitors -j | jq '.[] | select(.focused == false).id')
@@ -19,7 +20,8 @@ with lib; let
     hyprctl dispatch workspace "$1"
   '';
   cfg = config.features.home.wm.hyprland;
-in {
+in
+{
   config = mkIf cfg.enable {
     programs.hyprlock.enable = true;
     programs.wlogout = {
@@ -66,13 +68,6 @@ in {
       #
       # '';
     };
-
-    home.file.".config/hypr/hyprpaper.conf".text = ''
-      preload = ~/bg.png
-      wallpaper = ,~/bg.png
-      splash = false
-      ipc = off
-    '';
 
     home.file.".config/hypr/hypridle.conf".text = ''
       general {
@@ -127,7 +122,7 @@ in {
 
       systemd = {
         enable = true;
-        variables = ["--all"];
+        variables = [ "--all" ];
       };
       xwayland.enable = true;
       plugins = [
@@ -158,24 +153,23 @@ in {
           # "__EGL_VENDOR_LIBRARY_FILENAMES,/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json"
         ];
 
-        exec-once =
-          [
-            "dbus-update-activation-environment --systemd --all"
-            "brightnessctl set 40%"
-            "wl-paste --watch cliphist store"
-            "hyprpaper"
-            "hypridle"
-            "quickshell"
-            "sleep 2"
-            "ulauncher --hide-window --no-window-shadow"
-          ]
-          ++ optionals cfg.virtKeyboard ["wvkbd-mobintl --hidden"]
-          ++ [
-            # "easyeffects --gapplication-service"
-            "[workspace 7] zen"
-            "sleep 2"
-            "[workspace 1] ghostty -e tmux -2 new -Asdefault"
-          ];
+        exec-once = [
+          "dbus-update-activation-environment --systemd --all"
+          "brightnessctl set 40%"
+          "wl-paste --watch cliphist store"
+          "hyprpaper"
+          "hypridle"
+          "quickshell"
+          "sleep 2"
+          "ulauncher --hide-window --no-window-shadow"
+        ]
+        ++ optionals cfg.virtKeyboard [ "wvkbd-mobintl --hidden" ]
+        ++ [
+          # "easyeffects --gapplication-service"
+          "[workspace 7] zen"
+          "sleep 2"
+          "[workspace 1] ghostty -e tmux -2 new -Asdefault"
+        ];
 
         input = {
           kb_layout = "de";
@@ -203,7 +197,8 @@ in {
           gaps_out = 4;
           border_size = 2;
 
-          "col.active_border" = "rgba(${config.colorScheme.palette.base0E}ff) rgba(${config.colorScheme.palette.base06}ff) 60deg";
+          "col.active_border" =
+            "rgba(${config.colorScheme.palette.base0E}ff) rgba(${config.colorScheme.palette.base06}ff) 60deg";
           "col.inactive_border" = "rgba(${config.colorScheme.palette.base02}ff)";
 
           layout = "dwindle";

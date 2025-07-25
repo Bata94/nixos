@@ -4,9 +4,11 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.features.home.wm.hyprland;
-in {
+in
+{
   options.features.home.wm.hyprland = {
     enable = mkEnableOption "Enable Hyprland";
     virtKeyboard = mkOption {
@@ -17,12 +19,14 @@ in {
 
   imports = [
     ./hyprland.nix
-    # ./waybar.nix
+    ./hyprpaper.nix
+
     ./quickshell.nix
   ];
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs;
+    home.packages =
+      with pkgs;
       [
         #   alacritty
         killall
@@ -51,6 +55,6 @@ in {
         xdg-utils
         xdg-desktop-portal-hyprland
       ]
-      ++ optionals cfg.virtKeyboard [pkgs.wvkbd];
+      ++ optionals cfg.virtKeyboard [ pkgs.wvkbd ];
   };
 }
