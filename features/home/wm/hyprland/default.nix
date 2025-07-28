@@ -13,6 +13,22 @@ in {
       type = types.bool;
       default = false;
     };
+    nvidia_envs = mkOption {
+      type = types.bool;
+      default = false;
+    };
+    exec-once-services = mkOption {
+      type = types.listOf types.str;
+      default = [];
+    };
+    exec-once-apps = mkOption {
+      type = types.listOf types.str;
+      default = [];
+    };
+    monitors = mkOption {
+      type = types.listOf types.str;
+      default = [];
+    };
   };
 
   imports = [
@@ -23,6 +39,18 @@ in {
   ];
 
   config = mkIf cfg.enable {
+    home.file."xremap/config.yml".text = ''
+      remap:
+      - from:
+          key: CapsLock
+        to:
+          key: Escape
+      - from:
+          key: l
+          modifiers: [ Control, Shift ]
+        to:
+          toggle_key: CapsLock
+    '';
     home.packages = with pkgs;
       [
         #   alacritty
@@ -31,6 +59,7 @@ in {
         wireplumber
         ulauncher
 
+        xremap
         zenity
         polkit_gnome
         libva-utils

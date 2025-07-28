@@ -156,6 +156,9 @@
       hyprland = {
         enable = true;
         virtKeyboard = false;
+        nvidia_envs = true;
+        exec-once-services = ["easyeffects --gapplication-service"];
+        exec-once-apps = [];
       };
     };
   };

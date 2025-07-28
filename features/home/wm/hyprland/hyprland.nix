@@ -132,24 +132,35 @@ in {
       settings = {
         monitor = [
           ", preferred, auto, 1"
-          "desc:LG Display 0x0555, preferred, auto, 1.5"
-          "desc:BNQ BenQ GL2450H F9F05686019, preferred, auto-up, 1"
-          "desc:AOC 1601W MMEL1JA000075,preferred,auto-down,1"
+
+          ## Internal Monitors
+          "desc:Sharp Corporation 0x1517, preferred, auto, 2" # XPS Display
+          "desc:LG Display 0x0555, preferred, auto, 1.5" # Surface Pro7 Display
+
+          ## Home
+          "desc:BNQ BenQ GL2450H F9F05686019, preferred, auto-up, 1" # HomeMain
+          "desc:AOC 1601W MMEL1JA000075,preferred,auto-down,1" # PortMonitor
+
+          ## Eltern
+          "desc:Samsung Electric Company C34J79x HTRM800858,preferred,auto-left,1" # Old Settings 3440x1440@59.97300,0x0,1 # Curved
         ];
 
-        env = [
-          # hybrid GPU hyprland prio intel, nvidia as fallback
-          # "WLR_DRM_DEVICES,/dev/dri/card0"
-          # "DRI_PRIME,1"
+        env =
+          [
+            "XCURSOR_SIZE,16"
+          ]
+          ++ optionals cfg.nvidia_envs [
+            # hybrid GPU hyprland prio intel, nvidia as fallback
+            # "WLR_DRM_DEVICES,/dev/dri/card0"
+            # "DRI_PRIME,1"
 
-          # "LIBVA_DRIVER_NAME,nvidia"
-          # "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-          # "NVD_BACKEND,direct"
-          # "WLR_RENDERER_ALLOW_SOFTWARE, 1"
-          "XCURSOR_SIZE,16"
+            "LIBVA_DRIVER_NAME,nvidia"
+            "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+            "NVD_BACKEND,direct"
+            "WLR_RENDERER_ALLOW_SOFTWARE, 1"
 
-          # "__EGL_VENDOR_LIBRARY_FILENAMES,/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json"
-        ];
+            # "__EGL_VENDOR_LIBRARY_FILENAMES,/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json"
+          ];
 
         exec-once =
           [
@@ -163,18 +174,19 @@ in {
             "ulauncher --hide-window --no-window-shadow"
           ]
           ++ optionals cfg.virtKeyboard ["wvkbd-mobintl --hidden"]
+          ++ optionals (cfg.exec-once-services != []) cfg.exec-once-services
           ++ [
-            # "easyeffects --gapplication-service"
             "[workspace 7] zen"
             "sleep 2"
             "[workspace 1] ghostty -e tmux -2 new -Asdefault"
-          ];
+          ]
+          ++ optionals (cfg.exec-once-apps != []) cfg.exec-once-apps;
 
         input = {
           kb_layout = "de";
           kb_variant = "";
           kb_model = "";
-          kb_options = "caps:swapescape";
+          kb_options = "";
           kb_rules = "";
           follow_mouse = 1;
 
@@ -215,7 +227,6 @@ in {
             new_optimizations = true;
             ignore_opacity = true;
             xray = true;
-            # blurls = waybar;
           };
           active_opacity = 1.0;
           inactive_opacity = 1.0;
