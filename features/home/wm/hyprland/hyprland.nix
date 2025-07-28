@@ -123,7 +123,7 @@ in {
         variables = ["--all"];
       };
       xwayland.enable = true;
-      plugins = [
+      plugins = mkIf cfg.tablet [
         inputs.hyprgrass.packages.${pkgs.system}.default
 
         # optional integration with pulse-audio, see examples/hyprgrass-pulse/README.md
@@ -551,7 +551,7 @@ in {
         ];
 
         plugin = {
-          touch_gestures = {
+          touch_gestures = mkIf cfg.tablet {
             # The default sensitivity is probably too low on tablet screens,
             # I recommend turning it up to 4.0
             sensitivity = 4.0;

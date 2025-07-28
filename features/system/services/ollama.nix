@@ -10,7 +10,8 @@ in {
   options.features.system.services.ollama.enable = mkEnableOption "Enable ollama";
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [pkgs.oterm];
+    # BUG: Disabled because of a Python Dep broken ...
+    # environment.systemPackages = [pkgs.oterm];
     services.ollama = {
       enable = true;
       acceleration = "cuda";

@@ -13,6 +13,10 @@ in {
       type = types.bool;
       default = false;
     };
+    tablet = mkOption {
+      type = types.bool;
+      default = false;
+    };
     nvidia_envs = mkOption {
       type = types.bool;
       default = false;

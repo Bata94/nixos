@@ -6,7 +6,7 @@
     home = "/Users/bata";
   };
   home-manager.users.bata = {
-    home.stateVersion = "24.11";
+    home.stateVersion = "25.11";
     imports = [./home.nix];
   };
 
