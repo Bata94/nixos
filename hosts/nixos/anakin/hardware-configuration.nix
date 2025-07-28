@@ -7,31 +7,39 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "thunderbolt"
+    "nvme"
+    "usb_storage"
+    "sd_mod"
+    "rtsx_pci_sdmmc"
+  ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/6b5ec5d7-5bb9-40a9-acbf-14f4183c0d1e";
-    fsType = "btrfs";
-    options = ["subvol=@"];
+    device = "/dev/disk/by-uuid/7db4a535-782a-46f5-941f-14598a03bbbf";
+    fsType = "ext4";
   };
-
-  boot.initrd.luks.devices."luks-2212c04b-cee5-4969-94b3-bbbf478192e5".device = "/dev/disk/by-uuid/2212c04b-cee5-4969-94b3-bbbf478192e5";
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/D4D1-6A7B";
+    device = "/dev/disk/by-uuid/F041-3EFD";
     fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077"];
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
-  swapDevices = [];
+  swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -43,4 +51,9 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  # Includes the Wi-Fi and Bluetooth firmware
+  hardware.enableRedistributableFirmware = true;
+
+  services.fstrim.enable = lib.mkDefault true;
 }
