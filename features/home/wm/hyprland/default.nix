@@ -42,6 +42,7 @@ in {
     ./quickshell.nix
   ];
 
+  # BUG: Not working
   config = mkIf cfg.enable {
     home.file."xremap/config.yml".text = ''
       remap:

@@ -3,7 +3,28 @@
   pkgs,
   lib,
   ...
-}: {
+}: let
+  xpsStartupScript = pkgs.writeShellScriptBin "xpsStartupScript" ''
+    #!/usr/bin/env bash
+
+    echo "XPS Startup Script, to enable BIOS probing to increase Performance and Powerstates."
+    rmmod intel_rapl_msr
+    rmmod processor_thermal_device_pci_legacy
+    rmmod processor_thermal_device
+    rmmod processor_thermal_rapl
+    rmmod intel_rapl_common
+    rmmod intel_powerclamp
+    modprobe intel_powerclamp
+    modprobe intel_rapl_common
+    modprobe processor_thermal_rapl
+    modprobe processor_thermal_device
+    modprobe intel_rapl_msr
+    echo "Probing done. Now setting Thermal Mode..."
+
+    smbios-thermal-ctl --set-thermal-mode balanced
+    echo "Thermal Mode set to Balanced."
+  '';
+in {
   imports = [
     # ./disko-configuration.nix
     ./hardware-configuration.nix
@@ -32,6 +53,23 @@
       };
       "software_pw/google" = {};
       "software_pw/github" = {};
+    };
+  };
+
+  # TODO: Add disabled Nvidia Spec again
+  # XPS BIOS PowerSettings
+  environment.systemPackages = with pkgs; [
+    libsmbios
+  ];
+  systemd.services.xpsStartupScript = {
+    enable = true;
+    description = "XPS Startup Script, to enable BIOS probing to increase Performance and Powerstates.";
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      User = "root";
+      Group = "root";
+      ExecStart = "${pkgs.zsh}/bin/zsh ${xpsStartupScript}/bin/xpsStartupScript";
     };
   };
 
