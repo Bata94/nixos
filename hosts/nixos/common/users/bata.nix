@@ -43,5 +43,6 @@
     };
   };
   programs.zsh.enable = true;
+  home-manager.backupFileExtension = "hm-bak";
   home-manager.users.bata = import ../../../../users/bata/${config.networking.hostName}.nix;
 }
