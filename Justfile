@@ -89,3 +89,6 @@ sops-edit FILE:
 
 sops-update-keys:
   nix-shell -p sops --run "sops update-secrets"
+
+sops-HostKey2AgeKey:
+  nix-shell -p ssh-to-age --run "cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age"
