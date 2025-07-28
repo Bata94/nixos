@@ -75,6 +75,7 @@
       dunst.enable = false;
       hyprland = {
         enable = true;
+        tablet = true;
         virtKeyboard = true;
       };
     };
