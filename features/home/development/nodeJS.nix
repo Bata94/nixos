@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.development.nodeJS;
+  cfg = config.features.home.development.nodeJS;
 in {
-  options.features.development.nodeJS.enable = mkEnableOption "Enable nodeJS";
+  options.features.home.development.nodeJS.enable = mkEnableOption "Enable nodeJS";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

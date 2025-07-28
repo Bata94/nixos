@@ -3,11 +3,9 @@
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.features.hardware.systemd;
-in
-{
+in {
   options.features.hardware.systemd.enable = mkEnableOption "Enable systemd tweaks";
 
   config = mkIf cfg.enable {

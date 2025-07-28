@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.development.flutter;
+  cfg = config.features.home.development.flutter;
 in {
-  options.features.development.flutter.enable = mkEnableOption "Enable Flutter";
+  options.features.home.development.flutter.enable = mkEnableOption "Enable Flutter";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

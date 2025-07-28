@@ -3,11 +3,9 @@
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.features.system.desktop.wm.audio;
-in
-{
+in {
   options.features.system.desktop.wm.audio.enable = mkEnableOption "Enable Audio";
 
   config = mkIf cfg.enable {
@@ -30,7 +28,7 @@ in
 
       wireplumber = {
         enable = true;
-        configPackages = [ ];
+        configPackages = [];
       };
 
       extraConfig = {

@@ -4,11 +4,9 @@
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.features.system.desktop.wm.thunar;
-in
-{
+in {
   options.features.system.desktop.wm.thunar.enable = mkEnableOption "Enable Thunar";
 
   config = mkIf cfg.enable {

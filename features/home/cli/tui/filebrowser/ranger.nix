@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.cli.filebrowser.ranger;
+  cfg = config.features.home.cli.tui.filebrowser.ranger;
 in {
-  options.features.cli.filebrowser.ranger.enable = mkEnableOption "Enable ranger";
+  options.features.home.cli.tui.filebrowser.ranger.enable = mkEnableOption "Enable ranger";
 
   config = mkIf cfg.enable {
     programs.ranger = {

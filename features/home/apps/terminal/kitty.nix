@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.apps.terminal.kitty;
+  cfg = config.features.home.apps.terminal.kitty;
 in {
-  options.features.apps.terminal.kitty.enable = mkEnableOption "Enable kitty";
+  options.features.home.apps.terminal.kitty.enable = mkEnableOption "Enable kitty";
 
   config = mkIf cfg.enable {
     programs.kitty = {

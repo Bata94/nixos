@@ -1,6 +1,7 @@
 {
   description = "Bata NixOS Flake";
 
+  # TODO: Check if correct impl.; In old config it was set under nix.settings...
   nixConfig = {
     trusted-substituters = [
       "https://cachix.cachix.org"
@@ -79,71 +80,87 @@
     };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      nixos-hardware,
-      nix-darwin,
-      home-manager,
-      lanzaboote,
-      ...
-    }@inputs:
-    let
-      inherit (self) outputs;
-    in
-    {
-      nixosConfigurations = {
-        # coruscant = nixpkgs.lib.nixosSystem {
-        #   system = "x86_64-linux";
-        #   specialArgs = {inherit inputs outputs;};
-        #   modules = [
-        #     ./hosts/nixos/coruscant
-        #     inputs.disko.nixosModules.disko
-        #   ];
-        # };
+  outputs = {
+    self,
+    nixpkgs,
+    nixos-hardware,
+    nix-darwin,
+    home-manager,
+    lanzaboote,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
+  in {
+    nixosConfigurations = {
+      # coruscant = nixpkgs.lib.nixosSystem {
+      #   system = "x86_64-linux";
+      #   specialArgs = {inherit inputs outputs;};
+      #   modules = [
+      #     ./hosts/nixos/coruscant
+      #     inputs.disko.nixosModules.disko
+      #   ];
+      # };
 
-        grievous = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            lanzaboote.nixosModules.lanzaboote
-            ./hosts/nixos/grievous
-            nixos-hardware.nixosModules.microsoft-surface-pro-intel
-            inputs.disko.nixosModules.disko
-          ];
-        };
+      anakin = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          # lanzaboote.nixosModules.lanzaboote
+          ./hosts/nixos/anakin
+          # inputs.disko.nixosModules.disko
+        ];
       };
 
-      homeConfigurations = {
-        # "bata@coruscant" = home-manager.lib.homeManagerConfiguration {
-        #   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-        #   extraSpecialArgs = {inherit inputs outputs;};
-        #   modules = [./users/bata/coruscant.nix];
-        # };
-
-        "bata@grievous" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs = {
-            inherit inputs outputs;
-            hostName = "grievous";
-          };
-          modules = [ ./users/bata/grievous.nix ];
-        };
-      };
-
-      darwinConfigurations = {
-        solo = nix-darwin.lib.darwinSystem {
-          specialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-            home-manager.darwinModules.home-manager
-            { home-manager.extraSpecialArgs = { inherit inputs; }; }
-
-            ./hosts/darwin/solo
-          ];
-        };
+      grievous = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          lanzaboote.nixosModules.lanzaboote
+          ./hosts/nixos/grievous
+          nixos-hardware.nixosModules.microsoft-surface-pro-intel
+          inputs.disko.nixosModules.disko
+        ];
       };
     };
+
+    homeConfigurations = {
+      # "bata@coruscant" = home-manager.lib.homeManagerConfiguration {
+      #   pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      #   extraSpecialArgs = {inherit inputs outputs;};
+      #   modules = [./users/bata/coruscant.nix];
+      # };
+
+      "bata@anakin" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {
+          inherit inputs outputs;
+          hostName = "anakin";
+        };
+        modules = [./users/bata/anakin.nix];
+      };
+
+      "bata@grievous" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {
+          inherit inputs outputs;
+          hostName = "grievous";
+        };
+        modules = [./users/bata/grievous.nix];
+      };
+    };
+
+    darwinConfigurations = {
+      solo = nix-darwin.lib.darwinSystem {
+        specialArgs = {
+          inherit inputs outputs;
+        };
+        modules = [
+          home-manager.darwinModules.home-manager
+          {home-manager.extraSpecialArgs = {inherit inputs;};}
+
+          ./hosts/darwin/solo
+        ];
+      };
+    };
+  };
 }

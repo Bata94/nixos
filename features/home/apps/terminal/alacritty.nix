@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.apps.terminal.alacritty;
+  cfg = config.features.home.apps.terminal.alacritty;
 in {
-  options.features.apps.terminal.alacritty.enable = mkEnableOption "Enable alacritty";
+  options.features.home.apps.terminal.alacritty.enable = mkEnableOption "Enable alacritty";
 
   config = mkIf cfg.enable {
     programs.alacritty = {

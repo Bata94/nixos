@@ -6,9 +6,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.apps.browser.firefox;
+  cfg = config.features.home.apps.browser.firefox;
 in {
-  options.features.apps.browser.firefox.enable = mkEnableOption "Enable firefox";
+  options.features.home.apps.browser.firefox.enable = mkEnableOption "Enable firefox";
 
   config = mkIf cfg.enable {
     programs.firefox = {

@@ -2,8 +2,7 @@
   inputs,
   pkgs,
   ...
-}:
-{
+}: {
   imports = [
     ./home.nix
     ../common
@@ -29,19 +28,82 @@
       bata_ssh_key = {
         path = "/home/bata/.ssh/id_bata_master";
       };
-      "software_pw/google" = { };
-      "software_pw/github" = { };
+      "software_pw/google" = {};
+      "software_pw/github" = {};
     };
   };
 
   home.packages = with pkgs; [
     brightnessctl
     spotify-player
+
+    ## From old Config, need to be adjusted
+    alejandra
+
+    prismlauncher
+
+    # kubectl
+    # kubernetes-helm
+
+    # parsec-bin
+    moonlight-qt
+    # remmina
+
+    # turso-cli
+    atlas # Ent DB Schemas Integration
+    # brave
+    html-tidy
+    # obsidian
+    postgresql
+    just
+    gemini-cli
+
+    discord
+    vesktop # Discord APP
+    # whatsapp-for-linux
+    # telegram-desktop
+    teams-for-linux
+    webcamoid
+
+    # rustdesk-flutter
+    lan-mouse
+
+    ulauncher
+    libsForQt5.kcolorpicker
+
+    onlyoffice-bin
+    # texliveFull
+
+    easyeffects
+    movit
+    mediainfo
+    libmediainfo
+    mediainfo-gui
+    audio-recorder
+    # vlc
+    # mpv
+    # feh
+    kdePackages.okular
+    # spotify
+    spotify-player # Spotify TUI App
+    pavucontrol
+    # obs-studio
+    # zathura # PDF Reader
+
+    # godot_4
+    # dbeaver-bin
+    # mysql-workbench
+    sysbench
+    insomnia
+    # tor-browser
+    # qutebrowser
+    # anydesk
+    # partition-manager
   ];
 
   programs.zen-browser = {
     enable = true;
-    nativeMessagingHosts = [ pkgs.firefoxpwa ];
+    nativeMessagingHosts = [pkgs.firefoxpwa];
     policies = {
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
@@ -58,52 +120,43 @@
 
   features.home = {
     apps = {
+      browser = {
+        chromium.enable = true;
+      };
       editor.nixvim.enable = true;
       terminal.ghostty.enable = true;
+      nextcloud-client.enable = true;
     };
     cli = {
       tui = {
-        filebrowser.yazi.enable = true;
+        filebrowser = {
+          yazi.enable = true;
+          superfile.enable = true;
+        };
         lazygit.enable = true;
-        lazydocker.enable = false;
+        lazydocker.enable = true;
       };
       git.enable = true;
       sh.enable = true;
       zoxide.enable = true;
     };
-    # development = {};
+    development = {
+      android.enable = true;
+      c.enable = true;
+      flutter.enable = true;
+      go.enable = true;
+      java.enable = true;
+      lua.enable = true;
+      nodeJS.enable = true;
+      python.enable = true;
+      rust.enable = false;
+    };
     wm = {
       dunst.enable = false;
       hyprland = {
         enable = true;
-        virtKeyboard = true;
+        virtKeyboard = false;
       };
     };
   };
-
-  # features = {
-  #   apps = {
-  #     editor = {
-  #       nixvim.enable = true;
-  #     };
-  #   };
-  #   cli = {
-  #     tui = {
-  #       filebrowser.yazi.enable = true;
-  #       lazygit.enable = false;
-  #       lazydocker.enable = false;
-  #     };
-  #     git.enable = true;
-  #     sh.enable = true;
-  #     zoxide.enable = true;
-  #   };
-  #   development = {
-  #   };
-  #   wm = {
-  #     dunst.enable = true;
-  #     hyprland = {
-  #       enable = true;
-  #     };
-  #   };
-  # };
 }

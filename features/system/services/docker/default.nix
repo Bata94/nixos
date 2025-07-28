@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   ...
@@ -21,8 +22,10 @@ in {
     virtualisation.oci-containers.backend = "docker";
 
     environment.systemPackages =
-      []
-      ++ mkIf cfg.compose2nix [
+      [
+        pkgs.lazydocker
+      ]
+      ++ optionals cfg.compose2nix [
         inputs.compose2nix.packages.${pkgs.system}.default
       ];
   };

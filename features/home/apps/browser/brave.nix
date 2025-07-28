@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.apps.browser.brave;
+  cfg = config.features.home.apps.browser.brave;
 in {
-  options.features.apps.browser.brave.enable = mkEnableOption "Enable brave";
+  options.features.home.apps.browser.brave.enable = mkEnableOption "Enable brave";
 
   config = mkIf cfg.enable {
     # TODO: Setup Brave

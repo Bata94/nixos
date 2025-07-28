@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.development.c;
+  cfg = config.features.home.development.c;
 in {
-  options.features.development.c.enable = mkEnableOption "Enable C";
+  options.features.home.development.c.enable = mkEnableOption "Enable C";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

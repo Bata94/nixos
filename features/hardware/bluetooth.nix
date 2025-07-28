@@ -3,11 +3,9 @@
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.features.hardware.bluetooth;
-in
-{
+in {
   options.features.hardware.bluetooth.enable = mkEnableOption "Enable bluetooth";
 
   config = mkIf cfg.enable {

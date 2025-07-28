@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.development.rust;
+  cfg = config.features.home.development.rust;
 in {
-  options.features.development.rust.enable = mkEnableOption "Enable rust";
+  options.features.home.development.rust.enable = mkEnableOption "Enable rust";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

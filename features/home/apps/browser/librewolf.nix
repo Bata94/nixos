@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.apps.browser.librewolf;
+  cfg = config.features.home.apps.browser.librewolf;
 in {
-  options.features.apps.browser.librewolf.enable = mkEnableOption "Enable librewolf";
+  options.features.home.apps.browser.librewolf.enable = mkEnableOption "Enable librewolf";
 
   config = mkIf cfg.enable {
     programs.librewolf = {

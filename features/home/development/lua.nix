@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.development.lua;
+  cfg = config.features.home.development.lua;
 in {
-  options.features.development.lua.enable = mkEnableOption "Enable lua";
+  options.features.home.development.lua.enable = mkEnableOption "Enable lua";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

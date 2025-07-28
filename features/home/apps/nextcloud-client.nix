@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.apps.nextcloud-client;
+  cfg = config.features.home.apps.nextcloud-client;
 in {
-  options.features.apps.nextcloud-client.enable = mkEnableOption "Enable Nextcloud-Client";
+  options.features.home.apps.nextcloud-client.enable = mkEnableOption "Enable Nextcloud-Client";
 
   config = mkIf cfg.enable {
     services.nextcloud-client = {

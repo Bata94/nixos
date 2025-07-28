@@ -4,9 +4,9 @@
   ...
 }:
 with lib; let
-  cfg = config.features.development.java;
+  cfg = config.features.home.development.java;
 in {
-  options.features.development.java.enable = mkEnableOption "Enable Java";
+  options.features.home.development.java.enable = mkEnableOption "Enable Java";
 
   config = mkIf cfg.enable {
     programs.java = {

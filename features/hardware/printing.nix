@@ -4,11 +4,9 @@
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.features.hardware.printing;
-in
-{
+in {
   options.features.hardware.printing.enable = mkEnableOption "Enable printing";
 
   config = mkIf cfg.enable {
@@ -16,6 +14,6 @@ in
     services.avahi.enable = true;
     services.avahi.nssmdns4 = true;
     services.avahi.openFirewall = true;
-    environment.systemPackages = [ pkgs.cups-filters ];
+    environment.systemPackages = [pkgs.cups-filters];
   };
 }

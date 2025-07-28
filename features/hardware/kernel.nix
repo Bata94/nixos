@@ -1,13 +1,12 @@
 {
+  pkgs,
   config,
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.features.hardware.kernel;
-in
-{
+in {
   options.features.hardware.kernel.enable = mkEnableOption "Enable special kernel settings";
 
   config = mkIf cfg.enable {

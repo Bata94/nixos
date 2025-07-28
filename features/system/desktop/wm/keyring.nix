@@ -3,11 +3,9 @@
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.features.system.desktop.wm.keyring;
-in
-{
+in {
   options.features.system.desktop.wm.keyring.enable = mkEnableOption "Enable Keyring";
 
   config = mkIf cfg.enable {

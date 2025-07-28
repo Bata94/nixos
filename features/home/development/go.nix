@@ -5,17 +5,24 @@
   ...
 }:
 with lib; let
-  cfg = config.features.development.go;
+  cfg = config.features.home.development.go;
 in {
-  options.features.development.go.enable = mkEnableOption "Enable Go";
+  options.features.home.development.go.enable = mkEnableOption "Enable Go";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      go
-      gopls
-      golangci-lint
-      gofumpt
-      gotools
-    ];
+    home = {
+      # TODO: Prob add more Pkgs
+      packages = with pkgs; [
+        go
+        gopls
+        golangci-lint
+        gofumpt
+        gotools
+      ];
+      # TODO: Don't know if needed
+      # sessionVariables = {
+      #   PATH = "$PATH:" + "${config.home.homeDirectory}/go/bin/";
+      # };
+    };
   };
 }

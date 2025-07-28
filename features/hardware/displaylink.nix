@@ -4,11 +4,9 @@
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.features.hardware.displaylink;
-in
-{
+in {
   options.features.hardware.displaylink.enable = mkEnableOption "Enable displaylink";
 
   config = mkIf cfg.enable {

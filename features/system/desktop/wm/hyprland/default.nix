@@ -4,16 +4,14 @@
   lib,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.features.system.desktop.wm.hyprland;
 
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
   session = "${pkgs.hyprland}/bin/Hyprland";
   # TODO: Make setable
   username = "bata";
-in
-{
+in {
   options.features.system.desktop.wm.hyprland.enable = mkEnableOption "Enable Hyprland";
 
   config = mkIf cfg.enable {
@@ -34,7 +32,7 @@ in
         variant = "";
         options = "";
       };
-      excludePackages = [ pkgs.xterm ];
+      excludePackages = [pkgs.xterm];
     };
 
     # Configure tuigreet
