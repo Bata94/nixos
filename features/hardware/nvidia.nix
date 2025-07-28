@@ -3,10 +3,12 @@
   lib,
   ...
 }:
-with lib; let
-  cfg = config.hardware.nvidia-gpu;
-in {
-  options.hardware.nvidia-gpu.enable = mkEnableOption "Enable nvidia-gpu";
+with lib;
+let
+  cfg = config.features.hardware.nvidia-gpu;
+in
+{
+  options.features.hardware.nvidia-gpu.enable = mkEnableOption "Enable nvidia-gpu";
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
@@ -17,7 +19,7 @@ in {
     ];
 
     # Load nvidia driver for Xorg and Wayland
-    services.xserver.videoDrivers = ["nvidia"];
+    services.xserver.videoDrivers = [ "nvidia" ];
     boot.kernelParams = [
       "nvidia-drm.fbdev=1"
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"

@@ -3,10 +3,12 @@
   lib,
   ...
 }:
-with lib; let
-  cfg = config.features.desktop.wm.audio;
-in {
-  options.features.desktop.wm.audio.enable = mkEnableOption "Enable Audio";
+with lib;
+let
+  cfg = config.features.system.desktop.wm.audio;
+in
+{
+  options.features.system.desktop.wm.audio.enable = mkEnableOption "Enable Audio";
 
   config = mkIf cfg.enable {
     # Remove sound.enable or set it to false if you had it set previously, as sound.enable is only meant for ALSA-based configurations
@@ -28,7 +30,7 @@ in {
 
       wireplumber = {
         enable = true;
-        configPackages = [];
+        configPackages = [ ];
       };
 
       extraConfig = {

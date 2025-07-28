@@ -3,10 +3,12 @@
   lib,
   ...
 }:
-with lib; let
-  cfg = config.hardware.systemd;
-in {
-  options.hardware.systemd.enable = mkEnableOption "Enable systemd tweaks";
+with lib;
+let
+  cfg = config.features.hardware.systemd;
+in
+{
+  options.features.hardware.systemd.enable = mkEnableOption "Enable systemd tweaks";
 
   config = mkIf cfg.enable {
     services.journald.extraConfig = "SystemMaxUse=50M\nSystemMaxFiles=5";

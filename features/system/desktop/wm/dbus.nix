@@ -4,15 +4,17 @@
   lib,
   ...
 }:
-with lib; let
-  cfg = config.features.desktop.wm.dbus;
-in {
-  options.features.desktop.wm.dbus.enable = mkEnableOption "Enable DBUS services";
+with lib;
+let
+  cfg = config.features.system.desktop.wm.dbus;
+in
+{
+  options.features.system.desktop.wm.dbus.enable = mkEnableOption "Enable DBUS services";
 
   config = mkIf cfg.enable {
     services.dbus = {
       enable = true;
-      packages = [pkgs.dconf];
+      packages = [ pkgs.dconf ];
     };
 
     programs.dconf = {

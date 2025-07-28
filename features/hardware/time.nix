@@ -3,10 +3,12 @@
   lib,
   ...
 }:
-with lib; let
-  cfg = config.hardware.time;
-in {
-  options.hardware.time.enable = mkEnableOption "Enable time service";
+with lib;
+let
+  cfg = config.features.hardware.time;
+in
+{
+  options.features.hardware.time.enable = mkEnableOption "Enable time service";
 
   config = mkIf cfg.enable {
     services.timesyncd = {

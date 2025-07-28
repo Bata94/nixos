@@ -4,10 +4,12 @@
   lib,
   ...
 }:
-with lib; let
-  cfg = config.features.desktop.wm.defaultFonts;
-in {
-  options.features.desktop.wm.defaultFonts.enable = mkEnableOption "Use default fonts";
+with lib;
+let
+  cfg = config.features.system.desktop.wm.defaultFonts;
+in
+{
+  options.features.system.desktop.wm.defaultFonts.enable = mkEnableOption "Use default fonts";
 
   config = mkIf cfg.enable {
     fonts.packages = with pkgs; [

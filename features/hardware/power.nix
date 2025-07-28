@@ -3,10 +3,12 @@
   lib,
   ...
 }:
-with lib; let
-  cfg = config.hardware.power;
-in {
-  options.hardware.power.enable = mkEnableOption "Enable power settings";
+with lib;
+let
+  cfg = config.features.hardware.power;
+in
+{
+  options.features.hardware.power.enable = mkEnableOption "Enable power settings";
 
   config = mkIf cfg.enable {
     services = {

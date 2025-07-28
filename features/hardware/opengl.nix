@@ -3,9 +3,11 @@
   lib,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.features.hardware.opengl;
-in {
+in
+{
   options.features.hardware.opengl.enable = mkEnableOption "Enable opengl";
 
   config = mkIf cfg.enable {
@@ -16,7 +18,7 @@ in {
     #   libvdpau-va-gl
     # ];
 
-    services.xserver.videoDrivers = ["nvidia"];
+    # services.xserver.videoDrivers = ["nvidia"];
 
     hardware.graphics = {
       enable = true;

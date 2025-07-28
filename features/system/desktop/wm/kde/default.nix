@@ -3,13 +3,15 @@
   lib,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.features.desktop.wm.kde;
-in {
+in
+{
   options.features.desktop.wm.kde.enable = mkEnableOption "Enable KDE Desktop Environment";
 
   config = mkIf cfg.enable {
-    features.desktop.wm = {
+    features.system.desktop.wm = {
       defaultFonts.enable = true;
       dbus.enable = true;
       audio.enable = true;

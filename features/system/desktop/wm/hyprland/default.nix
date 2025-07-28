@@ -1,15 +1,23 @@
 {
+  pkgs,
   config,
   lib,
   ...
 }:
-with lib; let
-  cfg = config.features.desktop.wm.hyprland;
-in {
-  options.features.desktop.wm.hyprland.enable = mkEnableOption "Enable Hyprland";
+with lib;
+let
+  cfg = config.features.system.desktop.wm.hyprland;
+
+  tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+  session = "${pkgs.hyprland}/bin/Hyprland";
+  # TODO: Make setable
+  username = "bata";
+in
+{
+  options.features.system.desktop.wm.hyprland.enable = mkEnableOption "Enable Hyprland";
 
   config = mkIf cfg.enable {
-    features.desktop.wm = {
+    features.system.desktop.wm = {
       defaultFonts.enable = true;
       dbus.enable = true;
       audio.enable = true;
@@ -26,7 +34,7 @@ in {
         variant = "";
         options = "";
       };
-      excludePackages = [pkgs.xterm];
+      excludePackages = [ pkgs.xterm ];
     };
 
     # Configure tuigreet

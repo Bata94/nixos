@@ -3,10 +3,12 @@
   lib,
   ...
 }:
-with lib; let
-  cfg = config.features.desktop.services.gaming;
-in {
-  options.features.desktop.services.gaming.enable = mkEnableOption "Enable Gaming";
+with lib;
+let
+  cfg = config.features.system.desktop.services.gaming;
+in
+{
+  options.features.system.desktop.services.gaming.enable = mkEnableOption "Enable Gaming";
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [

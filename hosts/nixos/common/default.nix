@@ -5,7 +5,8 @@
   inputs,
   outputs,
   ...
-}: {
+}:
+{
   imports = [
     # ./extraServices
     ./users
@@ -41,27 +42,29 @@
     };
   };
 
-  nix = let
-    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-  in {
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      trusted-users = [
-        "root"
-        "bata"
-      ]; # Set users that are allowed to use the flake command
+  nix =
+    let
+      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+    in
+    {
+      settings = {
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+        trusted-users = [
+          "root"
+          "bata"
+        ]; # Set users that are allowed to use the flake command
+      };
+      gc = {
+        automatic = true;
+        options = "--delete-older-than 14d";
+      };
+      optimise.automatic = true;
+      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
+      # nixPath = ["/etc/nix/path"] ++ lib.mapAttrsToList (flakeName: _: "${flakeName}=flake:${flakeName}") flakeInputs;
     };
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 14d";
-    };
-    optimise.automatic = true;
-    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
-    # nixPath = ["/etc/nix/path"] ++ lib.mapAttrsToList (flakeName: _: "${flakeName}=flake:${flakeName}") flakeInputs;
-  };
 
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "de_DE.UTF-8";
@@ -93,7 +96,10 @@
     powertop
   ];
 
-  environment.shells = with pkgs; [bash zsh];
+  environment.shells = with pkgs; [
+    bash
+    zsh
+  ];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
@@ -101,17 +107,22 @@
   users.users.bata = {
     isNormalUser = true;
     description = "Bastian Sievers";
-    extraGroups = ["networkmanager" "wheel" "docker" "surface-control"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "surface-control"
+    ];
   };
 
   services.openssh = {
     enable = true;
-    ports = [22];
+    ports = [ 22 ];
     openFirewall = true;
     settings = {
-      AllowUsers = ["bata"];
-      PasswordAuthentication = true;
-      PermitRootLogin = "yes";
+      AllowUsers = [ "bata" ];
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
     };
     allowSFTP = true;
   };

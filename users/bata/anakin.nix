@@ -2,7 +2,8 @@
   inputs,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ./home.nix
     ../common
@@ -28,8 +29,8 @@
       bata_ssh_key = {
         path = "/home/bata/.ssh/id_bata_master";
       };
-      "software_pw/google" = {};
-      "software_pw/github" = {};
+      "software_pw/google" = { };
+      "software_pw/github" = { };
     };
   };
 
@@ -40,7 +41,7 @@
 
   programs.zen-browser = {
     enable = true;
-    nativeMessagingHosts = [pkgs.firefoxpwa];
+    nativeMessagingHosts = [ pkgs.firefoxpwa ];
     policies = {
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
@@ -80,29 +81,29 @@
     };
   };
 
-  features = {
-    apps = {
-      editor = {
-        nixvim.enable = true;
-      };
-    };
-    cli = {
-      tui = {
-        filebrowser.yazi.enable = true;
-        lazygit.enable = false;
-        lazydocker.enable = false;
-      };
-      git.enable = true;
-      sh.enable = true;
-      zoxide.enable = true;
-    };
-    development = {
-    };
-    wm = {
-      dunst.enable = true;
-      hyprland = {
-        enable = true;
-      };
-    };
-  };
+  # features = {
+  #   apps = {
+  #     editor = {
+  #       nixvim.enable = true;
+  #     };
+  #   };
+  #   cli = {
+  #     tui = {
+  #       filebrowser.yazi.enable = true;
+  #       lazygit.enable = false;
+  #       lazydocker.enable = false;
+  #     };
+  #     git.enable = true;
+  #     sh.enable = true;
+  #     zoxide.enable = true;
+  #   };
+  #   development = {
+  #   };
+  #   wm = {
+  #     dunst.enable = true;
+  #     hyprland = {
+  #       enable = true;
+  #     };
+  #   };
+  # };
 }

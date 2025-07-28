@@ -3,10 +3,12 @@
   lib,
   ...
 }:
-with lib; let
-  cfg = config.hardware.kernel;
-in {
-  options.hardware.kernel.enable = mkEnableOption "Enable special kernel settings";
+with lib;
+let
+  cfg = config.features.hardware.kernel;
+in
+{
+  options.features.hardware.kernel.enable = mkEnableOption "Enable special kernel settings";
 
   config = mkIf cfg.enable {
     # boot.kernelPackages = pkgs.linuxPackages_zen;
