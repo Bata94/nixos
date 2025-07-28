@@ -33,14 +33,24 @@ in {
     services.greetd = {
       enable = true;
       settings = {
+        ## Surface Settings
+        initial_session = {
+          command = "${session}";
+          user = "${username}";
+        };
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --greeting 'Welcome to NixOS' --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
-          user = "bata";
+          command = "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time -cmd ${session}";
+          user = "${username}";
         };
-        shell_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --greeting 'Welcome to NixOS' --time --time-format '%I:%M %p | %a • %h | %F' --cmd zsh";
-          user = "bata";
-        };
+        ## XPS settings
+        # default_session = {
+        #   command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --greeting 'Welcome to NixOS' --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
+        #   user = "bata";
+        # };
+        # shell_session = {
+        #   command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --greeting 'Welcome to NixOS' --time --time-format '%I:%M %p | %a • %h | %F' --cmd zsh";
+        #   user = "bata";
+        # };
       };
     };
     # environment.systemPackages = with pkgs; [greetd.tuigreet];
@@ -86,32 +96,5 @@ in {
     };
 
     services.gnome.gnome-keyring.enable = true;
-
-    programs = {
-      hyprland = {
-        enable = true;
-        package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-        xwayland = {
-          enable = true;
-        };
-        portalPackage = pkgs.xdg-desktop-portal-hyprland;
-      };
-    };
-
-    xdg = {
-      portal = {
-        enable = true;
-        xdgOpenUsePortal = true;
-        config = {
-          common.default = ["gtk"];
-          hyprland.default = ["gtk" "hyprland"];
-        };
-        extraPortals = [
-          pkgs.xdg-desktop-portal-gtk
-          pkgs.xdg-desktop-portal-wlr
-          # pkgs.xdg-desktop-portal-hyprland
-        ];
-      };
-    };
   };
 }

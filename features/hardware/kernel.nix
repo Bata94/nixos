@@ -10,6 +10,7 @@ in {
 
   config = mkIf cfg.enable {
     # boot.kernelPackages = pkgs.linuxPackages_zen;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.consoleLogLevel = 0;
     # boot.extraModulePackages = with config.boot.kernelPackages; [];
     # boot.blacklistedKernelModules = [

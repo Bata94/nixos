@@ -3,6 +3,7 @@
     ./bluetooth.nix
     ./displaylink.nix
     ./intel-gpu.nix
+    ./iptsd.nix
     ./kernel.nix
     ./nvidia.nix
     ./opengl.nix

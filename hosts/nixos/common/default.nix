@@ -5,8 +5,7 @@
   inputs,
   outputs,
   ...
-}:
-{
+}: {
   imports = [
     # ./extraServices
     ./users
@@ -42,28 +41,79 @@
     };
   };
 
-  nix =
-    let
-      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-    in
-    {
-      settings = {
-        experimental-features = [
-          "nix-command"
-          "flakes"
-        ];
-        trusted-users = [
-          "root"
-          "bata"
-        ]; # Set users that are allowed to use the flake command
-      };
-      gc = {
-        automatic = true;
-        options = "--delete-older-than 14d";
-      };
-      optimise.automatic = true;
-      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
-      # nixPath = ["/etc/nix/path"] ++ lib.mapAttrsToList (flakeName: _: "${flakeName}=flake:${flakeName}") flakeInputs;
+  nix = let
+    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+  in {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        "bata"
+      ]; # Set users that are allowed to use the flake command
     };
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 14d";
+    };
+    optimise.automatic = true;
+    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
+    # nixPath = ["/etc/nix/path"] ++ lib.mapAttrsToList (flakeName: _: "${flakeName}=flake:${flakeName}") flakeInputs;
+  };
+
+  time.timeZone = "Europe/Berlin";
+  i18n.defaultLocale = "de_DE.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "de_DE.UTF-8";
+    LC_IDENTIFICATION = "de_DE.UTF-8";
+    LC_MEASUREMENT = "de_DE.UTF-8";
+    LC_MONETARY = "de_DE.UTF-8";
+    LC_NAME = "de_DE.UTF-8";
+    LC_NUMERIC = "de_DE.UTF-8";
+    LC_PAPER = "de_DE.UTF-8";
+    LC_TELEPHONE = "de_DE.UTF-8";
+    LC_TIME = "de_DE.UTF-8";
+  };
+  console.keyMap = "de";
+  services.xserver.xkb = {
+    layout = "de";
+    variant = "";
+  };
+
+  environment.systemPackages = with pkgs; [
+    just
+    vim
+    wget
+    curl
+    git
+    htop
+    btop
+    powertop
+  ];
+
+  environment.shells = with pkgs; [bash zsh];
   users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
+
+  users.mutableUsers = false; # Needed for pw set by sops!
+  users.users.bata = {
+    isNormalUser = true;
+    description = "Bastian Sievers";
+    extraGroups = ["networkmanager" "wheel" "docker" "surface-control"];
+  };
+
+  services.openssh = {
+    enable = true;
+    ports = [22];
+    openFirewall = true;
+    settings = {
+      AllowUsers = ["bata"];
+      PasswordAuthentication = true;
+      PermitRootLogin = "yes";
+    };
+    allowSFTP = true;
+  };
+  security.sudo.extraConfig = "bata ALL=(ALL) NOPASSWD: ALL";
 }

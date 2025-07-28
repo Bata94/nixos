@@ -13,6 +13,7 @@ in {
     ./hardware-configuration.nix
 
     ../../../features/hardware
+    ../../../features/system
 
     inputs.sops-nix.nixosModules.sops
   ];
@@ -41,6 +42,8 @@ in {
   features = {
     hardware = {
       bluetooth.enable = true;
+    };
+    system = {
     };
   };
 
