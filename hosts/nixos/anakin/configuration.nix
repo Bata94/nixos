@@ -1,8 +1,48 @@
-{pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}: let
+  tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+  session = "${pkgs.hyprland}/bin/Hyprland";
+  username = "bata";
+in {
   imports = [
     # ./disko-configuration.nix
     ./hardware-configuration.nix
+
+    ../../../features/hardware
+
+    inputs.sops-nix.nixosModules.sops
   ];
+
+  sops = {
+    defaultSopsFile = ../../../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    validateSopsFiles = false;
+
+    age = {
+      # automatically import host SSH keys as age keys and generate if needed
+      sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+      keyFile = "/var/lib/sops-nix/key.txt";
+      generateKey = true;
+    };
+
+    secrets = {
+      bata_pw = {
+        neededForUsers = true;
+      };
+      "software_pw/google" = {};
+      "software_pw/github" = {};
+    };
+  };
+
+  features = {
+    hardware = {
+      bluetooth.enable = true;
+    };
+  };
 
   # nix.package = pkgs.nixVersions.stable;
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -76,11 +116,11 @@
     #   ];
     # };
     firewall = {
-      enable = false;
+      enable = true;
       # allowedTCPPorts = [ 22 ];
       # allowedUDPPorts = [  ];
     };
   };
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.11";
 }

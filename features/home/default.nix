@@ -3,6 +3,7 @@
     ./apps
     ./cli
     ./development
+    ./gaming
     ./wm
   ];
 }
