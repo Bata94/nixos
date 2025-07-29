@@ -167,6 +167,7 @@ in {
             "dbus-update-activation-environment --systemd --all"
             "brightnessctl set 40%"
             "wl-paste --watch cliphist store"
+            "sudo xremap ~/.config/xremap/config.yml"
             "hyprpaper"
             "hypridle"
             "quickshell"

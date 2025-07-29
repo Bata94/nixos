@@ -42,19 +42,13 @@ in {
     ./quickshell.nix
   ];
 
-  # BUG: Not working
   config = mkIf cfg.enable {
-    home.file."xremap/config.yml".text = ''
-      remap:
-      - from:
-          key: CapsLock
-        to:
-          key: Escape
-      - from:
-          key: l
-          modifiers: [ Control, Shift ]
-        to:
-          toggle_key: CapsLock
+    home.file.".config/xremap/config.yml".text = ''
+      modmap:
+        - name: global
+          remap:
+            CapsLock: Esc
+            # CTRL-L: CapsLock
     '';
     home.packages = with pkgs;
       [

@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   config,
   lib,
@@ -61,7 +62,13 @@ in {
     };
     # environment.systemPackages = with pkgs; [greetd.tuigreet];
 
-    # Configure Hyprland
+    programs.hyprland = {
+      enable = true;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      portalPackage =
+        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    };
+
     environment.systemPackages = with pkgs; [
       killall
 
