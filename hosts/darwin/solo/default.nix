@@ -1,6 +1,11 @@
 {pkgs, ...}: {
   nixpkgs.hostPlatform = "aarch64-darwin";
 
+  # TODO:
+  # add Background config
+  # add CapsLock remap
+  # add secrets
+
   users.users.bata = {
     name = "bata";
     home = "/Users/bata";
@@ -75,7 +80,7 @@
       max-jobs = "auto";
       trusted-users = [
         "root"
-        "notthebee"
+        "bata"
         "@admin"
       ];
     };
