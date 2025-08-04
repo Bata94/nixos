@@ -12,6 +12,7 @@
   # add Background config
   # add CapsLock remap
   # add secrets
+  # autostart stats
 
   networking.hostName = "solo";
 
