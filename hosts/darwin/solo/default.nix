@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, config, inputs, outputs, ...}: {
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   # TODO:
@@ -10,9 +10,16 @@
     name = "bata";
     home = "/Users/bata";
   };
-  home-manager.users.bata = {
-    home.stateVersion = "25.11";
-    imports = [./home.nix];
+  home-manager = {
+    useUserPackages = true;
+    extraSpecialArgs = {
+      inherit inputs outputs;
+      hostName = "solo";
+    };
+    users.bata = {
+      home.stateVersion = "25.11";
+      imports = [./home.nix];
+    };
   };
 
   system = {
