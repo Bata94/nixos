@@ -902,11 +902,11 @@
         "nixvim": "nixvim_2"
       },
       "locked": {
-        "lastModified": 1753395398,
-        "narHash": "sha256-pMvgfITFiV3OP2GoQDtwsKny4TDtxdKNBoo0+5Kg7gk=",
+        "lastModified": 1754316718,
+        "narHash": "sha256-GmeMXvbnQ3KLkf12Yyqb1SBKM1YtcfLKQ7ktpguDH2k=",
         "owner": "bata94",
         "repo": "nixvim-conf",
-        "rev": "72b43118169491f5891461480d6a5ba9390cab10",
+        "rev": "f7d136b42c72aefe206a883e410ff909130d5416",
         "type": "github"
       },
       "original": {

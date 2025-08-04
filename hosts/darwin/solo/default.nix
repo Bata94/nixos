@@ -70,6 +70,7 @@
     google-cloud-sdk
 
     spotify
+    spotify-player
     gemini-cli
   ];
 
