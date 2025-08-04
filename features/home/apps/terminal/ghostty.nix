@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   ...
@@ -7,10 +8,14 @@ with lib; let
   cfg = config.features.home.apps.terminal.ghostty;
 in {
   options.features.home.apps.terminal.ghostty.enable = mkEnableOption "Enable Ghostty";
+  options.features.home.apps.terminal.ghostty.installPackage= mkOption {
+    type = types.bool;
+    default = true;
+  };
 
   config = mkIf cfg.enable {
     programs.ghostty = {
-      enable = true;
+      enable = !pkgs.stdenv.isDarwin;
       clearDefaultKeybinds = false;
       settings = {
         theme = "rose-pine";
@@ -44,5 +49,36 @@ in {
         ];
       };
     };
+
+
+    home.file."Library/Application\ Support/com.mitchellh.ghostty/config".text = mkIf pkgs.stdenv.isDarwin ''
+      theme = "rose-pine"
+      window-theme = "ghostty"
+
+      mouse-scroll-multiplier = 0.5
+
+      background = "000000"
+      background-opacity = 0.8
+      background-blur-radius = 20
+
+      gtk-titlebar = false
+      gtk-tabs-location = "hidden"
+      gtk-single-instance = true
+
+      font-size = 9.0
+      font-family = "FiraMono Nerd Font"
+
+      keybind = "alt+1=unbind"
+      keybind = "alt+2=unbind"
+      keybind = "alt+3=unbind"
+      keybind = "alt+4=unbind"
+      keybind = "alt+5=unbind"
+      keybind = "alt+6=unbind"
+      keybind = "alt+7=unbind"
+      keybind = "alt+8=unbind"
+      keybind = "alt+9=unbind"
+      keybind = "alt+0=unbind"
+      keybind = "alt+t=unbind"
+    '';
   };
 }
