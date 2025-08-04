@@ -1,10 +1,19 @@
-{pkgs, config, inputs, outputs, ...}: {
+{
+  pkgs,
+  config,
+  inputs,
+  outputs,
+  ...
+}:
+{
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   # TODO:
   # add Background config
   # add CapsLock remap
   # add secrets
+
+  networking.hostName = "solo";
 
   users.users.bata = {
     name = "bata";
@@ -18,7 +27,7 @@
     };
     users.bata = {
       home.stateVersion = "25.11";
-      imports = [./home.nix];
+      imports = [ ./home.nix ];
     };
   };
 
@@ -52,7 +61,7 @@
       "zen-browser"
       "autoraiseapp"
     ];
-    brews = [];
+    brews = [ ];
   };
   environment.systemPackages = with pkgs; [
     # TODO:
