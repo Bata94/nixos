@@ -67,22 +67,22 @@ in
         gtk-tabs-location = "hidden"
         gtk-single-instance = true
 
-        macos-option-as-alt = true
+        # macos-option-as-alt = true
 
         font-size = 9.0
         font-family = "FiraMono Nerd Font"
 
-        keybind = "alt+1=unbind"
-        keybind = "alt+2=unbind"
-        keybind = "alt+3=unbind"
-        keybind = "alt+4=unbind"
-        keybind = "alt+5=unbind"
-        keybind = "alt+6=unbind"
-        keybind = "alt+7=unbind"
-        keybind = "alt+8=unbind"
-        keybind = "alt+9=unbind"
-        keybind = "alt+0=unbind"
-        keybind = "alt+t=unbind"
+        # keybind = "alt+1=unbind"
+        # keybind = "alt+2=unbind"
+        # keybind = "alt+3=unbind"
+        # keybind = "alt+4=unbind"
+        # keybind = "alt+5=unbind"
+        # keybind = "alt+6=unbind"
+        # keybind = "alt+7=unbind"
+        # keybind = "alt+8=unbind"
+        # keybind = "alt+9=unbind"
+        # keybind = "alt+0=unbind"
+        # keybind = "alt+t=unbind"
       '';
   };
 }
