@@ -144,7 +144,7 @@ in {
           "desc:AOC 1601W MMEL1JA000075,preferred,auto-down,1" # PortMonitor
 
           ## Eltern
-          "desc:Samsung Electric Company C34J79x HTRM800858,preferred,auto-left,1" # Old Settings 3440x1440@59.97300,0x0,1 # Curved
+          "desc:Samsung Electric Company C34J79x HTRM800858,3440x1440@99.98Hz,auto-left,1"
         ];
 
         env =

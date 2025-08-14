@@ -94,7 +94,7 @@ in {
       };
       services = {
         docker.enable = true;
-        ollama.enable = true;
+        ollama.enable = false;
         virtualization.enable = true;
       };
     };
