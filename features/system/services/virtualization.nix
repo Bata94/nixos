@@ -8,7 +8,10 @@ with lib; let
   cfg = config.features.system.services.tailscale;
 in {
   options.features.system.services.virtualization.enable = mkEnableOption "Enable virtualization";
-  options.features.system.services.virtualization.guiApps = mkEnableOption "Enable virtualization GUI Apps";
+  options.features.system.services.virtualization.guiApps = mkOption {
+    type = types.bool;
+    default = true;
+  };
 
   config = mkIf cfg.enable {
     programs.dconf.enable = true;
@@ -21,7 +24,7 @@ in {
         win-virtio
         win-spice
       ]
-      ++ mkIf cfg.guiApps [
+      ++ optionals cfg.guiApps [
         virt-manager
         virt-viewer
         adwaita-icon-theme

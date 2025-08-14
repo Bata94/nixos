@@ -95,7 +95,10 @@ in {
       services = {
         docker.enable = true;
         ollama.enable = false;
-        virtualization.enable = true;
+        virtualization = {
+          enable = true;
+          guiApps = true;
+        };
       };
     };
   };
