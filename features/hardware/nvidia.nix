@@ -15,10 +15,11 @@ in {
       autoAddDriverRunpath
       nvidia-vaapi-driver
       egl-wayland
+      nvidia-container-toolkit
     ];
 
     # Load nvidia driver for Xorg and Wayland
-    services.xserver.videoDrivers = ["nvidia"];
+    services.xserver.videoDrivers = ["modesetting" "nvidia"];
     boot.kernelParams = [
       "nvidia-drm.fbdev=1"
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
@@ -61,9 +62,7 @@ in {
         };
 
         # Sync Mode, primary using discrete GPU
-        # sync = {
-        #   enable = true;
-        # };
+        # sync.enable = true;
       };
     };
   };

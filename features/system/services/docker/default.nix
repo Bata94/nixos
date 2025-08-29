@@ -21,6 +21,9 @@ in {
     users.users.bata.extraGroups = ["docker"];
     virtualisation.oci-containers.backend = "docker";
 
+    # TODO: check if nvidia is enabled
+    virtualisation.docker.daemon.settings.features.cdi = true;
+
     environment.systemPackages =
       [
         pkgs.lazydocker

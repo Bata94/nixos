@@ -16,6 +16,12 @@ in {
       (lutris.override {
         extraPkgs = pkgs: [
           # List package dependencies here
+          wineWowPackages.waylandFull
+          winetricks
+          vulkan-tools
+          xterm
+          glib
+          gamemode
         ];
       })
     ];

@@ -78,6 +78,8 @@ in {
       gsettings-desktop-schemas
       grim
       slurp
+      hyprpicker
+      grimblast
       libsForQt5.qt5.qtwayland
       qt6.qtwayland
       pavucontrol

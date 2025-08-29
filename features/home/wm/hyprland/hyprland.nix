@@ -136,11 +136,12 @@ in {
           ", preferred, auto, 1"
 
           ## Internal Monitors
+          # "desc:Sharp Corporation 0x1517, 2560×1600@60Hz, auto, 1" # XPS Display lesser resolution (mode nor avaiable)
           "desc:Sharp Corporation 0x1517, preferred, auto, 2" # XPS Display
           "desc:LG Display 0x0555, preferred, auto, 1.5" # Surface Pro7 Display
 
           ## Home
-          "desc:BNQ BenQ GL2450H F9F05686019, preferred, auto-up, 1" # HomeMain
+          "desc:BNQ BenQ GL2450H F9F05686019, preferred, auto, 1" # HomeMain
           "desc:AOC 1601W MMEL1JA000075,preferred,auto-down,1" # PortMonitor
 
           ## Eltern
@@ -155,6 +156,7 @@ in {
             # hybrid GPU hyprland prio intel, nvidia as fallback
             # "WLR_DRM_DEVICES,/dev/dri/card0"
             # "DRI_PRIME,1"
+            "AQ_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"
 
             "LIBVA_DRIVER_NAME,nvidia"
             "__GLX_VENDOR_LIBRARY_NAME,nvidia"
@@ -329,6 +331,11 @@ in {
 
           # Global hotkeys
           # "CTRL SHIFT, M, pass, ^(discord)$" # Not working -.-
+
+          # Grimblast binds
+          ", Print, exec, grimblast save output ~/Pictures/Screenshots/$(date +%s_grimblast).png"
+          "SHIFT, Print, exec, grimblast save active ~/Pictures/Screenshots/$(date +%s_grimblast).png"
+          "CTRL, Print, exec, grimblast save area ~/Pictures/Screenshots/$(date +%s_grimblast).png"
 
           # Switch workspaces with mainMod + [0-9]
           "$mainMod, 1, exec, ${pkgs.bash}/bin/bash ${customDispatch}/bin/customDispatch 1"
