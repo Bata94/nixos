@@ -11,7 +11,7 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      python3Full
+      python3
       pipx
       imath
       pystring

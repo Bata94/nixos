@@ -8,7 +8,7 @@
 with lib; let
   cfg = config.features.system.desktop.wm.hyprland;
 
-  tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+  tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
   session = "${pkgs.hyprland}/bin/Hyprland";
   # TODO: Make setable
   username = "bata";

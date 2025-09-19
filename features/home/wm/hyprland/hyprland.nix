@@ -259,10 +259,9 @@ in {
           new_status = "master";
         };
 
-        gestures = {
-          workspace_swipe = true;
-          workspace_swipe_cancel_ratio = 0.15;
-        };
+        gesture = [
+          "3, horizontal, workspace"
+        ];
 
         misc = {
           disable_hyprland_logo = true;

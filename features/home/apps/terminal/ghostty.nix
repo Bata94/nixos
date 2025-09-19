@@ -18,7 +18,7 @@ in {
       enable = !pkgs.stdenv.isDarwin;
       clearDefaultKeybinds = false;
       settings = {
-        theme = "rose-pine";
+        theme = "Rose Pine";
         window-theme = "ghostty";
 
         mouse-scroll-multiplier = 0.5;
