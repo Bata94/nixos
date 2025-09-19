@@ -96,7 +96,7 @@ in {
       hypridle
       # hyprlock
 
-      libsForQt5.xwaylandvideobridge
+      kdePackages.xwaylandvideobridge
     ];
 
     # Security
