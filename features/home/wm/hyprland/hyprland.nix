@@ -156,7 +156,7 @@ in {
             # hybrid GPU hyprland prio intel, nvidia as fallback
             # "WLR_DRM_DEVICES,/dev/dri/card0"
             # "DRI_PRIME,1"
-            "AQ_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"
+            "AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"
 
             "LIBVA_DRIVER_NAME,nvidia"
             "__GLX_VENDOR_LIBRARY_NAME,nvidia"
