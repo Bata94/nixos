@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   imports = [
     ./android.nix
     ./c.nix
@@ -9,5 +9,9 @@
     ./nodeJS.nix
     ./python.nix
     ./rust.nix
+  ];
+
+  home.packages = with pkgs; [
+    opencode
   ];
 }

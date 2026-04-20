@@ -60,7 +60,7 @@ in {
     settings = {
       ipc = "on";
       splash = false;
-      splash_offset = 2.0;
+      splash_offset = 2;
 
       preload =
         if lib.lists.length hyprpaperPreloadPaths > 0

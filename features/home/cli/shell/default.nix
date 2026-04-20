@@ -29,7 +29,6 @@ with lib; let
     ta = "tmux a";
     ts = "${tmuxSessionizer}/bin/tmuxSessionizer -r ~/Projects/work ~/Projects/personal";
     cs = "${cheatSheet}/bin/cheatSheet";
-    y = "yazi";
 
     ls = "colorls";
     ll = "colorls -l";
@@ -62,7 +61,7 @@ in {
 
       dwt1-shell-color-scripts
       colorls
-      neofetch
+      # neofetch
       unzip
       p7zip
       gnugrep
@@ -145,7 +144,7 @@ in {
       extraConfig = ''
         set -g focus-events on
         set -sa terminal-features ',screen-256color:RGB'
-        set -ga terminal-overrides ',screen-254color:Tc'
+        set -ga terminal-overrides ',screen-256color:Tc'
         set -g status-position top
 
         unbind %

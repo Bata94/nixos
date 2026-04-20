@@ -31,13 +31,13 @@ in {
         powerline-symbols
         material-symbols
 
-        ubuntu_font_family
+        ubuntu-classic
         source-code-pro
         jetbrains-mono
         twemoji-color-font
         noto-fonts
         noto-fonts-cjk-sans
-        noto-fonts-emoji
+        noto-fonts-color-emoji
         # emojione
         kanji-stroke-order-font
         ipafont

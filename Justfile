@@ -79,7 +79,7 @@ collect-garbage:
 
 # Collect and delete all old Nix Store entries
 collect-garbage-all:
-  nix-collect-garbage -d --max-jbs auto --cores 0 --quiet
+  nix-collect-garbage -d --max-jobs auto --cores 0 --quiet
   sudo nix-collect-garbage -d --max-jobs auto --cores 0 --quiet
 
 alias gc := collect-garbage

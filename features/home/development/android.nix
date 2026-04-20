@@ -14,7 +14,7 @@ in {
       packages = with pkgs; [
         # Android
         android-tools
-        android-udev-rules
+        # android-udev-rules
         android-studio
         google-chrome
       ];

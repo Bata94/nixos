@@ -4,9 +4,8 @@
   inputs,
   outputs,
   ...
-}:
-{
-  nixpkgs.hostPlatform = "aarch64-darwin";
+}: {
+  nixpkgs.stdenv.hostPlatform = "aarch64-darwin";
 
   # TODO:
   # add Background config
@@ -27,8 +26,8 @@
       hostName = "solo";
     };
     users.bata = {
-      home.stateVersion = "25.11";
-      imports = [ ./home.nix ];
+      home.stateVersion = "26.05";
+      imports = [./home.nix];
     };
   };
 
@@ -62,7 +61,7 @@
       "zen-browser"
       "autoraiseapp"
     ];
-    brews = [ ];
+    brews = [];
   };
   environment.systemPackages = with pkgs; [
     # TODO:

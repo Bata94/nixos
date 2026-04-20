@@ -33,9 +33,14 @@
     };
   };
 
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
+
   home.packages = with pkgs; [
     brightnessctl
-    spotify-player
 
     ## From old Config, need to be adjusted
     alejandra
@@ -64,6 +69,8 @@
     # telegram-desktop
     teams-for-linux
     webcamoid
+    droidcam
+    # v4l2loopback ## prop needed for droidcam
 
     # rustdesk-flutter
     lan-mouse
@@ -71,7 +78,7 @@
     ulauncher
     libsForQt5.kcolorpicker
 
-    onlyoffice-bin
+    onlyoffice-desktopeditors
     # texliveFull
 
     easyeffects
@@ -79,13 +86,14 @@
     mediainfo
     libmediainfo
     mediainfo-gui
-    audio-recorder
+    # audio-recorder # deprecated -> gnome-sound-recorder if needed
     # vlc
     # mpv
     # feh
     kdePackages.okular
     # spotify
-    spotify-player # Spotify TUI App
+    # spotify-player # Spotify TUI App
+    ytmdesktop
     pavucontrol
     # obs-studio
     # zathura # PDF Reader
@@ -115,6 +123,14 @@
       DontCheckDefaultBrowser = true;
       NoDefaultBookmarks = true;
       OfferToSaveLogins = false;
+    };
+  };
+
+  # Adding qemu connection
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = ["qemu:///system"];
+      uris = ["qemu:///system"];
     };
   };
 

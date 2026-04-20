@@ -14,7 +14,7 @@ in {
       # TODO: Prob add more Pkgs
       packages = with pkgs; [
         go
-        gopls
+        # gopls
         golangci-lint
         gofumpt
         gotools

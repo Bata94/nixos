@@ -7,6 +7,15 @@
   nix.settings.trusted-users = ["bata"];
 
   users = {
+    groups.plugdev = {};
+    groups.libvirtd = {};
+    groups.kvm = {};
+    groups.libvirt-qemu = {};
+    groups.qemu-libvirtd = {};
+    groups.libvirt-guests = {};
+    groups.libvirt = {};
+    groups.adb = {};
+
     users.bata = {
       hashedPasswordFile = config.sops.secrets.bata_pw.path;
       isNormalUser = true;
@@ -18,6 +27,7 @@
         "podman"
         "docker"
         "adb"
+        "plugdev"
         "networkmanager"
         "flatpak"
         "audio"
@@ -34,7 +44,7 @@
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN+WfV3PWmp9PHJKcFWlECuhZ1AScCk691D7Z6En6Fg0 bastian.sievers@gmail.com"
       ];
-      packages = [inputs.home-manager.packages.${pkgs.system}.default];
+      packages = [inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.default];
     };
     groups = {
       bata = {

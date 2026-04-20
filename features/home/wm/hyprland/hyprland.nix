@@ -93,6 +93,7 @@ in {
 
     gtk = {
       enable = true;
+      # gtk4.theme = config.gtk.theme; // default in 25.11
       cursorTheme = {
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";
@@ -126,10 +127,10 @@ in {
       };
       xwayland.enable = true;
       plugins = mkIf cfg.tablet [
-        inputs.hyprgrass.packages.${pkgs.system}.default
+        inputs.hyprgrass.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         # optional integration with pulse-audio, see examples/hyprgrass-pulse/README.md
-        inputs.hyprgrass.packages.${pkgs.system}.hyprgrass-pulse
+        inputs.hyprgrass.packages.${pkgs.stdenv.hostPlatform.system}.hyprgrass-pulse
       ];
       settings = {
         monitor = [
@@ -137,7 +138,7 @@ in {
 
           ## Internal Monitors
           # "desc:Sharp Corporation 0x1517, 2560×1600@60Hz, auto, 1" # XPS Display lesser resolution (mode nor avaiable)
-          "desc:Sharp Corporation 0x1517, preferred, auto, 2" # XPS Display
+          "desc:Sharp Corporation 0x1517, preferred, auto-right, 2" # XPS Display
           "desc:LG Display 0x0555, preferred, auto, 1.5" # Surface Pro7 Display
 
           ## Home
@@ -154,9 +155,9 @@ in {
           ]
           ++ optionals cfg.nvidia_envs [
             # hybrid GPU hyprland prio intel, nvidia as fallback
-            # "WLR_DRM_DEVICES,/dev/dri/card0"
-            # "DRI_PRIME,1"
-            "AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"
+            "WLR_DRM_DEVICES,/dev/dri/card0"
+            "DRI_PRIME,1"
+            "AQ_DRM_DEVICES,/dev/dri/card1:/dev/dri/card2"
 
             "LIBVA_DRIVER_NAME,nvidia"
             "__GLX_VENDOR_LIBRARY_NAME,nvidia"
@@ -181,7 +182,7 @@ in {
           ++ optionals cfg.virtKeyboard ["wvkbd-mobintl --hidden"]
           ++ optionals (cfg.exec-once-services != []) cfg.exec-once-services
           ++ [
-            "[workspace 7] zen"
+            "[workspace 7] zen-twilight"
             "sleep 2"
             "[workspace 1] ghostty -e tmux -2 new -Asdefault"
           ]
@@ -309,24 +310,14 @@ in {
           "$mainMod SHIFT, F, togglefloating"
           "$mainMod, V, togglesplit"
 
-          # "$mainMod ALT, SPACE, exec, fuzzel"
           "ALT, SPACE, exec, ulauncher-toggle"
           "ALT SHIFT, SPACE, exec, ulauncher --no-window-shadow"
-          # "$mainMod, SPACE, exec, ~/.config/scripts/applauncher.sh"
           "$mainMod, E, exec, thunar "
           "$mainMod SHIFT, E, exec, ghostty -e yazi"
-          "$mainMod, B, exec, zen" # __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json zen"
-          "$mainMod SHIFT, B, exec, brave"
+          "$mainMod, B, exec, zen"
+          "$mainMod SHIFT, B, exec, zen --private-window"
 
           "$mainMod CTRL, P, exec, wlogout"
-          # "$mainMod, PRINT, exec, ~/.config/scripts/grim.sh"
-          # "$mainMod SHIFT, W, exec, ~/.config/scripts/updatewal-swww.sh"
-          # "$mainMod, W, exec, rofi-wifi-menu"
-          # "$mainMod CTRL, W, exec, ~/.config/scripts/wallpaper-swww.sh"
-          # "$mainMod CTRL, RETURN, exec, ~/.config/scripts/applauncher.sh"
-          # "$mainMod SHIFT, B, exec, ~/.config/waybar/launch.sh"
-          # "$mainMod CTRL, F, exec, ~/.config/scripts/filemanager.sh"
-          # "$mainMod CTRL, C, exec, ~/.config/scripts/cliphist.sh"
 
           # Global hotkeys
           # "CTRL SHIFT, M, pass, ^(discord)$" # Not working -.-
@@ -469,95 +460,95 @@ in {
           "f[1], gapsout:0, gapsin:0"
         ];
 
-        windowrule = [
-          # No Gap if only 1 Window is active
-          "bordersize 0, floating:0, onworkspace:w[tv1]"
-          # "rounding 0, floating:0, onworkspace:w[tv1]"
-          "bordersize 0, floating:0, onworkspace:f[1]"
-          # "rounding 0, floating:0, onworkspace:f[1]"
-
-          # Example rule for a virtual keyboard (replace with your keyboard's class/title)
-          # "float, class:onboard"
-          # "size 50% 20%, class:onboard " # Example size, adjust as needed
-          # "move 50%-25% 10%, class:onboard " # Example position, adjust as needed
-          # "stayfocused, class:onboard"
-          # "noblur, class:onboard" # or use size:0 to disable blur
-          # "pin, class:onboard" # show it on all workspaces
-          # "workspace 10, class:onboard, noinitialfocus" # open it on workspace 10 (not stealing focus)
-
-          "float,class:^(pavucontrol)$"
-          "size 1000 600,class:^(pavucontrol)$"
-          "move 400 400,class:^(pavucontrol)$"
-
-          "float,class:^(blueman-manager)$"
-          "size 1000 600,class:^(blueman-manager)$"
-
-          "float,class:^(thunar)$"
-          "size 1000 600,class:^(thunar)$"
-
-          "float,class:^(Extension: (Bitwarden Password Manager) - Bitwarden — Zen Browser)$"
-
-          "float,class:^(feh)$"
-          "move 400 400,class:^(feh)$"
-          "float,class:^(mpv)$"
-          # "size 640 360,class:^(mpv)$"
-          "move 400 400,class:^(mpv)$"
-
-          "workspace 8, class:^(Spotify)$"
-          "workspace 8, class:^(com.github.wwmm.easyeffects)$"
-
-          "workspace 9, class:^(org.telegram.desktop)$"
-          "workspace 9, class:^(discord)$"
-          "workspace 9, class:^(teams-for-linux)$"
-          "workspace 9, class:^(whatsapp-for-linux)$"
-
-          "workspace 10, title:(Fyne App -)(.*)"
-          # "float, title:(Fyne App -)(.*)"
-          # "center, title:(Fyne App -)(.*)"
-          "workspace 10, title:(Dev: )(.*)"
-          "workspace 10, class:^(Ebitengine-Application)$"
-
-          "workspace 10, title:^(Parsec)$"
-          "workspace 10, class:^(virt-manager)$"
-          "float, title:^(Emulator)$"
-
-          "float, class:^(org.kde.kcalc)$"
-          "float, class:^(org.gnome.Calculator)$"
-
-          "float, title:^(pulsemixer)$"
-          "move 1410 62, title:^(pulsemixer)$"
-          "pin, title:^(pulsemixer)$"
-
-          "float, title:^(nmtui)$"
-          "move 1410 62, title:^(nmtui)$"
-          "pin, title:^(nmtui)$"
-
-          "float, title:^(bluetuith)$"
-          "move 1410 62, title:^(bluetuith)$"
-          "pin, title:^(bluetuith)$"
-
-          # Open gnome-calendar at the top right corner
-          "float, class:^(org.gnome.Calendar)$"
-          "size 390 600, class:^(org.gnome.Calendar)$"
-          "move 1520 62, class:^(org.gnome.Calendar)$"
-          "pin, class:^(org.gnome.Calendar)$"
-
-          # Firefox Picture-in-picture
-          "float, class:^(firefox)$, title:^(Picture-in-picture)$"
-          "move 10 830, class:^(firefox)$, title:^(Picture-in-picture)$"
-          "size 427 240, class:^(firefox)$, title:^(Picture-in-picture)$"
-          "pin, class:^(firefox)$, title:^(Picture-in-picture)$"
-
-          # Kitty floating
-          "float, class:^(kitty-floating)$"
-
-          # xwaylandvideobridge workaround https://wiki.hyprland.org/Useful-Utilities/Screen-Sharing/
-          "opacity 0.0 override, class:^(xwaylandvideobridge)$"
-          "noanim, class:^(xwaylandvideobridge)$"
-          "noinitialfocus, class:^(xwaylandvideobridge)$"
-          "maxsize 1 1, class:^(xwaylandvideobridge)$"
-          "noblur, class:^(xwaylandvideobridge)$"
-        ];
+        # windowrule = [
+        #   # No Gap if only 1 Window is active
+        #   "bordersize 0, floating:0, onworkspace:w[tv1]"
+        #   # "rounding 0, floating:0, onworkspace:w[tv1]"
+        #   "bordersize 0, floating:0, onworkspace:f[1]"
+        #   # "rounding 0, floating:0, onworkspace:f[1]"
+        #
+        #   # Example rule for a virtual keyboard (replace with your keyboard's class/title)
+        #   # "float, class:onboard"
+        #   # "size 50% 20%, class:onboard " # Example size, adjust as needed
+        #   # "move 50%-25% 10%, class:onboard " # Example position, adjust as needed
+        #   # "stayfocused, class:onboard"
+        #   # "noblur, class:onboard" # or use size:0 to disable blur
+        #   # "pin, class:onboard" # show it on all workspaces
+        #   # "workspace 10, class:onboard, noinitialfocus" # open it on workspace 10 (not stealing focus)
+        #
+        #   "float,class:^(pavucontrol)$"
+        #   "size 1000 600,class:^(pavucontrol)$"
+        #   "move 400 400,class:^(pavucontrol)$"
+        #
+        #   "float,class:^(blueman-manager)$"
+        #   "size 1000 600,class:^(blueman-manager)$"
+        #
+        #   "float,class:^(thunar)$"
+        #   "size 1000 600,class:^(thunar)$"
+        #
+        #   "float,class:^(Extension: (Bitwarden Password Manager) - Bitwarden — Zen Browser)$"
+        #
+        #   "float,class:^(feh)$"
+        #   "move 400 400,class:^(feh)$"
+        #   "float,class:^(mpv)$"
+        #   # "size 640 360,class:^(mpv)$"
+        #   "move 400 400,class:^(mpv)$"
+        #
+        #   "workspace 8, class:^(Spotify)$"
+        #   "workspace 8, class:^(com.github.wwmm.easyeffects)$"
+        #
+        #   "workspace 9, class:^(org.telegram.desktop)$"
+        #   "workspace 9, class:^(discord)$"
+        #   "workspace 9, class:^(teams-for-linux)$"
+        #   "workspace 9, class:^(whatsapp-for-linux)$"
+        #
+        #   "workspace 10, title:(Fyne App -)(.*)"
+        #   # "float, title:(Fyne App -)(.*)"
+        #   # "center, title:(Fyne App -)(.*)"
+        #   "workspace 10, title:(Dev: )(.*)"
+        #   "workspace 10, class:^(Ebitengine-Application)$"
+        #
+        #   "workspace 10, title:^(Parsec)$"
+        #   "workspace 10, class:^(virt-manager)$"
+        #   "float, title:^(Emulator)$"
+        #
+        #   "float, class:^(org.kde.kcalc)$"
+        #   "float, class:^(org.gnome.Calculator)$"
+        #
+        #   "float, title:^(pulsemixer)$"
+        #   "move 1410 62, title:^(pulsemixer)$"
+        #   "pin, title:^(pulsemixer)$"
+        #
+        #   "float, title:^(nmtui)$"
+        #   "move 1410 62, title:^(nmtui)$"
+        #   "pin, title:^(nmtui)$"
+        #
+        #   "float, title:^(bluetuith)$"
+        #   "move 1410 62, title:^(bluetuith)$"
+        #   "pin, title:^(bluetuith)$"
+        #
+        #   # Open gnome-calendar at the top right corner
+        #   "float, class:^(org.gnome.Calendar)$"
+        #   "size 390 600, class:^(org.gnome.Calendar)$"
+        #   "move 1520 62, class:^(org.gnome.Calendar)$"
+        #   "pin, class:^(org.gnome.Calendar)$"
+        #
+        #   # Firefox Picture-in-picture
+        #   "float, class:^(firefox)$, title:^(Picture-in-picture)$"
+        #   "move 10 830, class:^(firefox)$, title:^(Picture-in-picture)$"
+        #   "size 427 240, class:^(firefox)$, title:^(Picture-in-picture)$"
+        #   "pin, class:^(firefox)$, title:^(Picture-in-picture)$"
+        #
+        #   # Kitty floating
+        #   "float, class:^(kitty-floating)$"
+        #
+        #   # xwaylandvideobridge workaround https://wiki.hyprland.org/Useful-Utilities/Screen-Sharing/
+        #   "opacity 0.0 override, class:^(xwaylandvideobridge)$"
+        #   "noanim, class:^(xwaylandvideobridge)$"
+        #   "noinitialfocus, class:^(xwaylandvideobridge)$"
+        #   "maxsize 1 1, class:^(xwaylandvideobridge)$"
+        #   "noblur, class:^(xwaylandvideobridge)$"
+        # ];
 
         plugin = {
           touch_gestures = mkIf cfg.tablet {

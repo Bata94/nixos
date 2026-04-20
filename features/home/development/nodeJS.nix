@@ -11,12 +11,12 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      nodejs_20
-      watchman
+      nodejs_24
+      watchman # wangle throws error...
       prettierd
       eslint_d
 
-      nodePackages.eas-cli
+      eas-cli
     ];
   };
 }

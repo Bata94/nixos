@@ -11,8 +11,8 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      xfce.thunar
-      xfce.xfconf
+      thunar
+      xfconf
 
       feh
       mpv
@@ -23,7 +23,7 @@ in {
 
     programs.thunar = {
       enable = true;
-      plugins = with pkgs.xfce; [
+      plugins = with pkgs; [
         thunar-archive-plugin
         thunar-volman
       ];

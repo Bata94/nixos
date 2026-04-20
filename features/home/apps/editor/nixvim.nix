@@ -11,6 +11,6 @@ in {
   options.features.home.apps.editor.nixvim.enable = mkEnableOption "Enable nixvim";
 
   config = mkIf cfg.enable {
-    home.packages = [inputs.nixvim.packages.${pkgs.system}.default];
+    home.packages = [inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default];
   };
 }

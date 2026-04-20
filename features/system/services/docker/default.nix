@@ -29,7 +29,7 @@ in {
         pkgs.lazydocker
       ]
       ++ optionals cfg.compose2nix [
-        inputs.compose2nix.packages.${pkgs.system}.default
+        inputs.compose2nix.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
   };
 }

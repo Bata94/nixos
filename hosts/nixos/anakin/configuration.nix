@@ -21,7 +21,7 @@
     modprobe intel_rapl_msr
     echo "Probing done. Now setting Thermal Mode..."
 
-    smbios-thermal-ctl --set-thermal-mode balanced
+    echo "balanced" | sudo tee /sys/firmware/acpi/platform_profile
     echo "Thermal Mode set to Balanced."
   '';
 in {
@@ -60,6 +60,16 @@ in {
   # XPS BIOS PowerSettings
   environment.systemPackages = with pkgs; [
     libsmbios
+
+    # temp virt pkgs
+    spice
+    spice-gtk
+    spice-protocol
+    virtio-win
+    win-spice
+    # virt-manager
+    virt-viewer
+    adwaita-icon-theme
   ];
   systemd.services.xpsStartupScript = {
     enable = true;
@@ -72,6 +82,11 @@ in {
       ExecStart = "${pkgs.zsh}/bin/zsh ${xpsStartupScript}/bin/xpsStartupScript";
     };
   };
+
+  # Keychron F-Key setup
+  boot.extraModprobeConfig = ''
+    options hid_apple fnmode=0
+  '';
 
   features = {
     hardware = {
@@ -96,8 +111,8 @@ in {
         docker.enable = true;
         ollama.enable = false;
         virtualization = {
-          enable = true;
-          guiApps = true;
+          enable = false;
+          guiApps = false;
         };
       };
     };
@@ -106,8 +121,44 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # programs.nix-ld.enable = true;
-  # programs.nix-ld.libraries = [];
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = [];
+
+  # This is the one that correctly adds the udev rules!
+  # programs.adb.enable = true; # deprecated
+
+  # Not sure if this is necessary if the above is set?
+  # services.udev.packages = [
+  #   pkgs.android-udev-rules
+  # ];
+
+  programs.dconf.enable = true;
+  programs.virt-manager.enable = true;
+  # environment.systemPackages = with pkgs; [
+  #   spice
+  #   spice-gtk
+  #   spice-protocol
+  #   virtio-win
+  #   win-spice
+  #   virt-manager
+  #   virt-viewer
+  #   adwaita-icon-theme
+  # ];
+
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        # ovmf.enable = true;
+        # ovmf.packages = [pkgs.OVMFFull.fd];
+      };
+    };
+    spiceUSBRedirection.enable = true;
+  };
+  services.spice-vdagentd.enable = true;
+
+  users.groups.libvirtd.members = ["bata"];
 
   networking = {
     hostName = "anakin";
@@ -117,7 +168,29 @@ in {
       allowedTCPPorts = [22];
       allowedUDPPorts = [];
     };
+    # wg-quick.interfaces = {
+    #   # TODO: Move to age file!!
+    #   wg0 = {
+    #     address = [
+    #       "10.42.0.10/32"
+    #     ];
+    #     dns = ["10.42.0.0"];
+    #     privateKey = "UCs7B506W8PRA5tCcuL+1+8cNiBPeWvuRk1eA8eUuGE=";
+    #     peers = [
+    #       {
+    #         publicKey = "BLTPU3Q3y31pnWy10k2r1RiHY/dYSASckUDuyixJxmk=";
+    #         presharedKey = "BtRpgfHFxSQfC0sgFZD3PxuaYU0BcO078+3yXb71r60=";
+    #         allowedIPs = [
+    #           "10.42.0.0/24"
+    #           "10.69.0.0/24"
+    #         ];
+    #         endpoint = "138.199.198.213:51820";
+    #         persistentKeepalive = 25;
+    #       }
+    #     ];
+    #   };
+    # };
   };
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 }

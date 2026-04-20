@@ -16,7 +16,7 @@ in {
       (lutris.override {
         extraPkgs = pkgs: [
           # List package dependencies here
-          wineWowPackages.waylandFull
+          wineWow64Packages.waylandFull
           winetricks
           vulkan-tools
           xterm

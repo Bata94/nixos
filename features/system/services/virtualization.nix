@@ -16,31 +16,31 @@ in {
   config = mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    environment.systemPackages = with pkgs;
-      [
-        spice
-        spice-gtk
-        spice-protocol
-        win-virtio
-        win-spice
-      ]
-      ++ optionals cfg.guiApps [
-        virt-manager
-        virt-viewer
-        adwaita-icon-theme
-      ];
+    environment.systemPackages = with pkgs; [
+      spice
+      spice-gtk
+      spice-protocol
+      virtio-win
+      win-spice
+      virt-manager
+      virt-viewer
+      adwaita-icon-theme
+    ];
 
     virtualisation = {
       libvirtd = {
         enable = true;
         qemu = {
           swtpm.enable = true;
-          ovmf.enable = true;
-          ovmf.packages = [pkgs.OVMFFull.fd];
+          # ovmf.enable = true;
+          # ovmf.packages = [pkgs.OVMFFull.fd];
         };
       };
       spiceUSBRedirection.enable = true;
     };
     services.spice-vdagentd.enable = true;
+
+    programs.virt-manager.enable = true;
+    users.groups.libvirtd.members = ["bata"];
   };
 }

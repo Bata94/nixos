@@ -96,7 +96,7 @@ in {
       hypridle
       # hyprlock
 
-      kdePackages.xwaylandvideobridge
+      # kdePackages.xwaylandvideobridge
     ];
 
     # Security
