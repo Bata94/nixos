@@ -63,8 +63,8 @@ in {
     };
   };
 
-  # TODO: Add disabled Nvidia Spec again
-  # XPS BIOS PowerSettings
+  services.fwupd.enable = true;
+
   environment.systemPackages = with pkgs; [
     libsmbios
 

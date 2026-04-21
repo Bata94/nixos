@@ -22,11 +22,42 @@
   ];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel" "dcdbas" "dell-smm-hwmon"];
-  boot.extraModulePackages = [];
+  boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
+  boot.extraModprobeConfig = ''    # found that in a related NixOS thread
+     options snd-intel-dspcfg dsp_driver=1
+  '';
   boot.kernelParams = [
+    "intel_idle.max_cstate=10"
+    "acpi_rev_override=1" # Sometimes needed for modern standby
+
+    # SSD Power Management
+    "nvme_core.default_ps_max_latency_us=0"
+    "pcie_aspm=force"
+    "port_pirq=disable"
+
+    # iGPU
+    "i915.enable_dc=4" # Deep Link Power Management
+    "i915.enable_guc=3" # Use GuC/HuC firmware
+    "i915.enable_fbc=1" # Framebuffer compression
+    "i915.enable_psr=1" # Panel Self Refresh
+
+    # Audio Power Management
+    "snd_hda_intel.power_save=1"
+    "snd_hda_intel.power_save_controller=y"
+
     # example settings
     "quiet"
     "splash"
+  ];
+  boot.blacklistedKernelModules = [
+    # Disable SD Reader
+    "rtsx_pci_sdmmc"
+    "rtsx_pci"
+
+    # Disable Intel Telemetry Driver
+    "intel_vsec"
+    "intel_th"
+    "intel_th_pci"
   ];
 
   fileSystems."/" = {
