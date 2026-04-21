@@ -31,9 +31,9 @@ in {
       # Allow headless mode
       nvidiaPersistenced = false;
 
-      powerManagement.enable = false;
-      powerManagement.finegrained = false;
-      dynamicBoost.enable = false;
+      powerManagement.enable = true;
+      powerManagement.finegrained = true;
+      dynamicBoost.enable = true;
 
       # Use the NVidia open source kernel module (not to be confused with the
       # independent third-party "nouveau" open source driver).
