@@ -38,6 +38,7 @@ in {
   imports = [
     ./hyprland.nix
     ./hyprpaper.nix
+    ./hyprlauncher.nix
 
     ./quickshell.nix
   ];
@@ -56,7 +57,7 @@ in {
         killall
 
         wireplumber
-        ulauncher
+        # ulauncher
 
         xremap
         zenity

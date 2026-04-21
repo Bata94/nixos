@@ -173,19 +173,19 @@ in {
             "dbus-update-activation-environment --systemd --all"
             "brightnessctl set 40%"
             "wl-paste --watch cliphist store"
-            "sudo xremap ~/.config/xremap/config.yml"
+            "sudo xremap ~/.config/xremap/config.yml" # Set CapsLock as ESC
             "hyprpaper"
             "hypridle"
             "quickshell"
-            "sleep 2"
-            "ulauncher --hide-window --no-window-shadow"
+            "hyprlauncher -d"
           ]
           ++ optionals cfg.virtKeyboard ["wvkbd-mobintl --hidden"]
           ++ optionals (cfg.exec-once-services != []) cfg.exec-once-services
           ++ [
-            "[workspace 7] zen-twilight"
-            "sleep 2"
+            "[workspace special] ghostty -e nvtop"
+            "[workspace special] ghostty -e btop"
             "[workspace 1] ghostty -e tmux -2 new -Asdefault"
+            "[workspace 7] zen-twilight"
           ]
           ++ optionals (cfg.exec-once-apps != []) cfg.exec-once-apps;
 
@@ -311,8 +311,7 @@ in {
           "$mainMod SHIFT, F, togglefloating"
           "$mainMod, V, togglesplit"
 
-          "ALT, SPACE, exec, ulauncher-toggle"
-          "ALT SHIFT, SPACE, exec, ulauncher --no-window-shadow"
+          "ALT, SPACE, exec, hyprlauncher"
           "$mainMod, E, exec, thunar "
           "$mainMod SHIFT, E, exec, ghostty -e yazi"
           "$mainMod, B, exec, zen"

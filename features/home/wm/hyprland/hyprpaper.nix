@@ -60,14 +60,18 @@ in {
     settings = {
       ipc = "on";
       splash = false;
-      splash_offset = 2;
 
-      preload =
-        if lib.lists.length hyprpaperPreloadPaths > 0
-        then hyprpaperPreloadPaths
-        else [];
-      # TODO: Make it random and changeable vie hotkey
-      wallpaper = initialWallpaper;
+      wallpaper = {
+        monitor = "";
+        path = destinationWallpapersDir;
+      };
+
+      # preload =
+      #   if lib.lists.length hyprpaperPreloadPaths > 0
+      #   then hyprpaperPreloadPaths
+      #   else [];
+      # # TODO: Make it random and changeable vie hotkey
+      # wallpaper = initialWallpaper;
     };
   };
 }
