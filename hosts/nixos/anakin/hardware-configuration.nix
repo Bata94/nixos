@@ -21,7 +21,7 @@
     "rtsx_pci_sdmmc"
   ];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
+  boot.kernelModules = ["kvm-intel" "dcdbas" "dell-smm-hwmon"];
   boot.extraModulePackages = [];
   boot.kernelParams = [
     # example settings

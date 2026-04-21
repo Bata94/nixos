@@ -31,9 +31,9 @@ in {
       # Allow headless mode
       nvidiaPersistenced = false;
 
-      powerManagement.enable = true;
-      powerManagement.finegrained = true;
-      dynamicBoost.enable = true;
+      powerManagement.enable = false;
+      powerManagement.finegrained = false;
+      dynamicBoost.enable = false;
 
       # Use the NVidia open source kernel module (not to be confused with the
       # independent third-party "nouveau" open source driver).
@@ -51,25 +51,25 @@ in {
       # Optionally, you may need to select the appropriate driver version for your specific GPU.
       # package = config.boot.kernelPackages.nvidiaPackages.latest;
       # Apply CachyOS kernel 6.19 patch to NVIDIA latest driver
-      package = let
-        base = config.boot.kernelPackages.nvidiaPackages.latest;
-        cachyos-nvidia-patch = pkgs.fetchpatch {
-          url = "https://raw.githubusercontent.com/CachyOS/CachyOS-PKGBUILDS/master/nvidia/nvidia-utils/kernel-7.0.patch";
-          sha256 = "sha256-PRejd6Tdt81VgYjjVfXfyOQvv12NInw9mxfPT6CMD/E=";
-        };
-
-        # Patch the appropriate driver based on config.hardware.nvidia.open
-        driverAttr =
-          if config.hardware.nvidia.open
-          then "open"
-          else "bin";
-      in
-        base
-        // {
-          ${driverAttr} = base.${driverAttr}.overrideAttrs (oldAttrs: {
-            patches = (oldAttrs.patches or []) ++ [cachyos-nvidia-patch];
-          });
-        };
+      # package = let
+      #   base = config.boot.kernelPackages.nvidiaPackages.latest;
+      #   cachyos-nvidia-patch = pkgs.fetchpatch {
+      #     url = "https://raw.githubusercontent.com/CachyOS/CachyOS-PKGBUILDS/master/nvidia/nvidia-utils/kernel-7.0.patch";
+      #     sha256 = "sha256-PRejd6Tdt81VgYjjVfXfyOQvv12NInw9mxfPT6CMD/E=";
+      #   };
+      #
+      #   # Patch the appropriate driver based on config.hardware.nvidia.open
+      #   driverAttr =
+      #     if config.hardware.nvidia.open
+      #     then "open"
+      #     else "bin";
+      # in
+      #   base
+      #   // {
+      #     ${driverAttr} = base.${driverAttr}.overrideAttrs (oldAttrs: {
+      #       patches = (oldAttrs.patches or []) ++ [cachyos-nvidia-patch];
+      #     });
+      #   };
 
       prime = {
         intelBusId = "PCI:0:2:0";

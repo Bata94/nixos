@@ -2,28 +2,35 @@
   inputs,
   pkgs,
   lib,
+  config,
   ...
 }: let
-  xpsStartupScript = pkgs.writeShellScriptBin "xpsStartupScript" ''
-    #!/usr/bin/env bash
+  xpsStartupScript = let
+    platformProfile =
+      if config.features.hardware.nvidia-gpu.enable
+      then "balanced"
+      else "quiet";
+  in
+    pkgs.writeShellScriptBin "xpsStartupScript" ''
+      #!/usr/bin/env bash
 
-    echo "XPS Startup Script, to enable BIOS probing to increase Performance and Powerstates."
-    rmmod intel_rapl_msr
-    rmmod processor_thermal_device_pci_legacy
-    rmmod processor_thermal_device
-    rmmod processor_thermal_rapl
-    rmmod intel_rapl_common
-    rmmod intel_powerclamp
-    modprobe intel_powerclamp
-    modprobe intel_rapl_common
-    modprobe processor_thermal_rapl
-    modprobe processor_thermal_device
-    modprobe intel_rapl_msr
-    echo "Probing done. Now setting Thermal Mode..."
+      echo "XPS Startup Script, to enable BIOS probing to increase Performance and Powerstates."
+      rmmod intel_rapl_msr
+      rmmod processor_thermal_device_pci_legacy
+      rmmod processor_thermal_device
+      rmmod processor_thermal_rapl
+      rmmod intel_rapl_common
+      rmmod intel_powerclamp
+      modprobe intel_powerclamp
+      modprobe intel_rapl_common
+      modprobe processor_thermal_rapl
+      modprobe processor_thermal_device
+      modprobe intel_rapl_msr
+      echo "Probing done. Now setting Thermal Mode..."
 
-    echo "balanced" | sudo tee /sys/firmware/acpi/platform_profile
-    echo "Thermal Mode set to Balanced."
-  '';
+      echo "${platformProfile}" | tee /sys/firmware/acpi/platform_profile
+      echo "Thermal Mode set to ${platformProfile}."
+    '';
 in {
   imports = [
     # ./disko-configuration.nix
@@ -92,7 +99,7 @@ in {
     hardware = {
       bluetooth.enable = true;
       # display.enable = true;
-      # intel-gpu.enable = true;
+      intel-gpu.enable = true;
       # iptsd.enable = true;
       kernel.enable = true;
       nvidia-gpu.enable = true;

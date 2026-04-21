@@ -155,14 +155,15 @@ in {
           ]
           ++ optionals cfg.nvidia_envs [
             # hybrid GPU hyprland prio intel, nvidia as fallback
-            "WLR_DRM_DEVICES,/dev/dri/card0"
-            "DRI_PRIME,1"
             "AQ_DRM_DEVICES,/dev/dri/card1:/dev/dri/card2"
+
+            # "WLR_DRM_DEVICES,/dev/dri/card0"
+            # "WLR_RENDERER_ALLOW_SOFTWARE, 1"
+            # "DRI_PRIME,1"
 
             "LIBVA_DRIVER_NAME,nvidia"
             "__GLX_VENDOR_LIBRARY_NAME,nvidia"
             "NVD_BACKEND,direct"
-            "WLR_RENDERER_ALLOW_SOFTWARE, 1"
 
             # "__EGL_VENDOR_LIBRARY_FILENAMES,/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json"
           ];

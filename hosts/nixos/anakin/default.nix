@@ -5,6 +5,6 @@
 
     # ./secrets.nix
     # ./services
-    # ./specialisations.nix
+    ./specialisations.nix
   ];
 }
