@@ -59,9 +59,11 @@ in {
         wireplumber
         # ulauncher
 
+        hyprpolkitagent
+        hyprpwcenter
+
         xremap
         zenity
-        polkit_gnome
         libva-utils
         gsettings-desktop-schemas
         grim

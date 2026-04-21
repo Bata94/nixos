@@ -72,8 +72,9 @@ in {
     environment.systemPackages = with pkgs; [
       killall
 
+      hyprpolkitagent
+
       zenity
-      polkit_gnome
       libva-utils
       gsettings-desktop-schemas
       grim

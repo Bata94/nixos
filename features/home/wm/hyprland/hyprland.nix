@@ -170,6 +170,7 @@ in {
 
         exec-once =
           [
+            "systemctl --user start hyprpolkitagent"
             "dbus-update-activation-environment --systemd --all"
             "brightnessctl set 40%"
             "wl-paste --watch cliphist store"
