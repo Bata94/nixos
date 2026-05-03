@@ -91,6 +91,7 @@
     git
     htop
     btop
+    nvtopPackages.full
     powertop
   ];
 

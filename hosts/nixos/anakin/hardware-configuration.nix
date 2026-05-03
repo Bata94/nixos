@@ -23,28 +23,36 @@
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel" "dcdbas" "dell-smm-hwmon"];
   boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
-  boot.extraModprobeConfig = ''    # found that in a related NixOS thread
-     options snd-intel-dspcfg dsp_driver=1
-  '';
+  # boot.extraModprobeConfig = ''    # found that in a related NixOS thread
+  #    options snd-intel-dspcfg dsp_driver=1
+  # '';
   boot.kernelParams = [
-    "intel_idle.max_cstate=10"
-    "acpi_rev_override=1" # Sometimes needed for modern standby
-
-    # SSD Power Management
-    "nvme_core.default_ps_max_latency_us=0"
-    "pcie_aspm=force"
-    "port_pirq=disable"
-
-    # iGPU
-    "i915.enable_dc=4" # Deep Link Power Management
-    "i915.enable_guc=3" # Use GuC/HuC firmware
-    "i915.enable_fbc=1" # Framebuffer compression
-    "i915.enable_psr=1" # Panel Self Refresh
-
-    # Audio Power Management
-    "snd_hda_intel.power_save=1"
-    "snd_hda_intel.power_save_controller=y"
-
+    # "threadirqs" # Helps offload interrupt processing
+    # "scsi_mod.use_blk_mq=1"
+    # "skew_tick=1" # Helps align timer interrupts to happen at the same timer
+    #
+    # "pcie_aspm.policy=powersave"
+    # "workqueue.power_efficient=Y"
+    # "x86_pkg_temp_thermal.enable=1"
+    #
+    # "intel_idle.max_cstate=10"
+    # "acpi_rev_override=1" # Sometimes needed for modern standby
+    #
+    # # SSD Power Management
+    # "nvme_core.default_ps_max_latency_us=0"
+    # "pcie_aspm=force"
+    # "port_pirq=disable"
+    #
+    # # iGPU
+    # "i915.enable_dc=4" # Deep Link Power Management
+    # "i915.enable_guc=3" # Use GuC/HuC firmware
+    # "i915.enable_fbc=1" # Framebuffer compression
+    # "i915.enable_psr=1" # Panel Self Refresh
+    #
+    # # Audio Power Management
+    # "snd_hda_intel.power_save=1"
+    # "snd_hda_intel.power_save_controller=y"
+    #
     # example settings
     "quiet"
     "splash"

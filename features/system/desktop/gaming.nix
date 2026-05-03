@@ -11,6 +11,13 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
+      # (retroarch.withCores (cores:
+      #   with cores; [
+      #     mgba
+      #     melonds
+      #   ]))
+      retroarch-full
+
       steam
       heroic
       (lutris.override {

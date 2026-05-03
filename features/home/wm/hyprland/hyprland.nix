@@ -126,12 +126,12 @@ in {
         variables = ["--all"];
       };
       xwayland.enable = true;
-      plugins = mkIf cfg.tablet [
-        inputs.hyprgrass.packages.${pkgs.stdenv.hostPlatform.system}.default
-
-        # optional integration with pulse-audio, see examples/hyprgrass-pulse/README.md
-        inputs.hyprgrass.packages.${pkgs.stdenv.hostPlatform.system}.hyprgrass-pulse
-      ];
+      # plugins = mkIf cfg.tablet [
+      #   inputs.hyprgrass.packages.${pkgs.stdenv.hostPlatform.system}.default
+      #
+      #   # optional integration with pulse-audio, see examples/hyprgrass-pulse/README.md
+      #   inputs.hyprgrass.packages.${pkgs.stdenv.hostPlatform.system}.hyprgrass-pulse
+      # ];
       settings = {
         monitor = [
           ", preferred, auto, 1"
@@ -170,23 +170,23 @@ in {
 
         exec-once =
           [
-            "systemctl --user start hyprpolkitagent"
             "dbus-update-activation-environment --systemd --all"
-            "brightnessctl set 40%"
+            "systemctl --user start hyprpolkitagent"
+            # "brightnessctl set 40%"
             "wl-paste --watch cliphist store"
             "sudo xremap ~/.config/xremap/config.yml" # Set CapsLock as ESC
             "hyprpaper"
             "hypridle"
             "quickshell"
-            "hyprlauncher -d"
+            # "hyprlauncher -d"
           ]
           ++ optionals cfg.virtKeyboard ["wvkbd-mobintl --hidden"]
           ++ optionals (cfg.exec-once-services != []) cfg.exec-once-services
           ++ [
-            "[workspace special] ghostty -e nvtop"
-            "[workspace special] ghostty -e btop"
-            "[workspace 1] ghostty -e tmux -2 new -Asdefault"
-            "[workspace 7] zen-twilight"
+            # "[workspace special] ghostty -e nvtop"
+            # "[workspace special] ghostty -e btop"
+            # "[workspace 1] ghostty -e tmux -2 new -Asdefault"
+            # "[workspace 7] zen-twilight"
           ]
           ++ optionals (cfg.exec-once-apps != []) cfg.exec-once-apps;
 
@@ -228,24 +228,24 @@ in {
 
         decoration = {
           rounding = 8;
-          blur = {
-            enabled = true;
-            size = 6;
-            passes = 2;
-            new_optimizations = true;
-            ignore_opacity = true;
-            xray = true;
-          };
+          # blur = {
+          #   enabled = true;
+          #   size = 6;
+          #   passes = 2;
+          #   new_optimizations = true;
+          #   ignore_opacity = true;
+          #   xray = true;
+          # };
           active_opacity = 1.0;
           inactive_opacity = 1.0;
           fullscreen_opacity = 1.0;
 
-          shadow = {
-            enabled = true;
-            range = 30;
-            render_power = 3;
-            color = "0x66000000";
-          };
+          # shadow = {
+          #   enabled = true;
+          #   range = 30;
+          #   render_power = 3;
+          #   color = "0x66000000";
+          # };
         };
 
         dwindle = {
@@ -269,26 +269,27 @@ in {
         misc = {
           disable_hyprland_logo = true;
           disable_splash_rendering = true;
+          # vfr = true;
         };
 
         animations = {
-          enabled = true;
-          bezier = [
-            "wind, 0.05, 0.9, 0.1, 1.05"
-            "winIn, 0.1, 1.1, 0.1, 1.1"
-            "winOut, 0.3, -0.3, 0, 1"
-            "liner, 1, 1, 1, 1"
-          ];
-          animation = [
-            "windows, 1, 6, wind, slide"
-            "windowsIn, 1, 6, winIn, slide"
-            "windowsOut, 1, 5, winOut, slide"
-            "windowsMove, 1, 5, wind, slide"
-            "border, 1, 1, liner"
-            "borderangle, 1, 30, liner, loop"
-            "fade, 1, 10, default"
-            "workspaces, 1, 5, wind"
-          ];
+          enabled = false;
+          # bezier = [
+          #   "wind, 0.05, 0.9, 0.1, 1.05"
+          #   "winIn, 0.1, 1.1, 0.1, 1.1"
+          #   "winOut, 0.3, -0.3, 0, 1"
+          #   "liner, 1, 1, 1, 1"
+          # ];
+          # animation = [
+          #   "windows, 1, 6, wind, slide"
+          #   "windowsIn, 1, 6, winIn, slide"
+          #   "windowsOut, 1, 5, winOut, slide"
+          #   "windowsMove, 1, 5, wind, slide"
+          #   "border, 1, 1, liner"
+          #   "borderangle, 1, 30, liner, loop"
+          #   "fade, 1, 10, default"
+          #   "workspaces, 1, 5, wind"
+          # ];
         };
 
         # layerrule = [
@@ -310,7 +311,7 @@ in {
           "$mainMod, F, fullscreen, 0"
           "$mainMod, M, fullscreen, 1"
           "$mainMod SHIFT, F, togglefloating"
-          "$mainMod, V, togglesplit"
+          # "$mainMod, V, togglesplit"
 
           "ALT, SPACE, exec, hyprlauncher"
           "$mainMod, E, exec, thunar "

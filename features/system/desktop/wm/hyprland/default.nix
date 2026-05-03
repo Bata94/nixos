@@ -37,29 +37,29 @@ in {
     };
 
     # Configure tuigreet
-    services.greetd = {
-      enable = true;
-      settings = {
-        ## Surface Settings
-        initial_session = {
-          command = "${session}";
-          user = "${username}";
-        };
-        default_session = {
-          command = "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time -cmd ${session}";
-          user = "${username}";
-        };
-        ## XPS settings
-        # default_session = {
-        #   command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --greeting 'Welcome to NixOS' --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
-        #   user = "bata";
-        # };
-        # shell_session = {
-        #   command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --greeting 'Welcome to NixOS' --time --time-format '%I:%M %p | %a • %h | %F' --cmd zsh";
-        #   user = "bata";
-        # };
-      };
-    };
+    # services.greetd = {
+    #   enable = true;
+    #   settings = {
+    #     ## Surface Settings
+    #     initial_session = {
+    #       command = "${session}";
+    #       user = "${username}";
+    #     };
+    #     default_session = {
+    #       command = "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time -cmd ${session}";
+    #       user = "${username}";
+    #     };
+    #     ## XPS settings
+    #     # default_session = {
+    #     #   command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --greeting 'Welcome to NixOS' --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
+    #     #   user = "bata";
+    #     # };
+    #     # shell_session = {
+    #     #   command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --greeting 'Welcome to NixOS' --time --time-format '%I:%M %p | %a • %h | %F' --cmd zsh";
+    #     #   user = "bata";
+    #     # };
+    #   };
+    # };
     # environment.systemPackages = with pkgs; [greetd.tuigreet];
 
     programs.hyprland = {
@@ -101,16 +101,16 @@ in {
     ];
 
     # Security
-    security = {
-      # pam.services.swaylock = {
-      #   text = ''
-      #     auth include login
-      #   '';
-      # };
-      #    pam.services.gtklock = {};
-      pam.services.login.enableGnomeKeyring = true;
-    };
+    # security = {
+    # pam.services.swaylock = {
+    #   text = ''
+    #     auth include login
+    #   '';
+    # };
+    #    pam.services.gtklock = {};
+    #   pam.services.login.enableGnomeKeyring = true;
+    # };
 
-    services.gnome.gnome-keyring.enable = true;
+    # services.gnome.gnome-keyring.enable = true;
   };
 }

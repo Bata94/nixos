@@ -13,7 +13,7 @@ in {
   config = mkIf cfg.enable {
     virtualisation.docker = {
       enable = true;
-      enableOnBoot = true;
+      enableOnBoot = false;
       storageDriver = "overlay2";
       autoPrune.enable = true;
       logDriver = "json-file";
