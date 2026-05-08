@@ -8,7 +8,7 @@ install SYSTEM HOST:
 
 # Deploy system configuration
 deploy SYSTEM HOST:
-  nixos-rebuild switch --flake .#{{SYSTEM}} --target-host {{HOST}} --use-remote-sudo
+  nixos-rebuild switch --flake .#{{SYSTEM}} --target-host {{HOST}} --sudo
 
 # Update flake
 update:
