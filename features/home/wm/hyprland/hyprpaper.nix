@@ -6,6 +6,7 @@
   ...
 }: let
   # TODO: Add a default Wallpaper
+  # TODO: Linking doesnt work right, it creates a "images.jpg" as a link but nothing more/usable
   sourceAssetsDir = builtins.path {
     path = ../../../../assets/wallpapers/${hostName};
   };
@@ -56,7 +57,7 @@ in {
   home.file = lib.optionalAttrs (lib.lists.length sourceBackgroundFiles > 0) wallpaperSymlinks;
 
   services.hyprpaper = {
-    enable = true;
+    enable = false;
     settings = {
       ipc = "on";
       splash = false;

@@ -66,6 +66,8 @@
     "intel_vsec"
     "intel_th"
     "intel_th_pci"
+
+    "nouveau"
   ];
 
   fileSystems."/" = {

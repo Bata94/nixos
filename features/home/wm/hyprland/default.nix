@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 with lib; let
@@ -38,9 +39,10 @@ in {
   imports = [
     ./hyprland.nix
     ./hyprpaper.nix
-    ./hyprlauncher.nix
+    # ./hyprlauncher.nix
 
-    ./quickshell.nix
+    # ./quickshell.nix
+    inputs.noctalia.homeModules.default
   ];
 
   config = mkIf cfg.enable {

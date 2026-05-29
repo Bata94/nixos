@@ -32,7 +32,7 @@ in {
       nvidiaPersistenced = false;
 
       powerManagement.enable = true;
-      powerManagement.finegrained = true;
+      # powerManagement.finegrained = true;
       dynamicBoost.enable = true;
 
       # Use the NVidia open source kernel module (not to be confused with the
@@ -71,19 +71,21 @@ in {
       #     });
       #   };
 
-      prime = {
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
+      # prime = {
+      # intelBusId = "PCI:0:2:0";
+      # nvidiaBusId = "PCI:1:0:0";
+      # intelBusId = "PCI:0@0:2:0";
+      # nvidiaBusId = "PCI:1@0:0:0";
 
-        # Offload Mode, primary using integrated GPU
-        offload = {
-          enable = true;
-          enableOffloadCmd = true;
-        };
+      # Offload Mode, primary using integrated GPU
+      # offload = {
+      #   enable = true;
+      #   enableOffloadCmd = true;
+      # };
 
-        # Sync Mode, primary using discrete GPU
-        # sync.enable = true;
-      };
+      # Sync Mode, primary using discrete GPU
+      # sync.enable = true;
+      # };
     };
   };
 }

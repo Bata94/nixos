@@ -77,7 +77,15 @@ in {
     # virt-manager
     virt-viewer
     adwaita-icon-theme
+
+    tailscale
   ];
+
+  # make the tailscale command usable to users
+  # environment.systemPackages = [pkgs.tailscale];
+  # enable the tailscale service
+  services.tailscale.enable = true;
+
   systemd.services.xpsStartupScript = {
     enable = true;
     description = "XPS Startup Script, to enable BIOS probing to increase Performance and Powerstates.";

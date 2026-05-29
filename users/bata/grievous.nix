@@ -33,6 +33,12 @@
     };
   };
 
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
+
   home.packages = with pkgs; [
     brightnessctl
     spotify-player
@@ -59,6 +65,7 @@
     apps = {
       editor.nixvim.enable = true;
       terminal.ghostty.enable = true;
+      browser.chromium.enable = true;
     };
     cli = {
       tui = {

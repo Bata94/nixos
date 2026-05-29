@@ -37,6 +37,10 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nix-darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -104,13 +108,24 @@
       #   ];
       # };
 
+      bespin = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/nixos/bespin
+          # nixos-hardware.nixosModules.cpu.intel
+          # nixos-hardware.nixosModules.common.pc.vm
+          inputs.disko.nixosModules.disko
+        ];
+      };
+
       anakin = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {inherit inputs outputs;};
         modules = [
           # lanzaboote.nixosModules.lanzaboote
           ./hosts/nixos/anakin
-          nixos-hardware.nixosModules.dell-xps-17-9710-intel
+          # nixos-hardware.nixosModules.dell-xps-17-9710-intel
           # inputs.disko.nixosModules.disko
         ];
       };
@@ -133,6 +148,15 @@
       #   extraSpecialArgs = {inherit inputs outputs;};
       #   modules = [./users/bata/coruscant.nix];
       # };
+
+      "bata@bespin" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {
+          inherit inputs outputs;
+          hostName = "bespin";
+        };
+        modules = [./users/bata/bespin.nix];
+      };
 
       "bata@anakin" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";

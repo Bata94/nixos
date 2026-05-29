@@ -20,7 +20,7 @@ in {
       defaultFonts.enable = true;
       dbus.enable = true;
       audio.enable = true;
-      keyring.enable = true;
+      keyring.enable = false;
       thunar.enable = true;
     };
 
@@ -33,7 +33,10 @@ in {
         variant = "";
         options = "";
       };
-      excludePackages = [pkgs.xterm];
+      excludePackages = with pkgs; [
+        lightdm
+        xterm
+      ];
     };
 
     # Configure tuigreet

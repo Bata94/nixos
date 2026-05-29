@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  lib,
   ...
 }: {
   imports = [
@@ -13,7 +12,6 @@
 
     inputs.sops-nix.nixosModules.sops
   ];
-
   sops = {
     defaultSopsFile = ../../../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
@@ -30,28 +28,30 @@
       bata_pw = {
         neededForUsers = true;
       };
-      "software_pw/google" = {};
-      "software_pw/github" = {};
     };
   };
 
+  # nix.package = pkgs.nixVersions.stable;
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nixpkgs.config.allowUnfree = true;
+
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.enable = true;
+  # boot.loader.grub.device = "/dev/vda";
+
+  # programs.nix-ld.enable = true;
+  # programs.nix-ld.libraries = [];
+
   features = {
     hardware = {
-      bluetooth.enable = true;
-      intel-gpu.enable = true;
-      iptsd.enable = true;
-      opengl.enable = true;
-      printing.enable = true;
-      power.enable = true;
-      systemd.enable = true;
       time.enable = true;
+      systemd.enable = true;
     };
     system = {
-      desktop = {
-        wm.hyprland.enable = true;
-      };
       services = {
         docker.enable = true;
+        sshd.enable = true;
       };
     };
   };
@@ -63,29 +63,8 @@
     memoryPercent = 50;
   };
 
-  # make the tailscale command usable to users
-  # environment.systemPackages = [pkgs.tailscale];
-  # enable the tailscale service
-  services.tailscale.enable = true;
-
-  boot.loader.systemd-boot.enable = true; # lib.mkForce false;
-  # boot.lanzaboote = {
-  #   enable = true;
-  #   pkiBundle = "/var/lib/sbctl";
-  # };
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  environment.systemPackages = with pkgs; [
-    sbctl # key gen and mgmt for secureboot
-    tailscale
-  ];
-
-  # programs.nix-ld.enable = true;
-  # programs.nix-ld.libraries = [];
-
   networking = {
-    hostName = "grievous";
-    networkmanager.enable = true;
+    hostName = "bespin";
     firewall = {
       enable = true;
       allowedTCPPorts = [22];

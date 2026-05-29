@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   ...
@@ -9,12 +10,13 @@ in {
   options.features.hardware.opengl.enable = mkEnableOption "Enable opengl";
 
   config = mkIf cfg.enable {
-    # environment.systemPackages = with pkgs; [
-    #   vulkan-tools
-    #   vulkan-validation-layers
-    #   vaapiVdpau
-    #   libvdpau-va-gl
-    # ];
+    environment.systemPackages = with pkgs; [
+      #   vulkan-tools
+      #   vulkan-validation-layers
+      # vaapiVdpau
+      libva-vdpau-driver
+      #   libvdpau-va-gl
+    ];
 
     # services.xserver.videoDrivers = ["nvidia"];
 
