@@ -17,7 +17,23 @@ in {
       storageDriver = "overlay2";
       autoPrune.enable = true;
       logDriver = "json-file";
+      # rootless = {
+      #   enable = true;
+      #   setSocketVariable = true;
+      # };
     };
+    # Disable Rootless-Docker auto start on boot
+    systemd.user.services.docker = {
+      enable = true;
+      wantedBy = lib.mkForce [];
+    };
+
+    # Disable Docker auto start on boot
+    systemd.services.docker = {
+      enable = true;
+      wantedBy = lib.mkForce [];
+    };
+
     users.users.bata.extraGroups = ["docker"];
     virtualisation.oci-containers.backend = "docker";
 
