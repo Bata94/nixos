@@ -9,10 +9,12 @@ with lib; let
 in {
   options.features.system.services.docker.enable = mkEnableOption "Enable docker";
   options.features.system.services.docker.compose2nix = mkEnableOption "Enable compose2nix";
+  options.features.system.services.docker.autoStart = mkEnableOption "Enable AutoStart";
 
   config = mkIf cfg.enable {
     virtualisation.docker = {
       enable = true;
+      # TODO: Make this settable
       enableOnBoot = false;
       storageDriver = "overlay2";
       autoPrune.enable = true;
@@ -22,6 +24,8 @@ in {
       #   setSocketVariable = true;
       # };
     };
+
+    # TODO: Make this settable
     # Disable Rootless-Docker auto start on boot
     systemd.user.services.docker = {
       enable = true;
