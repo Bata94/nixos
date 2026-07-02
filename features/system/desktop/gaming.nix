@@ -22,17 +22,17 @@ in {
 
       steam
       heroic
-      # (lutris.override {
-      #   extraPkgs = pkgs: [
-      #     # List package dependencies here
-      #     wineWow64Packages.waylandFull
-      #     winetricks
-      #     vulkan-tools
-      #     xterm
-      #     glib
-      #     gamemode
-      #   ];
-      # })
+      (lutris.override {
+        extraPkgs = pkgs: [
+          # List package dependencies here
+          wineWow64Packages.waylandFull
+          winetricks
+          vulkan-tools
+          xterm
+          glib
+          gamemode
+        ];
+      })
     ];
     programs.gamemode.enable = true;
     programs.steam = {

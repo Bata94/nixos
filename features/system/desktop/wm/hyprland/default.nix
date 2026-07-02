@@ -84,7 +84,7 @@ in {
       slurp
       hyprpicker
       grimblast
-      libsForQt5.qt5.qtwayland
+      qt5.qtwayland
       qt6.qtwayland
       pavucontrol
       pamixer

@@ -21,7 +21,7 @@ with lib; let
   cfg = config.features.home.wm.hyprland;
 in {
   config = mkIf cfg.enable {
-    programs.noctalia-shell = {
+    programs.noctalia = {
       enable = true;
       settings = {
         settingsVersion = 0;
