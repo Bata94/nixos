@@ -6,6 +6,7 @@ keys:
       - &anakin age158hl9m0548qtexdn9jvjyrscz0uuh7t24ts8x2cj88mufuxua5fsgaqulu
       - &grievous age1keq8tmu0496yefp6k6ul5tq4qwn8q4xpw0wnla07w39dht9wf5cs4sl2k9
       - &bespin age1kcw54dx7gg98wm3gysz5e26w6xh3u02wdgutgvf6upd0mu8rdvjq9r2dhn
+      - &naboo age12vvwv39g54lj3t7swhwlnvujtysm3vxm96up7lng4tnymvvg6frsdtu2fg
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
@@ -14,3 +15,4 @@ creation_rules:
           - *grievous
           - *anakin
           - *bespin
+          - *naboo

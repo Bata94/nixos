@@ -68,6 +68,9 @@ in {
   environment.systemPackages = with pkgs; [
     libsmbios
 
+    ffmpeg
+    v4l-utils
+
     # temp virt pkgs
     spice
     spice-gtk
@@ -180,6 +183,13 @@ in {
   };
   services.spice-vdagentd.enable = true;
 
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
+    openFirewall = true;
+  };
+
   users.groups.libvirtd.members = ["bata"];
 
   networking = {
@@ -187,8 +197,8 @@ in {
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [22];
-      allowedUDPPorts = [];
+      allowedTCPPorts = [22 4747];
+      allowedUDPPorts = [4747];
     };
     # wg-quick.interfaces = {
     #   # TODO: Move to age file!!

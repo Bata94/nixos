@@ -61,7 +61,8 @@
     # obsidian
     postgresql
     just
-    gemini-cli
+
+    thunderbird
 
     discord
     vesktop # Discord APP

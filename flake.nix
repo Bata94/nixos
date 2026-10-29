@@ -18,7 +18,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -119,6 +122,18 @@
         ];
       };
 
+      naboo = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/nixos/naboo
+          nixos-hardware.nixosModules.common-cpu-intel
+          nixos-hardware.nixosModules.common-pc
+          # nixos-hardware.nixosModules.common.pc.vm
+          inputs.disko.nixosModules.disko
+        ];
+      };
+
       anakin = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {inherit inputs outputs;};
@@ -156,6 +171,15 @@
           hostName = "bespin";
         };
         modules = [./users/bata/bespin.nix];
+      };
+
+      "bata@naboo" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {
+          inherit inputs outputs;
+          hostName = "naboo";
+        };
+        modules = [./users/bata/naboo.nix];
       };
 
       "bata@anakin" = home-manager.lib.homeManagerConfiguration {

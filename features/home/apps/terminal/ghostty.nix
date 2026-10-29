@@ -15,7 +15,7 @@ in {
 
   config = mkIf cfg.enable {
     programs.ghostty = {
-      enable = !pkgs.stdenv.isDarwin;
+      enable = !pkgs.stdenv.hostPlatform.isDarwin;
       clearDefaultKeybinds = false;
       settings = {
         theme = "Rose Pine";

@@ -80,7 +80,6 @@
 
     spotify
     spotify-player
-    gemini-cli
   ];
 
   nixpkgs = {

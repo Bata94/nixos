@@ -21,7 +21,7 @@
     "rtsx_pci_sdmmc"
   ];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel" "dcdbas" "dell-smm-hwmon"];
+  boot.kernelModules = ["kvm-intel" "dcdbas" "dell-smm-hwmon" "v4l2loopback"];
   boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
   # boot.extraModprobeConfig = ''    # found that in a related NixOS thread
   #    options snd-intel-dspcfg dsp_driver=1
@@ -69,6 +69,10 @@
 
     "nouveau"
   ];
+
+  boot.extraModprobeConfig = ''
+    options v4l2loopback exclusive_caps=1 card_label="Virtual Webcam"
+  '';
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/7db4a535-782a-46f5-941f-14598a03bbbf";
