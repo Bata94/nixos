@@ -9,8 +9,17 @@
 }: {
   imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "nvme" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = [];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "nvme"
+    "usb_storage"
+    "sd_mod"
+  ];
+  boot.initrd.kernelModules = [
+    "dm-snapshot"
+    "cryptd"
+  ];
+  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/NIXLUKS";
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
