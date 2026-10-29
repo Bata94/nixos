@@ -14,8 +14,11 @@ in {
 
     environment.systemPackages = with pkgs; [
       intel-gpu-tools
-      intel-media-driver
-      intel-vaapi-driver
+
+      intel-media-driver # Für Broadwell und neuer (inkl. Ice Lake)
+      intel-vaapi-driver # Alternativer VA-API Treiber (oft stabil für ältere Apps)
+      # libva-vdpau-driver
+      libvdpau-va-gl
     ];
   };
 }

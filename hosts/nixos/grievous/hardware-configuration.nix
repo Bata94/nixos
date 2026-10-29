@@ -6,8 +6,9 @@
   lib,
   modulesPath,
   ...
-}: {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+}:
+{
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
@@ -20,8 +21,11 @@
     "cryptd"
   ];
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/NIXLUKS";
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
+  boot.kernelModules = [
+    "kvm-intel"
+    "i915"
+  ];
+  boot.extraModulePackages = [ ];
 
   # fileSystems."/" =
   #   { device = "/dev/disk/by-uuid/b7ce5268-a2f1-41d3-b4e4-fb72fdc4d7b2";

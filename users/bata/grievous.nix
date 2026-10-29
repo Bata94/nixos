@@ -2,7 +2,8 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ./home.nix
 
@@ -28,8 +29,8 @@
       bata_ssh_key = {
         path = "/home/bata/.ssh/id_bata_master";
       };
-      "software_pw/google" = {};
-      "software_pw/github" = {};
+      "software_pw/google" = { };
+      "software_pw/github" = { };
     };
   };
 
@@ -42,11 +43,13 @@
   home.packages = with pkgs; [
     brightnessctl
     spotify-player
+    euro-office-desktopeditors
+    moonlight-qt
   ];
 
   programs.zen-browser = {
     enable = true;
-    nativeMessagingHosts = [pkgs.firefoxpwa];
+    nativeMessagingHosts = [ pkgs.firefoxpwa ];
     policies = {
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
